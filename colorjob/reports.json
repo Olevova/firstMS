@@ -1,0 +1,168 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 0,
+    "pending": 0,
+    "failures": 2,
+    "start": "2023-10-31T13:55:29.215Z",
+    "end": "2023-10-31T13:55:39.852Z",
+    "duration": 10637,
+    "testsRegistered": 2,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "74ee197e-8dd3-45ea-befd-41a6e48f7c56",
+      "title": "",
+      "fullFile": "C:\\terenbro\\mailstone1\\test\\createRemoveProject.test.js",
+      "file": "\\test\\createRemoveProject.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a5ae0a17-0fe2-41d7-9731-287e7bea94b4",
+          "title": "create and remove project in the chrom browser",
+          "fullFile": "C:\\terenbro\\mailstone1\\test\\createRemoveProject.test.js",
+          "file": "\\test\\createRemoveProject.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before each\" hook in \"create and remove project in the chrom browser\"",
+              "fullTitle": "create and remove project in the chrom browser \"before each\" hook in \"create and remove project in the chrom browser\"",
+              "timedOut": false,
+              "duration": 827,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "driverChrome = await createWebdriverChrom()",
+              "err": {},
+              "uuid": "2e626aab-e864-4a7f-90c1-7f9f06b76bd4",
+              "parentUUID": "a5ae0a17-0fe2-41d7-9731-287e7bea94b4",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after each\" hook in \"create and remove project in the chrom browser\"",
+              "fullTitle": "create and remove project in the chrom browser \"after each\" hook in \"create and remove project in the chrom browser\"",
+              "timedOut": false,
+              "duration": 35,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "if (driverChrome){\n            await driverChrome.quit();\n        }",
+              "err": {},
+              "uuid": "9daf8e02-870e-4d10-9475-8dbefc1285ac",
+              "parentUUID": "a5ae0a17-0fe2-41d7-9731-287e7bea94b4",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "create new project",
+              "fullTitle": "create and remove project in the chrom browser create new project",
+              "timedOut": false,
+              "duration": 4410,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const logginPageTest = new LoginPage(driverChrome, URL);\n        const CreateProjectTest = new CreateProject(driverChrome);\n       \n        await logginPageTest.openLoginForm();\n        await logginPageTest.fillEmailInput(email);\n        await logginPageTest.fillPasswordInput(password);\n        await logginPageTest.checkSaveForFuture();\n        await logginPageTest.login(urlForCheck);\n        \n        \n       \n        try {\n            await CreateProjectTest.goToCreateProjectForm();\n            await CreateProjectTest.fillCreateProjectFields(\n                newProjectName ,\n                newProjectNumber,\n                newCompanyProjectBelong,\n                newProjectStreet,\n                newProjectApp,\n                newProjectState ,\n                newCompanProjectCity ,\n                newProjectZip,\n                newProjectClientName ,\n                startDate,\n                eneDate,\n            );\n            await CreateProjectTest.chekCreationOfNewProject(newProjectName);\n            \n        } catch (error) {\n            await makeScreenshot(driverChrome, 'company_create')\n            throw error\n        }",
+              "err": {
+                "message": "Error: No terenbro in options list",
+                "estack": "Error: No terenbro in options list\n    at CreateProject.findDateInDropDown (src\\classes\\createProject.js:18:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async CreateProject.fillCreateProjectFields (src\\classes\\createProject.js:55:9)\n    at async Context.<anonymous> (test\\createRemoveProject.test.js:63:13)",
+                "diff": null
+              },
+              "uuid": "c89ebd44-21d6-48e8-bf43-2030e9ada0c8",
+              "parentUUID": "a5ae0a17-0fe2-41d7-9731-287e7bea94b4",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "remove project",
+              "fullTitle": "create and remove project in the chrom browser remove project",
+              "timedOut": false,
+              "duration": 4481,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const logginPageTest = new LoginPage(driverChrome, URL);\nconst removeProject = new RemoveProject(driverChrome);\ntry {\n    await logginPageTest.openLoginForm();\n    await logginPageTest.fillEmailInput(email);\n    await logginPageTest.fillPasswordInput(password);\n    await logginPageTest.checkSaveForFuture();\n    await logginPageTest.login(urlForCheck);\n    \n    await removeProject.goToProjectList();\n    await removeProject.findProject(newProjectName, projectsPage);\n    await removeProject.removefindProject(newProjectName)\n} catch (error) {\n    \n    await makeScreenshot(driverChrome, 'project_remove')\n    throw error\n}",
+              "err": {
+                "message": "Error: No such project in the list of project",
+                "estack": "Error: No such project in the list of project\n    at removeProject.findProjectInList (src\\classes\\removeProject.js:24:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async removeProject.findProject (src\\classes\\removeProject.js:61:13)\n    at async Context.<anonymous> (test\\createRemoveProject.test.js:100:13)",
+                "diff": null
+              },
+              "uuid": "816e979a-e445-44b2-a47d-088cf383926a",
+              "parentUUID": "a5ae0a17-0fe2-41d7-9731-287e7bea94b4",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "c89ebd44-21d6-48e8-bf43-2030e9ada0c8",
+            "816e979a-e445-44b2-a47d-088cf383926a"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 8891,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 0
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 0
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "reports",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "colorjob",
+        "reportFilename": "reports"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
