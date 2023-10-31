@@ -1,40 +1,40 @@
-version: "3"
+version: '3.9'
+
+name: colorjob
 services:
-  chrome:
-    image: selenium/node-chrome:dev
-    shm_size: 4gb
-    depends_on:
-      - selenium-hub
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  mysql:
+    image: denisdetkov/manual-testing-db:latest
+    container_name: mysql-container
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - my-network
 
-  firefox:
-    image: selenium/node-firefox:dev
-    shm_size: 4gb
-    depends_on:
-      - selenium-hub
+  backend:
+    image: denisdetkov/manual-testing-colorjob-backend:latest
+    container_name: backend
     environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-
-  selenium-hub:
-    image: selenium/hub:latest
-    container_name: selenium-hub
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
     ports:
-      - "4442:4442"
-      - "4443:4443"
-      - "4444:4444"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+      - "8080:8080"
+    networks:
+      - my-network
 
-  test-runner:
-    image: olevova1983/testcjone:latest
-    depends_on:
-      selenium-hub:
-        condition: service_healthy
+  frontend:
+    image: denisdetkov/manual-testing-colorjob-frontend:latest
+    container_name: frontend
+    environment:
+      - SCRIPT_NAME=startDocker
+    ports:
+       - "4200:4200"
+    networks:
+      - my-network
+
+volumes:
+  mysql-data:
+
+networks:
+  my-network:
+    driver: bridge
