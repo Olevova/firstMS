@@ -28,7 +28,7 @@ services:
     environment:
       - SCRIPT_NAME=startDocker
     ports:
-       - "4300:4400"
+       - "4400:4400"
     networks:
       - my-network
 
