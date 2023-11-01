@@ -18,7 +18,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "8090:8090"
+      - "8090:8080"
     networks:
       - my-network
 
@@ -28,7 +28,7 @@ services:
     environment:
       - SCRIPT_NAME=startDocker
     ports:
-       - "4400:4400"
+       - "4400:4200"
     networks:
       - my-network
 
