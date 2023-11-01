@@ -10,9 +10,9 @@ const should = require("chai").should();
 describe("create and remove company in the chrom browser", async () => {
 
     let driverChrome = null;
-    const URL = 'http://localhost:4400/login';
-    const urlForCheck = "http://localhost:4400/system/dashboard";
-    const companiesPage = 'http://localhost:4400/system/companies';
+    const URL = 'http://frontend-cj:4400/login';
+    const urlForCheck = "http://frontend-cj:4400/system/dashboard";
+    const companiesPage = 'http://frontend-cj:4400/system/companies';
     // const companiesPage = 'https://dev-frontend.colorjob.terenbro.com/system/companies';
     // const URL = 'https://dev-frontend.colorjob.terenbro.com/login';
     // const urlForCheck = "https://dev-frontend.colorjob.terenbro.com/system/dashboard"
@@ -44,7 +44,7 @@ describe("create and remove company in the chrom browser", async () => {
     });
 
     it("create new company", async ()=>{
-
+        console.log(Date().toLocaleLowerCase(), 'date', URL);
         const logginPageTest = new LoginPage(driverChrome, URL);
         const createCompany = new CreateCompany(driverChrome);
        

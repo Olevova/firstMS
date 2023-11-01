@@ -1,8 +1,8 @@
-const {createWebdriverChrom} = require("../src/utils/webdriver");
-const InviteUser = require("../src/classes/inviteUser");
-const LoginPage = require("../src/classes/login");
-const RemoveUser = require("../src/classes/removeUser");
-const makeScreenshot = require('../src/utils/makeScreenShot');
+const {createWebdriverChrom} = require("../webdriver");
+const InviteUser = require("../../classes/inviteUser");
+const LoginPage = require("../../classes/login");
+const RemoveUser = require("../../classes/removeUser");
+const makeScreenshot = require('../makeScreenShot');
 const { describe } = require("mocha");
 const should = require("chai").should();
 const {Builder, Key} = require('selenium-webdriver');
