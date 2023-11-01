@@ -10,7 +10,7 @@ const should = require("chai").should();
 describe("create and remove company in the chrom browser", async () => {
 
     let driverChrome = null;
-    const URL = 'http://frontend-cj:4400/login';
+    const URL = 'http://frontend-cj/login';
     const urlForCheck = "http://frontend-cj:4400/system/dashboard";
     const companiesPage = 'http://frontend-cj:4400/system/companies';
     // const companiesPage = 'https://dev-frontend.colorjob.terenbro.com/system/companies';
