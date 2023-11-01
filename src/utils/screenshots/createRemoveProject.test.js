@@ -46,7 +46,7 @@ describe("create and remove project in the chrom browser", async () => {
     });
 
     it("create new project", async ()=>{
-
+        console.log(Date().toLocaleLowerCase(), 'date', URL);
         const logginPageTest = new LoginPage(driverChrome, URL);
         const CreateProjectTest = new CreateProject(driverChrome);
        

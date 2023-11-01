@@ -18,6 +18,7 @@ class InviteUser {
         await array[0].click()
         return
       }
+      
       throw new Error(`Company list is empty, but `)
   }
 
