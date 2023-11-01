@@ -10,12 +10,12 @@ const should = require("chai").should();
 describe("create and remove project in the chrom browser", async () => {
 
     let driverChrome = null;
-    // const URL = 'http://localhost:4200/login';
-    // const urlForCheck = "http://localhost:4200/system/dashboard";
-    // const projectsPage =  'http://localhost:4200/system/projects';
-    const projectsPage = 'https://dev-frontend.colorjob.terenbro.com/system/projects';
-    const URL = 'https://dev-frontend.colorjob.terenbro.com/login';
-    const urlForCheck = "https://dev-frontend.colorjob.terenbro.com/system/dashboard"
+    const URL = 'http://localhost:4400/login';
+    const urlForCheck = "http://localhost:4400/system/dashboard";
+    const projectsPage =  'http://localhost:4400/system/projects';
+    // const projectsPage = 'https://dev-frontend.colorjob.terenbro.com/system/projects';
+    // const URL = 'https://dev-frontend.colorjob.terenbro.com/login';
+    // const urlForCheck = "https://dev-frontend.colorjob.terenbro.com/system/dashboard"
     const email = "superadmin@gmail.com";
     const password ="colorjob" ;
     const successMessage = 'No such company in the list of company'
@@ -77,7 +77,7 @@ describe("create and remove project in the chrom browser", async () => {
             
         } catch (error) {
 
-            await makeScreenshot(driverChrome, 'company_create')
+            await makeScreenshot(driverChrome, 'project_create')
             throw error
 
         }
