@@ -10,12 +10,12 @@ const should = require("chai").should();
 describe("create and remove company in the chrom browser", async () => {
 
     let driverChrome = null;
-    // const URL = 'http://localhost:4200/login';
-    // const urlForCheck = "http://localhost:4200/system/dashboard";
-    // const companiesPage = 'http://localhost:4200/system/companies';
-    const companiesPage = 'https://dev-frontend.colorjob.terenbro.com/system/companies';
-    const URL = 'https://dev-frontend.colorjob.terenbro.com/login';
-    const urlForCheck = "https://dev-frontend.colorjob.terenbro.com/system/dashboard"
+    const URL = 'http://localhost:4400/login';
+    const urlForCheck = "http://localhost:4400/system/dashboard";
+    const companiesPage = 'http://localhost:4400/system/companies';
+    // const companiesPage = 'https://dev-frontend.colorjob.terenbro.com/system/companies';
+    // const URL = 'https://dev-frontend.colorjob.terenbro.com/login';
+    // const urlForCheck = "https://dev-frontend.colorjob.terenbro.com/system/dashboard"
     const email = "superadmin@gmail.com";
     const password ="colorjob" ;
 
