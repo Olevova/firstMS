@@ -38,3 +38,5 @@ services:
     depends_on:
       selenium-hub:
         condition: service_healthy
+  environment:
+      - RUNNING_IN_DOCKER=true
