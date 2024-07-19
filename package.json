@@ -6,7 +6,7 @@
   "scripts": {
     "test": "DEBUG=testomatio:* TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035 npx mocha --no-timeouts -R ./node_modules/@testomatio/reporter/lib/adapter/mocha.js",
     "test2": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports",
-    "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/InviteAndRemoveUserByCAandCheckAvailableNumber.test.js",
+    "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/sequenceChange.test.js",
     "testp": "mocha --no-timeouts --parallel",
     "import-tests": "set TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035&& npx check-tests@latest Mocha \"**/*{.,_}{test,spec,cy}.js\""
   },

@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CheckRoomGrouping = require('../src/classes/view/room/checkRoomGrouping');
 const makeScreenshot = require('../src/utils/makeScreenShot');
@@ -7,6 +8,7 @@ const config = require('../src/utils/config');
 // const { nanoid } = require('nanoid');
 
 describe('Check rooms grouping by the room name, test case #149', async () => {
+  
   // here add parameters for creation
   let driverChrome = null;
   const project = 'one-floor';
@@ -22,6 +24,7 @@ describe('Check rooms grouping by the room name, test case #149', async () => {
   });
 
   it('Check rooms grouping by the room name', async () => {
+    await lambdaParameters('Check rooms grouping by the room name', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -39,8 +42,10 @@ describe('Check rooms grouping by the room name, test case #149', async () => {
       await checkRoomGrouping.roomGroupingWithSameNameInViewTab();
       await checkRoomGrouping.goToSelektTab('Project Progress');
       await checkRoomGrouping.checkGroupingInProjectProgressTab();
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_rooms_grouping');
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

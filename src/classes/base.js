@@ -6,7 +6,7 @@ class Base {
   async findDateInDropDown(array, text) {
     for (const option of array) {
       const date = (await option.getText()).trim().toLowerCase();
-      // console.log(date, text);
+      // console.log(date, 'drop', text);
 
       if (date === text.trim().toLowerCase()) {
         await option.click();

@@ -56,10 +56,11 @@ describe("create, searching by name, edit and remove task in the chrom browser",
         try {
             await createTask.goToCreateTasksForm();
             await createTask.fillCreateTask(newTaskName, newTaskDescription, newTaskDueData);
-          
+            await lambdaParameters('passed',driverChrome);
         } catch (error) {
             
             await makeScreenshot(driverChrome, 'task_update');
+            await lambdaParameters('failed',driverChrome);
             throw error
         }
 

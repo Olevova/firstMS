@@ -70,9 +70,10 @@ describe('check metrics', async () => {
         // console.log(`Page Load Time: ${pageLoadTime} ms`);
 
         console.log(obtainedMetrics, '1', performance, '2', navigationTimings, '3');
-      
+        await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'change_area_status_project');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

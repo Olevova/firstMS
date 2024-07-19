@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateCompany = require('../src/classes/company/createCompany');
 const RemoveCompany = require('../src/classes/company/removeCompany');
@@ -9,7 +10,7 @@ const config = require('../src/utils/config');
 
 describe('Create, edit and remove company in the chrom browser, test-cases #4, 20, 11', async () => {
   // here add parameters for creation
-  
+
   let driverChrome = null;
 
   const newConpanyName = 'Fortest';
@@ -26,7 +27,6 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
   const editCompanyName = 'Fortestedit';
 
   beforeEach(async () => {
-    console.log(process.env);
     driverChrome = await createWebdriverChrom();
   });
 
@@ -37,6 +37,7 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
   });
 
   it('create new company', async () => {
+    await lambdaParameters('create new company',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -64,13 +65,16 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
         newCompanyType
       );
       await createCompany.checkCreationOfNewCompany();
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('edit new company', async () => {
+    await lambdaParameters('edit new company',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -87,14 +91,17 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
       await editCompany.goToCompanyList();
       await editCompany.findCompany(newConpanyName, config.companiesPage);
       await editCompany.editCompany(editCompanyName);
+      await lambdaParameters('passed',driverChrome);
       // await editCompany.checkCompanyPlane('Enterprise',1000)
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_edit');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove company', async () => {
+    await lambdaParameters('remove company',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -111,7 +118,9 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
       await removeCompany.goToCompanyList();
       await removeCompany.findCompany(editCompanyName, config.companiesPage);
       await removeCompany.removefindCompany(editCompanyName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
+      await lambdaParameters('failed',driverChrome);
       await makeScreenshot(driverChrome, 'company_remove');
       throw error;
     }

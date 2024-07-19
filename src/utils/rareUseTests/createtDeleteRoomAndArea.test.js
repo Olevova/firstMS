@@ -62,10 +62,11 @@ describe("create, edit and remove Room in the chrom browser", async () => {
             await createRoom.goToView();
             await createRoom.createRoom( '_', newRoomName);
             await createRoom.checkCreateNewRoom(newRoomName);
-        
+            await lambdaParameters('passed',driverChrome);
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'room_create')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }
@@ -92,11 +93,12 @@ describe("create, edit and remove Room in the chrom browser", async () => {
             await createArea.openEditRoomFormViaThreeDots(newRoomName);
             await createArea.addAreaInRoom(newAreaName);
             await createArea.checkCreateArea(newRoomName,newAreaName);
-            
+            await lambdaParameters('passed',driverChrome);
         
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'area_create')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }
@@ -123,11 +125,12 @@ describe("create, edit and remove Room in the chrom browser", async () => {
             await deleteArea.openEditRoomFormViaThreeDots(newRoomName)
             await deleteArea.deleteArea(newAreaName);
             await deleteArea.checkDeleteArea(newRoomName,newAreaName)
-            
+            await lambdaParameters('passed',driverChrome);
         
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'area_delete')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }
@@ -153,11 +156,12 @@ describe("create, edit and remove Room in the chrom browser", async () => {
             await deleteRoom.goToView();
             await deleteRoom.deleteRoom(newRoomName);
             await deleteRoom.checkDeleteFloor(newRoomName);
-            
+            await lambdaParameters('passed',driverChrome);
         
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'room_delete')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }

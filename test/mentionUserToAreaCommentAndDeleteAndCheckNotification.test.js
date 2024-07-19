@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const MentionUserToArea = require('../src/classes/view/area/mentionUserToArea');
 const CheckUserNotificationsList = require('../src/classes/notification/checkUserNotificationsList');
@@ -22,6 +23,7 @@ describe('Mention user to the area comment and after delete in the View tab, and
   });
 
   it('mention user to the area comment', async () => {
+    await lambdaParameters('mention user to the area comment',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -39,14 +41,17 @@ describe('Mention user to the area comment and after delete in the View tab, and
       await addUserToComment.goToSelektTab('view');
       await addUserToComment.addUser(config.userCAName);
       areaName = await addUserToComment.goToUserList();
+      await lambdaParameters('passed',driverChrome);
       await driverChrome.sleep(1000);
     } catch (error) {
       await makeScreenshot(driverChrome, 'mention_user_to_area');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('Check receive notification about mentioning in the comment within the Area ', async () => {
+    await lambdaParameters('Check receive notification about mentioning in the comment within the Area',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -65,13 +70,16 @@ describe('Mention user to the area comment and after delete in the View tab, and
     try {
       await checkUserNotificationsList.goToNotificationList();
       await checkUserNotificationsList.checkLastNotification(areaName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_notification');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('Delete mention user', async () => {
+    await lambdaParameters('Delete mention user',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -90,8 +98,10 @@ describe('Mention user to the area comment and after delete in the View tab, and
       //   await addComment.addComment('@Yuliia');
 
       await addUserToComment.deleteUserFromComment('@Vova CA test1');
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'mention_user_to_area');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

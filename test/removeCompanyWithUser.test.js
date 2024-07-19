@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateCompany = require('../src/classes/company/createCompany');
 const RemoveCompany = require('../src/classes/company/removeCompany');
@@ -33,6 +34,7 @@ describe('Remove company with the user in the chrom browser, test-cases #11.2', 
   });
 
   it('create new company, and invite new user to the company, test-case #11.2', async () => {
+    await lambdaParameters('create new company, and invite new user to the company, test-case #11.2',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -61,15 +63,22 @@ describe('Remove company with the user in the chrom browser, test-cases #11.2', 
       );
       await createCompany.checkCreationOfNewCompany();
       await inviteUser.goToInviteUsersForm('sa');
-      await inviteUser.fillInviteForm(config.emailUseForTest, newConpanyName, config.standartUser);
+      await inviteUser.fillInviteForm(
+        config.emailUseForTest,
+        newConpanyName,
+        config.standartUser
+      );
       await inviteUser.checkNewUser(config.emailUseForTest, config.usersPage);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create_invite_user');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove company with the user', async () => {
+    await lambdaParameters('remove company with the user',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -84,10 +93,11 @@ describe('Remove company with the user in the chrom browser, test-cases #11.2', 
 
       await removeCompany.goToCompanyList();
       await removeCompany.removeCompanyViaThreeDotsMenu(newConpanyName);
-
+      await lambdaParameters('passed',driverChrome);
       //   await driverChrome.sleep(1000)
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

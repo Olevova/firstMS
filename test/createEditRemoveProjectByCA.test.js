@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateProject = require('../src/classes/project/createProject');
 const EditProject = require('../src/classes/project/editProject');
@@ -37,6 +38,7 @@ describe('Create, edit and remove project by the company admin through the three
   });
 
   it('create new project by the company admin', async () => {
+    await lambdaParameters('create new project by the company admin',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -64,13 +66,16 @@ describe('Create, edit and remove project by the company admin through the three
         startDate,
         eneDate
       );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_by_CA');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('edit project by the company admin through the three dots menu', async () => {
+    await lambdaParameters('edit project by the company admin through the three dots menu',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -89,13 +94,16 @@ describe('Create, edit and remove project by the company admin through the three
         newProjectName,
         newEditName
       );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_edit_by_CA');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove project by the company admin through the three dots menu', async () => {
+    await lambdaParameters('remove project by the company admin through the three dots menu',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -111,8 +119,10 @@ describe('Create, edit and remove project by the company admin through the three
 
       await removeProject.goToProjectList('ca');
       await removeProject.removeProjectViaThreeDotsMenu(newEditName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_remove_by_CA');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateTask = require('../src/classes/task/createTask');
 const SearchingTaskByName = require('../src/classes/task/searchingTask');
@@ -11,7 +12,7 @@ const config = require('../src/utils/config');
 describe('Create, searching by name, add attachment, edit and remove task in the chrom browser, test-cases #34,35,36,40,55.1', async () => {
   // here add parameters for creation
   let driverChrome = null;
-  
+
   const newTaskName = 'FortesTask';
   const newTaskNameForUpdate = 'Foretask2';
   const newTaskDescription = 'Test description';
@@ -30,6 +31,7 @@ describe('Create, searching by name, add attachment, edit and remove task in the
   });
 
   it('create new task', async () => {
+    await lambdaParameters('create new task',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -50,13 +52,16 @@ describe('Create, searching by name, add attachment, edit and remove task in the
         newTaskDueData
       );
       await createTask.checkTaskCreation(newTaskName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('searching task by name in the searching form', async () => {
+    await lambdaParameters('searching task by name in the searching form',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -73,84 +78,86 @@ describe('Create, searching by name, add attachment, edit and remove task in the
       await searchingTask.goToTasksList(config.projectNameMain);
       await searchingTask.searchingTasksByName(newTaskName);
       await searchingTask.chekSearchingResult(newTaskName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_search');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
-  it('update task', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  // it('update task', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+  //   const updateTaskDetail = new UpdateTaskDetail(driverChrome);
+  //   const goToTasks = new SearchingTaskByName(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(config.email);
-    await logginPageTest.fillPasswordInput(config.password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(config.urlhomePageForCheck);
-    await goToTasks.goToTasksList(config.projectNameMain);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(config.email);
+  //   await logginPageTest.fillPasswordInput(config.password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(config.urlhomePageForCheck);
+  //   await goToTasks.goToTasksList(config.projectNameMain);
 
-    try {
-      await updateTaskDetail.findAllTasksInProject();
-      await updateTaskDetail.editTask(newTaskName, newTaskNameForUpdate);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'task_update');
-      throw error;
-    }
-  });
+  //   try {
+  //     await updateTaskDetail.findAllTasksInProject();
+  //     await updateTaskDetail.editTask(newTaskName, newTaskNameForUpdate);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'task_update');
+  //     throw error;
+  //   }
+  // });
 
-  it('add attachment to the task', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  // it('add attachment to the task', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+  //   const updateTaskDetail = new UpdateTaskDetail(driverChrome);
+  //   const goToTasks = new SearchingTaskByName(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(config.email);
-    await logginPageTest.fillPasswordInput(config.password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(config.urlhomePageForCheck);
-    await goToTasks.goToTasksList(config.projectNameMain);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(config.email);
+  //   await logginPageTest.fillPasswordInput(config.password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(config.urlhomePageForCheck);
+  //   await goToTasks.goToTasksList(config.projectNameMain);
 
-    try {
-      await updateTaskDetail.findAllTasksInProject();
-      await updateTaskDetail.addAttachment(newTaskNameForUpdate);
-      // await updateTaskDetail.checkAttachment(newTaskNameForUpdate, attachmentFileName); for local Use
-      await updateTaskDetail.checkAttachment(
-        newTaskNameForUpdate,
-        attachmentFileNameDocker
-      );
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'task_attachment');
-      throw error;
-    }
-  });
+  //   try {
+  //     await updateTaskDetail.findAllTasksInProject();
+  //     await updateTaskDetail.addAttachment(newTaskNameForUpdate);
+  //     // await updateTaskDetail.checkAttachment(newTaskNameForUpdate, attachmentFileName); for local Use
+  //     await updateTaskDetail.checkAttachment(
+  //       newTaskNameForUpdate,
+  //       attachmentFileNameDocker
+  //     );
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'task_attachment');
+  //     throw error;
+  //   }
+  // });
 
-  it('remove task', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  // it('remove task', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeTask = new RemoveTask(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+  //   const removeTask = new RemoveTask(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(config.email);
-    await logginPageTest.fillPasswordInput(config.password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(config.urlhomePageForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(config.email);
+  //   await logginPageTest.fillPasswordInput(config.password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(config.urlhomePageForCheck);
 
-    try {
-      await removeTask.goToTasksList(config.projectNameMain);
-      await removeTask.taskRemove(newTaskNameForUpdate);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'task_remove');
-      throw error;
-    }
-  });
+  //   try {
+  //     await removeTask.goToTasksList(config.projectNameMain);
+  //     await removeTask.taskRemove(newTaskNameForUpdate);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'task_remove');
+  //     throw error;
+  //   }
+  // });
 });

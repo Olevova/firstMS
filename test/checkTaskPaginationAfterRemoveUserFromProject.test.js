@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const AddRemoveUserToProject = require('../src/classes/user/addAndRemoveUserToProject');
 const CreateTask = require('../src/classes/task/createTask');
@@ -11,7 +12,7 @@ describe('Checking the addition of a pagination, a pagination counter, after add
   // here add parameters for creation
   let driverChrome = null;
 
-  const userName='task-test';
+  const userName = 'task-test';
   const taskTitle = 'taskforPagination';
   const taskDescription = 'check pagination';
   const newTaskDueData = '15.12.2024';
@@ -30,6 +31,7 @@ describe('Checking the addition of a pagination, a pagination counter, after add
   });
 
   it('checking the addition of a pagination, a pagination counter, after adding and removing a task on the user', async () => {
+    await lambdaParameters('checking the addition of a pagination, a pagination counter, after adding and removing a task on the user', driverChrome)
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -89,8 +91,10 @@ describe('Checking the addition of a pagination, a pagination counter, after add
         throw new Error('Test failed, check screenshot');
       }
       await removeTask.taskRemove(taskTitle);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_pagination');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

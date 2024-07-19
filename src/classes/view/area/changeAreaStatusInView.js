@@ -163,7 +163,9 @@ class ChangeAreaStatus extends Base {
     );
     // console.log(await selectStatus.getAttribute('value'));
     await this.clickAreaStatusDropdown();
+
     const statusElements = this.driver.findElements(By.css('.area__status-menu__item'));
+    await this.driver.sleep(1000);
     await this.findDateInDropDown(await statusElements, 'To Do');
     await this.notificationCheck();
     await this.checkAreaStatus('TO_DO');

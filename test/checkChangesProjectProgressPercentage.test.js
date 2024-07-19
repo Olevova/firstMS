@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const ChangeAreaStatus = require('../src/classes/view/area/changeAreaStatusInView');
 const CreateRoom = require('../src/classes/view/room/createRoom');
@@ -26,6 +27,7 @@ describe('Check changes of Project Progress(%) when changing status of Area from
   });
   it('Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes', async () => {
     // time and site or lochalhost there tests are going
+    await lambdaParameters('Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes', driverChrome)
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -52,16 +54,19 @@ describe('Check changes of Project Progress(%) when changing status of Area from
       await deleteRoom.deleteRoom(newRoomName);
       await deleteRoom.checkDeleteFloor(newRoomName);
       await changeAreaStatus.comparisonOfProgress();
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(
         driverChrome,
         'chek_project%_after_added_new_room_area'
       );
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('change area status in view tab and check Project Progress(%)', async () => {
+    await lambdaParameters('change area status in view tab and check Project Progress(%)',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -92,11 +97,13 @@ describe('Check changes of Project Progress(%) when changing status of Area from
       await changeAreaStatus.findAreaInView('-2');
       await changeAreaStatus.changeStatusInProgressOnToDo();
       await changeAreaStatus.closeAreaAndCheckProgress('decrease');
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(
         driverChrome,
         'chek_project%_after_change_status_area'
       );
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

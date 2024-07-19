@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const ChangeStatusTask = require('../src/classes/task/changeStatus');
 const makeScreenshot = require('../src/utils/makeScreenShot');
@@ -21,6 +22,7 @@ describe('Change task status from to do to in progress in the chrom browser, tes
   });
 
   it('change task status', async () => {
+    await lambdaParameters('change task status', driverChrome)
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -38,8 +40,10 @@ describe('Change task status from to do to in progress in the chrom browser, tes
       await changeTaskStatus.findAllTasksInProject();
       await changeTaskStatus.changeStatus();
       await changeTaskStatus.checkStatus();
+      await lambdaParameters('passed', driverChrome)
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_change_status');
+      await lambdaParameters('failed', driverChrome)
       throw error;
     }
   });

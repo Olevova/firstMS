@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateProject = require('../src/classes/project/createProject');
 const RemoveProject = require('../src/classes/project/removeProject');
@@ -11,7 +12,7 @@ const config = require('../src/utils/config');
 describe('Removing the project with existing User,test case #12.1 ', async () => {
   // here add parameters for creation
   let driverChrome = null;
-  
+
   const newProjectName = 'user project';
   const newProjectkey = 'APWU';
   const newProjectNumber = '628';
@@ -36,6 +37,7 @@ describe('Removing the project with existing User,test case #12.1 ', async () =>
   });
 
   it('create the project and invite user to the project', async () => {
+    await lambdaParameters('create the project and invite user to the project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -68,15 +70,21 @@ describe('Removing the project with existing User,test case #12.1 ', async () =>
       await createProjectTest.goToView(newProjectName);
       await createProjectTest.goToSelektTab('Users');
       await inviteUserTest.openInviteUserFormInProject();
-      await inviteUserTest.fillInviteFormByCA(config.emailForTest, config.projManager);
+      await inviteUserTest.fillInviteFormByCA(
+        config.emailForTest,
+        config.projManager
+      );
       await inviteUserTest.checkCreateNewUser(config.emailForTest);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_user_add');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove project', async () => {
+    await lambdaParameters('remove project with user',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -95,11 +103,19 @@ describe('Removing the project with existing User,test case #12.1 ', async () =>
       await removeProject.findProject(newProjectName, config.projectsPage);
       await removeProject.removefindProject(newProjectName);
       await removeUserTest.goToUserList('incompany');
-      await removeUserTest.findUser(config.emailForTest, config.mainCompanyUsersPage);
+      await removeUserTest.findUser(
+        config.emailForTest,
+        config.mainCompanyUsersPage
+      );
       await removeUserTest.removefindUser();
-      await removeUserTest.checkIfUserRemove(config.emailForTest, config.mainCompanyUsersPage);
+      await removeUserTest.checkIfUserRemove(
+        config.emailForTest,
+        config.mainCompanyUsersPage
+      );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_with_user_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

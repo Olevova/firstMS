@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const FilterFloor = require('../src/classes/view/floor/filterFloorInRpojectProgressTab');
 const makeScreenshot = require('../src/utils/makeScreenShot');
@@ -21,6 +22,7 @@ describe('Filter floors and reset floors filter in the Progress Project tab in t
   });
 
   it('filters floor and reset filter', async () => {
+    await lambdaParameters('filters floor and reset filter',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -40,8 +42,10 @@ describe('Filter floors and reset floors filter in the Progress Project tab in t
       await filterFloor.filterByFirstRoom();
       await filterFloor.checkOfFilterOperationByFloors();
       await filterFloor.resetFilterAndCheckResult();
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

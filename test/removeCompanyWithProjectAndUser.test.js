@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateCompany = require('../src/classes/company/createCompany');
 const RemoveCompany = require('../src/classes/company/removeCompany');
@@ -47,6 +48,7 @@ describe('Remove company with the project and user in the chrom browser, test-ca
   });
 
   it('create new company, create project and invite user to the company, test-case #11.3', async () => {
+    await lambdaParameters('create new company, create project and invite user to the company, test-case #11.3',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -92,15 +94,25 @@ describe('Remove company with the project and user in the chrom browser, test-ca
         eneDate
       );
       await inviteUser.goToInviteUsersForm('sa');
-      await inviteUser.fillInviteForm(config.emailForTest, newConpanyName, config.projManager);
-      await inviteUser.checkNewUser(config.emailForTest, config.mainCompanyUsersPage);
+      await inviteUser.fillInviteForm(
+        config.emailForTest,
+        newConpanyName,
+        config.projManager
+      );
+      await inviteUser.checkNewUser(
+        config.emailForTest,
+        config.mainCompanyUsersPage
+      );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create_invite_user_project');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove company with the project and User', async () => {
+    await lambdaParameters('remove company with the project and User',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -124,9 +136,11 @@ describe('Remove company with the project and user in the chrom browser, test-ca
         '.list-name-wrapper',
         newProjectName
       );
+      await lambdaParameters('passed',driverChrome);
       //   await driverChrome.sleep(1000)
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

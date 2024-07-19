@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateCustomStatus = require('../src/classes/statusAndWeight/createCustomStatus');
 const DeleteCustomStatus = require('../src/classes/statusAndWeight/deleteCustomStatus');
@@ -27,6 +28,7 @@ describe('Create, edit, remove custom status, test-cases #133, 134, 144.1, 133.1
   });
 
   it('create custom status', async () => {
+    await lambdaParameters('create custom status', driverChrome)
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -43,13 +45,16 @@ describe('Create, edit, remove custom status, test-cases #133, 134, 144.1, 133.1
       await createStatus.goToView(config.projectNameMain);
       await createStatus.creatCustomStatus(status);
       await createStatus.checkCreateStatus(status);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'custom_status_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('edit custom status', async () => {
+    await lambdaParameters('edit custom status', driverChrome)
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -66,14 +71,17 @@ describe('Create, edit, remove custom status, test-cases #133, 134, 144.1, 133.1
       await editStatus.goToView(config.projectNameMain);
       await editStatus.editCustomStatus(newstatus);
       await editStatus.checkEditStatus(newstatus);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'custom_status_edit');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('Add a custom status to the area and try to delete it', async () => {
     // time and site or lochalhost there tests are going
+    await lambdaParameters('Add a custom status to the area and try to delete it',driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -93,13 +101,16 @@ describe('Create, edit, remove custom status, test-cases #133, 134, 144.1, 133.1
       await deleteStatus.inabilityToDeleteStatus();
       await changeAreaStatus.findAreaInView('1');
       await changeAreaStatus.changeStatusOnCustomStatus(config.toDo);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'custom_status_try_delete');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('delete custom status', async () => {
+    await lambdaParameters('delete custom status',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -116,8 +127,10 @@ describe('Create, edit, remove custom status, test-cases #133, 134, 144.1, 133.1
       await deleteStatus.goToView(config.projectNameMain);
       await deleteStatus.deleteCustomStatus();
       await deleteStatus.checkDeleteStatus(status);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'custom_status_delete');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

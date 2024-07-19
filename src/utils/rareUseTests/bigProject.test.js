@@ -151,6 +151,7 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
       // await createProjectTest.chekCreationOfNewProject(newProjectName);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

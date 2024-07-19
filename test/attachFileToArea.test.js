@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const AddFileToArea = require('../src/classes/view/area/addFileToArea');
 const AddCommentToArea = require('../src/classes/view/area/addCommentToArea');
@@ -27,6 +28,7 @@ describe('Add attachment to the area and delete atachment in the View tab in the
   });
 
   it('add attachment to the area check it, and delete', async () => {
+    await lambdaParameters('add attachment to the area check it, and delete', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -53,8 +55,10 @@ describe('Add attachment to the area and delete atachment in the View tab in the
       // await addFile.checkAttachment(attachmentFileName,'delete');
       // for local Use
       await addFile.checkAttachment(attachmentFileNameDocker, 'delete');
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'comment_add_to_area');
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

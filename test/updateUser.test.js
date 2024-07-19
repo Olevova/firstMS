@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const UpdateUser = require('../src/classes/user/updateUser');
 const makeScreenshot = require('../src/utils/makeScreenShot');
@@ -20,6 +21,7 @@ describe('Update user name of the Employee and the company admin in the chrom br
   });
 
   it('update user name of the Employee', async () => {
+    await lambdaParameters('update user name of the Employee',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -35,13 +37,16 @@ describe('Update user name of the Employee and the company admin in the chrom br
     try {
       await updateUser.openUserForm();
       await updateUser.updateAndCheck(config.userSUName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('update user name of the company admin', async () => {
+    await lambdaParameters('update user name of the company admin',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -57,12 +62,14 @@ describe('Update user name of the Employee and the company admin in the chrom br
     try {
       await updateUser.openUserForm();
       await updateUser.updateAndCheck(config.userCAName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create');
       throw error;
     }
   });
   it('update user name of the company admin for return old name', async () => {
+    await lambdaParameters('update user name of the company admin for return old name',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -78,6 +85,7 @@ describe('Update user name of the Employee and the company admin in the chrom br
     try {
       await updateUser.openUserForm();
       await updateUser.updateAndCheck(config.userCAName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create');
       throw error;

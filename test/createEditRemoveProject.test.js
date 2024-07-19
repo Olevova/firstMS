@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateProject = require('../src/classes/project/createProject');
 const EditProject = require('../src/classes/project/editProject');
@@ -37,6 +38,7 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
   });
 
   it('create new project', async () => {
+    await lambdaParameters('create new project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -65,14 +67,17 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
         startDate,
         eneDate
       );
+      await lambdaParameters('passed',driverChrome);
       // await createProjectTest.chekCreationOfNewProject(newProjectName);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('edit project', async () => {
+    await lambdaParameters('edit project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -89,13 +94,16 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
       await editProject.goToProjectList();
       await editProject.findProject(newProjectName, config.projectsPage);
       await editProject.editProject(newEditName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_edit');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove project', async () => {
+    await lambdaParameters('remove project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -112,8 +120,10 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
       await removeProject.goToProjectList();
       await removeProject.findProject(newEditName, config.projectsPage);
       await removeProject.removefindProject(newEditName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

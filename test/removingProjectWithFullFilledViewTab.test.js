@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateProject = require('../src/classes/project/createProject');
 const RemoveProject = require('../src/classes/project/removeProject');
@@ -42,6 +43,7 @@ describe('Removing the project with full-filled View tab, test case #12.3', asyn
   });
 
   it('create a project and fill it with a unit, a room, a template', async () => {
+    await lambdaParameters('create a project and fill it with a unit, a room, a template',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -84,6 +86,7 @@ describe('Removing the project with full-filled View tab, test case #12.3', asyn
       await createArea.addAreaInRoom(newAreaName);
       await createArea.checkCreateArea(newRoomName, newAreaName);
       await roomTemplate.checkTemplateInList('_', newAreaName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_task_add');
       throw error;
@@ -91,6 +94,7 @@ describe('Removing the project with full-filled View tab, test case #12.3', asyn
   });
 
   it('remove project', async () => {
+    await lambdaParameters('remove fullfield project ',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -107,8 +111,10 @@ describe('Removing the project with full-filled View tab, test case #12.3', asyn
       await removeProject.goToProjectList();
       await removeProject.findProject(newProjectName, config.projectsPage);
       await removeProject.removefindProject(newProjectName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_with_task_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

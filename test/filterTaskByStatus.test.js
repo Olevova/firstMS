@@ -1,10 +1,11 @@
 const LoginPage = require('../src/classes/auth/login');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const FilterTaskByStatus = require('../src/classes/task/filterTaskByStatus');
 const { createWebdriverChrom } = require('../src/utils/webdriver');
 const { describe } = require('mocha');
 const { By, until } = require('selenium-webdriver');
 const makeScreenshot = require('../src/utils/makeScreenShot');
-const config = require('../src/utils/config')
+const config = require('../src/utils/config');
 
 describe('Filter tasks test, test-case #39', async () => {
   // here add parameters for creation
@@ -21,6 +22,7 @@ describe('Filter tasks test, test-case #39', async () => {
   });
 
   it('Filter tasks', async () => {
+    await lambdaParameters('Filter tasks',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -37,9 +39,11 @@ describe('Filter tasks test, test-case #39', async () => {
       await filter.goToTasksList(config.projectNameMain);
       await filter.filterTasksByStatus(config.done);
       await filter.chekFilter(config.done);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       // if something wrong make screen in utils/screenshot
       makeScreenshot(driverChrome, 'filter');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

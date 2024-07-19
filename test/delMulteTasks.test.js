@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateTask = require('../src/classes/task/createTask');
 const DeleteMulteTasks = require('../src/classes/task/deleteMulteTasks');
@@ -9,7 +10,7 @@ const config = require('../src/utils/config');
 describe('Delete Multiple Tasks in the chrom browser, test-case #41', async () => {
   // here add parameters for creation
   let driverChrome = null;
-  
+
   const newFirstTaskName = 'Fortest';
   const newTaskDescription = 'Test description';
   const newTaskDueData = '15.12.2024';
@@ -27,6 +28,7 @@ describe('Delete Multiple Tasks in the chrom browser, test-case #41', async () =
   });
 
   it('delete two task', async () => {
+    await lambdaParameters('delete two task',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -57,8 +59,10 @@ describe('Delete Multiple Tasks in the chrom browser, test-case #41', async () =
       await deleteMulteTasks.findAllTasksInProject();
       await deleteMulteTasks.checkTasksInList(newTasksArray);
       await deleteMulteTasks.removeCheckingTasks();
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'del_two_tasks');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

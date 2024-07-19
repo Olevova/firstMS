@@ -1,4 +1,5 @@
 const LogOut = require('../src/classes/auth/logOut');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const { createWebdriverChrom } = require('../src/utils/webdriver');
 const { describe } = require('mocha');
@@ -20,6 +21,7 @@ describe('Log In and Log Out in the chrome browser, test-cases #1, 2', async () 
   });
 
   it('Log In and Log Out the Coloradojob', async () => {
+    await lambdaParameters('Log In and Log Out the Coloradojob',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
     try {
@@ -32,9 +34,11 @@ describe('Log In and Log Out in the chrome browser, test-cases #1, 2', async () 
       await loginPageTest.login(config.urlhomePageForCheck);
       await logOutUserTest.findUserMenu();
       await logOutUserTest.userLogOut(config.urlLoginPage);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       // if something wrong make screen in utils/screenshot
       makeScreenshot(driverChrome, 'logout');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

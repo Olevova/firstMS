@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const SequenceFloorChange = require('../src/classes/view/floor/sequenceFloorChange');
 const SequenceRoomChange = require('../src/classes/view/room/sequenceRoomChange');
@@ -22,6 +23,7 @@ describe('Items sequence change in the chrom browser, test-cases #76,78', async 
   });
 
   it('units', async () => {
+    await lambdaParameters('units sequence change',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -38,13 +40,16 @@ describe('Items sequence change in the chrom browser, test-cases #76,78', async 
       await changeUnits.goToView(config.projectNameMain);
       await changeUnits.sequenceChange();
       await changeUnits.checkSequence();
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'units_change_sequence');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('floor', async () => {
+    await lambdaParameters('floor sequence change',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -61,6 +66,7 @@ describe('Items sequence change in the chrom browser, test-cases #76,78', async 
       await changeFloor.goToView(config.projectNameMain);
       await changeFloor.sequenceChange();
       await changeFloor.checkSequence();
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_change_sequence');
       throw error;

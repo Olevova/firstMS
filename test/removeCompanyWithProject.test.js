@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateCompany = require('../src/classes/company/createCompany');
 const RemoveCompany = require('../src/classes/company/removeCompany');
@@ -46,6 +47,7 @@ describe('Remove company with the project in the chrom browser, test-cases #11.1
   });
 
   it('create new company, and new project', async () => {
+    await lambdaParameters('create new company, and new project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -89,13 +91,16 @@ describe('Remove company with the project in the chrom browser, test-cases #11.1
         startDate,
         eneDate
       );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create_with_project');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove company with the project', async () => {
+    await lambdaParameters('remove company with the project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -119,9 +124,11 @@ describe('Remove company with the project in the chrom browser, test-cases #11.1
         '.list-name-wrapper',
         newProjectName
       );
+      await lambdaParameters('passed',driverChrome);
       //   await driverChrome.sleep(1000)
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

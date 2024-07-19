@@ -58,11 +58,13 @@ describe("create, edit and remove Unit in the chrom browser", async () => {
 
             await createUnit.goToView();
             await createUnit.createUnit(newUnitName);
-            await createUnit.checkCreateUnit(newUnitName);      
+            await createUnit.checkCreateUnit(newUnitName);
+            await lambdaParameters('passed',driverChrome);      
         
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'unit_create')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }
@@ -88,10 +90,11 @@ describe("create, edit and remove Unit in the chrom browser", async () => {
             await editUnit.goToView();
             await editUnit.editUnit(newUnitName,editUnitName);
             await editUnit.checkCreateUnit(editUnitName);       
-        
+            await lambdaParameters('passed',driverChrome);
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'unit_edit')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }
@@ -119,11 +122,12 @@ describe("create, edit and remove Unit in the chrom browser", async () => {
             await deleteUnit.goToView();
             await deleteUnit.deleteUnit(editUnitName);
             await deleteUnit.checkDeleteUnit(editUnitName);
-            
+            await lambdaParameters('passed',driverChrome);
         
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'unit_delete')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }

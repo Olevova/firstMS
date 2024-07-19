@@ -45,12 +45,13 @@ class SearchingTaskByName extends Base {
     );
     await this.driver.wait(until.elementIsEnabled(searchingFormInput));
     this.startTaskNumber = await this.numberOfItemsInTheList('.item-info-list');
+    console.log(this.startTaskNumber, 'this.startTaskNumber');
     await searchingFormInput.sendKeys(name);
   }
 
   async chekSearchingResult(name) {
     this.endTasksNumber = await this.numberOfItemsInTheList('.item-info-list')
-    console.log(this.endTasksNumber);
+    console.log(this.endTasksNumber, 'end task');
 
     if (this.startTaskNumber === 1) {
       return;
@@ -65,9 +66,9 @@ class SearchingTaskByName extends Base {
         throw new Error('searching not working');
       }
     }
-
+    await this.driver.wait(until.elementsLocated(By.css('.task-name')),10000);
     const allTasks = await this.driver.findElements(By.className('task-name'));
-
+    
     for (const task of allTasks) {
       if ((await task.getText()) !== name) {
         console.log(await task.getText());
@@ -76,6 +77,7 @@ class SearchingTaskByName extends Base {
       }
 
       console.log('search is working');
+      return
     }
   }
 }

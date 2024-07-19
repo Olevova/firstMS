@@ -50,10 +50,11 @@ describe('invite user by the project manager and check the counter of avaliable 
     try {
       await inviteUserTest.checkNumberOfUsersInUsersList('pm');
       await inviteUserTest.checkAvailibleNumberOfUsersInInviteForm();
-
+      await lambdaParameters('passed',driverChrome);
       //   await inviteUserTest.checkCreateNewUser(emailUserCA);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_avaliable_invitations');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

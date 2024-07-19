@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const ChangeAreaStatus = require('../src/classes/view/area/changeAreaStatusInView');
 const ChangeAreaStatusInProjectProgress = require('../src/classes/view/area/changeAreaStatusInProjectProgress');
@@ -22,6 +23,7 @@ describe('Change Area status in the View tab and in the Progress Project tab in 
   });
 
   it('change area status in progress project', async () => {
+    await lambdaParameters('change area status in progress project', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -48,13 +50,16 @@ describe('Change Area status in the View tab and in the Progress Project tab in 
       await changeAreaStatusInProgress.changeColorProgressStatusByBtn();
       await changeAreaStatusInProgress.changeStatusInProgressOnToDo();
       await changeAreaStatusInProgress.closeAreaPopUpAndCheckStatusInPogress();
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'change_area_status_project');
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it(' change area status in view', async () => {
+    await lambdaParameters('change area status in view', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -77,8 +82,10 @@ describe('Change Area status in the View tab and in the Progress Project tab in 
       await changeAreaStatus.changeColorProgressStatusByBtn();
       await changeAreaStatus.changeStatusInProgressOnToDo();
       await changeAreaStatus.closeAreaPopUpAndCheckStatusInView();
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'change_area_status_view');
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

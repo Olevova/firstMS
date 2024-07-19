@@ -53,9 +53,10 @@ describe('duplicate 20 units', async () => {
         await duplicateUnit.duplicateUnit();
       }
       
-      
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, '20unit_duplicate');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

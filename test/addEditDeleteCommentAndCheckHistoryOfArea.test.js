@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const AddCommentToArea = require('../src/classes/view/area/addCommentToArea');
 const ChangeAreaStatus = require('../src/classes/view/area/changeAreaStatusInView');
@@ -14,6 +15,7 @@ describe('Add, edit, delete comment to the Area and check history Status in the 
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrom();
+    
   });
 
   afterEach(async () => {
@@ -23,6 +25,11 @@ describe('Add, edit, delete comment to the Area and check history Status in the 
   });
 
   it('add, edit, delete comment to the area', async () => {
+    await lambdaParameters('add, edit, delete comment to the area', driverChrome)
+    // if (process.env.RUNNING_IN_TEAMCITY || process.env.RUNNING_IN_DOCKER){
+    //   let testname = 'add, edit, delete comment to the area'
+    //   await driverChrome.executeScript(`lambda-name=${testname}`);
+    // }
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -41,13 +48,17 @@ describe('Add, edit, delete comment to the Area and check history Status in the 
       await addComment.addComment('Hi its test comment');
       await addComment.editComment('Hi its test comment', 'edit comment');
       await addComment.deleteComment('edit comment');
+      await lambdaParameters('passed', driverChrome);
+
     } catch (error) {
       await makeScreenshot(driverChrome, 'comment_add_to_area');
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it(' change area status in view and check history', async () => {
+    await lambdaParameters('change area status in view and check history', driverChrome)
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -60,7 +71,7 @@ describe('Add, edit, delete comment to the Area and check history Status in the 
     await logginPageTest.fillPasswordInput(config.password);
     await logginPageTest.checkSaveForFuture();
     await logginPageTest.login(config.urlhomePageForCheck);
-
+   
     try {
       await changeAreaStatus.goToView(config.projectNameMain);
       await changeAreaStatus.findAreaInView();
@@ -68,8 +79,10 @@ describe('Add, edit, delete comment to the Area and check history Status in the 
       await checkhistory.checkHistory(config.toDo);
       await changeAreaStatus.changeStatusInProgressOnToDo();
       await checkhistory.checkHistory(config.inProgress);
+      await lambdaParameters('passed', driverChrome)
     } catch (error) {
       await makeScreenshot(driverChrome, 'history_area_status');
+      await lambdaParameters('failed', driverChrome)
       throw error;
     }
   });

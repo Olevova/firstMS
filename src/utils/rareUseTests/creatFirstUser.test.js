@@ -51,10 +51,12 @@ describe("invite and remove user test", async ()=>{
         try {
             await inviteUserTest.goToUsersList();
             await inviteUserTest.fillInviteForm(emailUser, "test3", "employee");
+            await lambdaParameters('passed',driverChrome);
             // await inviteUserTest.checkNewUser(emailUser, usersPage)
             // await driverChrome.sleep(2000)
         } catch (error) {
             await makeScreenshot(driverChrome, 'user_create')
+            await lambdaParameters('failed',driverChrome);
             throw error
         }
    

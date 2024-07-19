@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateProject = require('../src/classes/project/createProject');
 const RemoveProject = require('../src/classes/project/removeProject');
@@ -26,7 +27,7 @@ describe('Removing the project with existing task, test case #12.2', async () =>
   const taskTitle = 'taskRemoveProject';
   const taskDescription = 'check remove project with task';
   const newTaskDueData = '15.12.2024';
-  
+
   beforeEach(async () => {
     driverChrome = await createWebdriverChrom();
   });
@@ -38,6 +39,7 @@ describe('Removing the project with existing task, test case #12.2', async () =>
   });
 
   it('create the project and create task in it', async () => {
+    await lambdaParameters('create the project and create task in it',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -76,13 +78,16 @@ describe('Removing the project with existing task, test case #12.2', async () =>
         newTaskDueData
       );
       await createTask.checkTaskCreation(taskTitle);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_task_add');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove project', async () => {
+    await lambdaParameters('remove project',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -99,8 +104,10 @@ describe('Removing the project with existing task, test case #12.2', async () =>
       await removeProject.goToProjectList();
       await removeProject.findProject(newProjectName, config.projectsPage);
       await removeProject.removefindProject(newProjectName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_with_task_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

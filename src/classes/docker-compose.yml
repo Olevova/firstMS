@@ -40,3 +40,4 @@ services:
         condition: service_healthy
     environment:
       - RUNNING_IN_DOCKER=true
+      - RUNNING_WITHOUT_VIDEO=${RUNNING_WITHOUT_VIDEO}

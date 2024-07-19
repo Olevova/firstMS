@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const DuplicateFloor = require('../src/classes/view/floor/duplicateFloor');
 const DeleteFloor = require('../src/classes/view/floor/deleteFloor');
@@ -24,6 +25,7 @@ describe('Duplicate and delete Floor in the chrom browser, test-case #61', async
   });
 
   it('duplicate floor', async () => {
+    await lambdaParameters('duplicate floor',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -42,9 +44,11 @@ describe('Duplicate and delete Floor in the chrom browser, test-case #61', async
       duplicateFloorName = await duplicateFloorInProject.duplicateFloor();
       await deleteFloor.deleteFloor(duplicateFloorName);
       await deleteFloor.checkDeleteFloor(duplicateFloorName);
+      await lambdaParameters('passed',driverChrome);
       //   await duplicateUnit.deleteDuplicateUnit();
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_duplicate');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

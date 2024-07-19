@@ -64,10 +64,11 @@ describe("create, edit and remove task by the employee in the chrom browser", as
 
             await employeeUpdateTask.goToCreateTasksForm();
             await employeeUpdateTask.editTask(newTaskName, newTaskNameForUpdate);
-
+            await lambdaParameters('passed',driverChrome);
         } catch (error) {
 
             await makeScreenshot(driverChrome, 'task_update')
+            await lambdaParameters('failed',driverChrome);
             throw error
 
         }

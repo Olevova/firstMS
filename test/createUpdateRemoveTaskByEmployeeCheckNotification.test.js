@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateTaskByEmployee = require('../src/classes/task/employee/employeeCreateTask');
 const EmployeeUpdateTask = require('../src/classes/task/employee/employeeUpdateTask');
@@ -29,6 +30,7 @@ describe('Create, edit and remove task by the employee in the chrom browser,test
   });
 
   it('create new task by employee', async () => {
+    await lambdaParameters('create new task by employee',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -50,13 +52,16 @@ describe('Create, edit and remove task by the employee in the chrom browser,test
         config.userCAName
       );
       taskIdForNotification = await createTaskByEmployee.getTaskId(newTaskName);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('Check receive notification about assigning in the Task', async () => {
+    await lambdaParameters('Check receive notification about assigning in the Task',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -77,13 +82,16 @@ describe('Create, edit and remove task by the employee in the chrom browser,test
       await checkUserNotificationsList.checkLastNotification(
         taskIdForNotification
       );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_notification');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('update task by employee', async () => {
+    await lambdaParameters('update task by employee',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -99,13 +107,16 @@ describe('Create, edit and remove task by the employee in the chrom browser,test
     try {
       await employeeUpdateTask.goToCreateTasksForm();
       await employeeUpdateTask.editTask(newTaskName, newTaskNameForUpdate);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_update');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove task', async () => {
+    await lambdaParameters('remove task',driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -120,8 +131,10 @@ describe('Create, edit and remove task by the employee in the chrom browser,test
     try {
       await removeTaskByEmployee.goToTasksList();
       await removeTaskByEmployee.taskRemove(newTaskNameForUpdate);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });

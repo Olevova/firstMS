@@ -1,4 +1,5 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
+const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
 const CreateProject = require('../src/classes/project/createProject');
 const RemoveProject = require('../src/classes/project/removeProject');
@@ -14,9 +15,10 @@ const { describe } = require('mocha');
 const config = require('../src/utils/config');
 
 describe('Remove the Project with Users, Tasks, full-filled View tab, test case #12.4', async () => {
+  
   // here add parameters for creation
   let driverChrome = null;
-  
+
   const newProjectName = 'full-field project';
   const newProjectkey = 'FFPD';
   const newProjectNumber = '321';
@@ -38,7 +40,6 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
   const taskDescription = 'check remove full project with task and user';
   const newTaskDueData = '15.12.2024';
 
-
   beforeEach(async () => {
     driverChrome = await createWebdriverChrom();
   });
@@ -50,6 +51,7 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
   });
 
   it('create a project and fill it with a unit, a room, a template, add User and create task', async () => {
+    await lambdaParameters('create a project and fill it with a unit, a room, a template, add User and create task',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -96,7 +98,10 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
       await roomTemplate.checkTemplateInList('_', newAreaName);
       await createProjectTest.goToSelektTab('Users');
       await inviteUserTest.openInviteUserFormInProject();
-      await inviteUserTest.fillInviteFormByCA(config.emailUseForTest, config.projManager);
+      await inviteUserTest.fillInviteFormByCA(
+        config.emailUseForTest,
+        config.projManager
+      );
       await inviteUserTest.checkCreateNewUser(config.emailUseForTest);
       await createProjectTest.goToSelektTab('Tasks');
       await createTask.openTaskForm();
@@ -106,13 +111,16 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
         newTaskDueData
       );
       await createTask.checkTaskCreation(taskTitle);
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_task_add');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
 
   it('remove project', async () => {
+    await lambdaParameters('remove project with a unit, a room, a template, add User and create task',driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -131,11 +139,19 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
       await removeProject.findProject(newProjectName, config.projectsPage);
       await removeProject.removefindProject(newProjectName);
       await removeUserTest.goToUserList('incompany');
-      await removeUserTest.findUser(config.emailUseForTest, config.mainCompanyUsersPage);
+      await removeUserTest.findUser(
+        config.emailUseForTest,
+        config.mainCompanyUsersPage
+      );
       await removeUserTest.removefindUser();
-      await removeUserTest.checkIfUserRemove(config.emailUseForTest, config.mainCompanyUsersPage);
+      await removeUserTest.checkIfUserRemove(
+        config.emailUseForTest,
+        config.mainCompanyUsersPage
+      );
+      await lambdaParameters('passed',driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_with_task_remove');
+      await lambdaParameters('failed',driverChrome);
       throw error;
     }
   });
