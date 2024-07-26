@@ -25,7 +25,7 @@ describe('Duplicate and delete Unit between the floors in the chrom browser, tes
   });
 
   it('duplicate unit', async () => {
-    await lambdaParameters('duplicate unit',driverChrome);
+    await lambdaParameters('duplicate unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -42,10 +42,10 @@ describe('Duplicate and delete Unit between the floors in the chrom browser, tes
       await duplicateUnit.goToView(config.projectNameMain);
       await duplicateUnit.duplicateUnitBetweenFloor();
       await duplicateUnit.deleteDuplicateUnit();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_duplicate');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

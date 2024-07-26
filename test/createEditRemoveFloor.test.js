@@ -26,7 +26,7 @@ describe('Create. edit and remove Floor in the chrom browser, test-cases #58, 59
   });
 
   it('create new floor', async () => {
-    await lambdaParameters('create new floor',driverChrome);
+    await lambdaParameters('create new floor', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -43,16 +43,16 @@ describe('Create. edit and remove Floor in the chrom browser, test-cases #58, 59
       await createFloor.goToView();
       await createFloor.createFloor(newFloorName);
       await createFloor.checkFloorCreation(newFloorName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_create');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('edit new floor', async () => {
-    await lambdaParameters('edit new floor',driverChrome);
+    await lambdaParameters('edit new floor', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -69,16 +69,16 @@ describe('Create. edit and remove Floor in the chrom browser, test-cases #58, 59
       await editFloor.goToView();
       await editFloor.editFloor(newFloorName, editFloorName);
       await editFloor.checkFloorCreation(editFloorName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_edit');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('delete new floor', async () => {
-    await lambdaParameters('delete new floor',driverChrome);
+    await lambdaParameters('delete new floor', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -95,10 +95,10 @@ describe('Create. edit and remove Floor in the chrom browser, test-cases #58, 59
       await deleteFloor.goToView();
       await deleteFloor.deleteFloor(editFloorName);
       await deleteFloor.checkDeleteFloor(editFloorName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_delete');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

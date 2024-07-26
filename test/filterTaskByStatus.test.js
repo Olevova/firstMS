@@ -22,7 +22,7 @@ describe('Filter tasks test, test-case #39', async () => {
   });
 
   it('Filter tasks', async () => {
-    await lambdaParameters('Filter tasks',driverChrome);
+    await lambdaParameters('Filter tasks', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -39,11 +39,11 @@ describe('Filter tasks test, test-case #39', async () => {
       await filter.goToTasksList(config.projectNameMain);
       await filter.filterTasksByStatus(config.done);
       await filter.chekFilter(config.done);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       // if something wrong make screen in utils/screenshot
       makeScreenshot(driverChrome, 'filter');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

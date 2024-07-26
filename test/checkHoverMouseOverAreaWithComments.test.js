@@ -1,13 +1,14 @@
 const { createWebdriverChrom } = require('../src/utils/webdriver');
 const lambdaParameters = require('../src/utils/lambdaAddParameters');
 const LoginPage = require('../src/classes/auth/login');
-const FilterFloor = require('../src/classes/view/floor/filterFloorInRpojectProgressTab');
+const ChangeAreaStatus = require('../src/classes/view/area/changeAreaStatusInView');
+const ChangeAreaStatusInProjectProgress = require('../src/classes/view/area/changeAreaStatusInProjectProgress');
 const makeScreenshot = require('../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../src/utils/config');
 // const { nanoid } = require('nanoid');
 
-describe('Filter floors and reset floors filter in the Progress Project tab in the chrom browser, test-cases #141, 141.2', async () => {
+describe('Check hover mouse over area with black triangle', async () => {
   // here add parameters for creation
   let driverChrome = null;
 
@@ -21,13 +22,18 @@ describe('Filter floors and reset floors filter in the Progress Project tab in t
     }
   });
 
-  it('filters floor and reset filter', async () => {
-    await lambdaParameters('filters floor and reset filter', driverChrome);
+  it('Check hover mouse over area with black triangle', async () => {
+    await lambdaParameters(
+      'Check hover mouse over area with black triangle',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const filterFloor = new FilterFloor(driverChrome);
+    const changeAreaStatusInProgress = new ChangeAreaStatusInProjectProgress(
+      driverChrome
+    );
 
     await logginPageTest.openLoginForm();
     await logginPageTest.fillEmailInput(config.email);
@@ -36,15 +42,16 @@ describe('Filter floors and reset floors filter in the Progress Project tab in t
     await logginPageTest.login(config.urlhomePageForCheck);
 
     try {
-      await filterFloor.goToView(config.projectNameMain);
-      await filterFloor.goToSelektTab(config.projectProgress);
-      await filterFloor.checkFloorInProjectProgressTab();
-      await filterFloor.filterByFirstRoom();
-      await filterFloor.checkOfFilterOperationByFloors();
-      await filterFloor.resetFilterAndCheckResult();
+      await changeAreaStatusInProgress.goToView(config.projectNameEdit);
+      await changeAreaStatusInProgress.goToSelektTab(config.projectProgress);
+      await changeAreaStatusInProgress.hoverAreaAndCheckCommentsAndAttachments(
+        2,
+        1
+      );
+
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
-      await makeScreenshot(driverChrome, 'floor_filtering');
+      await makeScreenshot(driverChrome, 'check_hover_mouse_over_area');
       await lambdaParameters('failed', driverChrome);
       throw error;
     }

@@ -31,7 +31,10 @@ describe('Checking the addition of a pagination, a pagination counter, after add
   });
 
   it('checking the addition of a pagination, a pagination counter, after adding and removing a task on the user', async () => {
-    await lambdaParameters('checking the addition of a pagination, a pagination counter, after adding and removing a task on the user', driverChrome)
+    await lambdaParameters(
+      'checking the addition of a pagination, a pagination counter, after adding and removing a task on the user',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -91,10 +94,10 @@ describe('Checking the addition of a pagination, a pagination counter, after add
         throw new Error('Test failed, check screenshot');
       }
       await removeTask.taskRemove(taskTitle);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_pagination');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

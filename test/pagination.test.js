@@ -23,7 +23,10 @@ describe('Pagination tests, test-cases #45, 47,48', async () => {
   });
 
   it('Pagination by the Number of Entities per Page', async () => {
-    await lambdaParameters('Pagination by the Number of Entities per Page',driverChrome);
+    await lambdaParameters(
+      'Pagination by the Number of Entities per Page',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -39,16 +42,16 @@ describe('Pagination tests, test-cases #45, 47,48', async () => {
     try {
       await paginationByNumber.goToProjectsPage();
       await paginationByNumber.executionOfPagination('50');
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'pagination_by_number');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('Pagination by button ', async () => {
-    await lambdaParameters('Pagination by button',driverChrome);
+    await lambdaParameters('Pagination by button', driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -63,16 +66,16 @@ describe('Pagination tests, test-cases #45, 47,48', async () => {
     try {
       await paginationByBtn.goToProjectsPage();
       await paginationByBtn.executionOfPagination();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'pagination_by_btn');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('Pagination by arrow ', async () => {
-    await lambdaParameters('Pagination by arrow',driverChrome);
+    await lambdaParameters('Pagination by arrow', driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -87,10 +90,10 @@ describe('Pagination tests, test-cases #45, 47,48', async () => {
     try {
       await paginationByArrow.goToProjectsPage();
       await paginationByArrow.executionOfPagination();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'pagination_by_arrow');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

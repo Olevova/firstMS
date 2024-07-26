@@ -27,7 +27,10 @@ describe('Check changes of Project Progress(%) when changing status of Area from
   });
   it('Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes', async () => {
     // time and site or lochalhost there tests are going
-    await lambdaParameters('Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes', driverChrome)
+    await lambdaParameters(
+      'Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes',
+      driverChrome
+    );
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -66,7 +69,10 @@ describe('Check changes of Project Progress(%) when changing status of Area from
   });
 
   it('change area status in view tab and check Project Progress(%)', async () => {
-    await lambdaParameters('change area status in view tab and check Project Progress(%)',driverChrome);
+    await lambdaParameters(
+      'change area status in view tab and check Project Progress(%)',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 

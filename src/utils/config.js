@@ -25,6 +25,7 @@ module.exports = {
     companyName: 'AT2024',
     //main test project
     projectNameMain: 'ColorjobAT',
+    projectNameEdit: 'unitEdit',
     //test project for status tests
     projectStatus: 'ProjectDoneStatus',
     // projects tabs

@@ -15,7 +15,6 @@ const { describe } = require('mocha');
 const config = require('../src/utils/config');
 
 describe('Remove the Project with Users, Tasks, full-filled View tab, test case #12.4', async () => {
-  
   // here add parameters for creation
   let driverChrome = null;
 
@@ -51,7 +50,10 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
   });
 
   it('create a project and fill it with a unit, a room, a template, add User and create task', async () => {
-    await lambdaParameters('create a project and fill it with a unit, a room, a template, add User and create task',driverChrome);
+    await lambdaParameters(
+      'create a project and fill it with a unit, a room, a template, add User and create task',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -111,16 +113,19 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
         newTaskDueData
       );
       await createTask.checkTaskCreation(taskTitle);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_task_add');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('remove project', async () => {
-    await lambdaParameters('remove project with a unit, a room, a template, add User and create task',driverChrome);
+    await lambdaParameters(
+      'remove project with a unit, a room, a template, add User and create task',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -148,10 +153,10 @@ describe('Remove the Project with Users, Tasks, full-filled View tab, test case 
         config.emailUseForTest,
         config.mainCompanyUsersPage
       );
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_with_task_remove');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

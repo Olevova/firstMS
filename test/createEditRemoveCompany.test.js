@@ -37,7 +37,7 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
   });
 
   it('create new company', async () => {
-    await lambdaParameters('create new company',driverChrome);
+    await lambdaParameters('create new company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -65,16 +65,16 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
         newCompanyType
       );
       await createCompany.checkCreationOfNewCompany();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('edit new company', async () => {
-    await lambdaParameters('edit new company',driverChrome);
+    await lambdaParameters('edit new company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -91,17 +91,17 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
       await editCompany.goToCompanyList();
       await editCompany.findCompany(newConpanyName, config.companiesPage);
       await editCompany.editCompany(editCompanyName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       // await editCompany.checkCompanyPlane('Enterprise',1000)
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_edit');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('remove company', async () => {
-    await lambdaParameters('remove company',driverChrome);
+    await lambdaParameters('remove company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -118,9 +118,9 @@ describe('Create, edit and remove company in the chrom browser, test-cases #4, 2
       await removeCompany.goToCompanyList();
       await removeCompany.findCompany(editCompanyName, config.companiesPage);
       await removeCompany.removefindCompany(editCompanyName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       await makeScreenshot(driverChrome, 'company_remove');
       throw error;
     }

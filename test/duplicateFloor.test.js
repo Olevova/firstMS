@@ -25,7 +25,7 @@ describe('Duplicate and delete Floor in the chrom browser, test-case #61', async
   });
 
   it('duplicate floor', async () => {
-    await lambdaParameters('duplicate floor',driverChrome);
+    await lambdaParameters('duplicate floor', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -44,11 +44,11 @@ describe('Duplicate and delete Floor in the chrom browser, test-case #61', async
       duplicateFloorName = await duplicateFloorInProject.duplicateFloor();
       await deleteFloor.deleteFloor(duplicateFloorName);
       await deleteFloor.checkDeleteFloor(duplicateFloorName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       //   await duplicateUnit.deleteDuplicateUnit();
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_duplicate');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

@@ -23,7 +23,10 @@ describe('Change Area status in the View tab and in the Progress Project tab in 
   });
 
   it('change area status in progress project', async () => {
-    await lambdaParameters('change area status in progress project', driverChrome);
+    await lambdaParameters(
+      'change area status in progress project',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 

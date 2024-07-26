@@ -24,7 +24,7 @@ describe('Invite and remove user by the Company Admin on the User tab and check 
   });
 
   it('invite user by the company admin', async () => {
-    await lambdaParameters('invite user by the company admin',driverChrome);
+    await lambdaParameters('invite user by the company admin', driverChrome);
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -42,16 +42,19 @@ describe('Invite and remove user by the Company Admin on the User tab and check 
         'Company Admin'
       );
       await inviteUserTest.checkCreateNewUser(config.emailUseForTest);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'user_create_by_CA');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('Check the counter of avaliable invitations by the PM test-cases in the PM 189', async () => {
-    await lambdaParameters('Check the counter of avaliable invitations by the PM test-cases in the PM 189',driverChrome);
+    await lambdaParameters(
+      'Check the counter of avaliable invitations by the PM test-cases in the PM 189',
+      driverChrome
+    );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -65,17 +68,17 @@ describe('Invite and remove user by the Company Admin on the User tab and check 
     try {
       await inviteUserTest.checkNumberOfUsersInUsersList('pm');
       await inviteUserTest.checkAvailibleNumberOfUsersInInviteForm();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       //   await inviteUserTest.checkCreateNewUser(config.emailUseForTest);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_avaliable_invitations');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('remove user by the company admin', async () => {
-    await lambdaParameters('remove user by the company admin',driverChrome);
+    await lambdaParameters('remove user by the company admin', driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const removeUserTest = new RemoveUser(driverChrome);
     await logginPageTest.openLoginForm();
@@ -95,10 +98,10 @@ describe('Invite and remove user by the Company Admin on the User tab and check 
         config.emailUseForTest,
         config.mainCompanyUsersPage
       );
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'user_remove_by_CA');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

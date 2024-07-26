@@ -17,7 +17,21 @@ class DeleteCustomStatus extends Base {
         const deleteBtn = await newStatusList.findElement(By.id("deleteStatusField"));
         await this.driver.wait(until.elementIsEnabled(deleteBtn));
         await deleteBtn.click();
+        const changeStatusMenu = await this.driver.wait(until.elementLocated(By.css('app-deleting-status-modal')),2000).catch(()=>null);
         await this.driver.sleep(1000);
+        if(changeStatusMenu){
+            await this.driver.wait(until.elementLocated(By.css('.area__status-btn')),10000);
+            const dropdownBtn = await this.driver.findElement(By.css('.area__status-btn'));
+            await this.driver.wait(until.elementIsEnabled(dropdownBtn));
+            await dropdownBtn.click();
+            await this.waitListDate('.area__status-menu__item p', 1);
+            const dropdownStatus = await this.driver.findElements(By.css('.area__status-menu__item p'));
+            await this.findDateInDropDown(dropdownStatus, 'To Do');
+            const delStatusBtn = await this.driver.findElement(By.id('btnDeleteProject'));
+            await delStatusBtn.click();
+            await this.notificationCheck();
+
+        }
         const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
         await submitBtn.click();
     }

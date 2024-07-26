@@ -28,7 +28,7 @@ describe('Delete Multiple Tasks in the chrom browser, test-case #41', async () =
   });
 
   it('delete two task', async () => {
-    await lambdaParameters('delete two task',driverChrome);
+    await lambdaParameters('delete two task', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -59,10 +59,10 @@ describe('Delete Multiple Tasks in the chrom browser, test-case #41', async () =
       await deleteMulteTasks.findAllTasksInProject();
       await deleteMulteTasks.checkTasksInList(newTasksArray);
       await deleteMulteTasks.removeCheckingTasks();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'del_two_tasks');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

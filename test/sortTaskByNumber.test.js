@@ -22,7 +22,7 @@ describe('Sort tasks test in the chrome browser , test-cases #38', async () => {
   });
 
   it('Sort tasks by number ', async () => {
-    await lambdaParameters('Sort tasks by number',driverChrome);
+    await lambdaParameters('Sort tasks by number', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -38,7 +38,7 @@ describe('Sort tasks test in the chrome browser , test-cases #38', async () => {
     try {
       await sortTasksByNumber.goToTasksLists(config.projectNameMain);
       await sortTasksByNumber.sortTasks();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       // if something wrong make screen in utils/screenshot
       makeScreenshot(driverChrome, 'sort_task_by_number');

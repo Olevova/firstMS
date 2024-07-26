@@ -1,13 +1,14 @@
 const {
   isRunningInDocker,
   isRunningInTeamCity,
-  inDocker
+  inDocker,
+  withoutLambda
 
 } = require('../utils/webdriver');
 
 async function lambdaParameters(params, driver) {
-    console.log(!inDocker, '!inDocker');
-  if ((isRunningInDocker || isRunningInTeamCity) && !inDocker) {
+    // console.log(!inDocker, '!inDocker');
+  if ((isRunningInDocker || isRunningInTeamCity) && !inDocker && !withoutLambda) {
     if (params === 'passed') {
       await driver.executeScript('lambda-status=passed');
     } else if (params === 'failed') {

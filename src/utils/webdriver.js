@@ -17,7 +17,6 @@ async function createWebdriverChrom() {
   try {
     if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
       console.log('running in docker or on teamcity');
-      console.log(process.env, 'env');
       ltCapabilite.capability.browserName = browsers[0].browser;
       ltCapabilite.capability.browserVersion = browsers[0].bVersion;
       ltCapabilite.capability['LT:Options'].platformName = browsers[0].os;
@@ -78,4 +77,5 @@ module.exports = {
   isRunningInDocker,
   isRunningInTeamCity,
   inDocker,
+  withoutLambda
 };

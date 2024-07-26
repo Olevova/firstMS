@@ -30,7 +30,7 @@ describe('Forgot password chrome, test-case # 3 in the SU', async () => {
   });
 
   it('forgot passsord Coloradojob chrome', async () => {
-    await lambdaParameters('forgot passsord Coloradojob chrome', driverChrome)
+    await lambdaParameters('forgot passsord Coloradojob chrome', driverChrome);
     const forgotPasswordTest = new ForgotPassword(driverChrome);
 
     await forgotPasswordTest.openFogotPasswordForm(config.urlLoginPage);
@@ -77,10 +77,10 @@ describe('Forgot password chrome, test-case # 3 in the SU', async () => {
 
     if (currentUrl !== config.forgotPasswordUrl) {
       makeScreenshot(driverChrome, 'forgotpassword');
-      await lambdaParameters('failed', driverChrome)
+      await lambdaParameters('failed', driverChrome);
     }
 
     currentUrl.should.to.equal(config.forgotPasswordUrl);
-    await lambdaParameters('passed', driverChrome)
+    await lambdaParameters('passed', driverChrome);
   });
 });

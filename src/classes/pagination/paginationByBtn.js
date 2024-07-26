@@ -51,18 +51,21 @@ class PaginationByButton extends Base {
       .perform();
     await paginationDropDown[1].click();
 
-    await PaginationByButton.waitNewListDate(
-      this.driver,
-      firstElName,
-      '.company-name'
-    );
-    const endElNumber = await this.driver.findElements(
-      By.className('company-name')
-    );
+    // await PaginationByButton.waitNewListDate(
+    //   this.driver,
+    //   firstElName,
+    //   '.company-name'
+    // );
+    await this.waitListDate('.company-name', 2);
+    // const endElNumber = await this.driver.findElements(
+    //   By.className('company-name')
+    // );
+    
+    const companiesList = await this.driver.findElements(By.className('list-name-wrapper'))
     const activeBtn = await paginationDropDown[1].getAttribute('current');
-
+    console.log(await companiesList.length, 'len', await companiesList[0].getText());
     if (
-      (await endElNumber[0].getText()) !== firstElName &&
+      (await companiesList[0].getText()) !== firstElName &&
       activeBtn === 'true'
     ) {
       console.log('pagination by button work');

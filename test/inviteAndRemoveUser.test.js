@@ -23,7 +23,7 @@ describe('Invite and remove user  test-cases #7, 13', async () => {
   });
 
   it('invite user by the super admin', async () => {
-    await lambdaParameters('invite user by the super admin, ',driverChrome);
+    await lambdaParameters('invite user by the super admin, ', driverChrome);
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
 
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
@@ -48,17 +48,17 @@ describe('Invite and remove user  test-cases #7, 13', async () => {
         config.emailUseForTest,
         config.usersPage
       );
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       await driverChrome.sleep(1000);
     } catch (error) {
       await makeScreenshot(driverChrome, 'user_create_by_SA');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('remove user by the super admin', async () => {
-    await lambdaParameters('remove user by the super admin',driverChrome);
+    await lambdaParameters('remove user by the super admin', driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
@@ -78,10 +78,10 @@ describe('Invite and remove user  test-cases #7, 13', async () => {
         config.emailUseForTest,
         config.usersPage
       );
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'user_remove_by_SA');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

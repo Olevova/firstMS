@@ -37,7 +37,10 @@ describe('Removing the project with existing User,test case #12.1 ', async () =>
   });
 
   it('create the project and invite user to the project', async () => {
-    await lambdaParameters('create the project and invite user to the project',driverChrome);
+    await lambdaParameters(
+      'create the project and invite user to the project',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -75,16 +78,16 @@ describe('Removing the project with existing User,test case #12.1 ', async () =>
         config.projManager
       );
       await inviteUserTest.checkCreateNewUser(config.emailForTest);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_user_add');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('remove project', async () => {
-    await lambdaParameters('remove project with user',driverChrome);
+    await lambdaParameters('remove project with user', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -112,10 +115,10 @@ describe('Removing the project with existing User,test case #12.1 ', async () =>
         config.emailForTest,
         config.mainCompanyUsersPage
       );
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_with_user_remove');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

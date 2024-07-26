@@ -23,7 +23,10 @@ describe('Update Company User Plane and check it in the chrom browser, test-case
   });
 
   it('edit company plane from Custom to the Team', async () => {
-    await lambdaParameters('edit company plane from Custom to the Team',driverChrome);
+    await lambdaParameters(
+      'edit company plane from Custom to the Team',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -41,7 +44,7 @@ describe('Update Company User Plane and check it in the chrom browser, test-case
       await editCompany.findCompany(conpanyName, config.companiesPage);
       await editCompany.editCompanyPlan('Team');
       await editCompany.checkCompanyPlane('Team', 20);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_plan_check');
       throw error;
@@ -49,7 +52,10 @@ describe('Update Company User Plane and check it in the chrom browser, test-case
   });
 
   it('edit company plane from Team to the Custom', async () => {
-    await lambdaParameters('edit company plane from Custom to the Team',driverChrome);
+    await lambdaParameters(
+      'edit company plane from Custom to the Team',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -67,10 +73,10 @@ describe('Update Company User Plane and check it in the chrom browser, test-case
       await editCompany.findCompany(conpanyName, config.companiesPage);
       await editCompany.editCompanyPlan('Custom', 1000);
       await editCompany.checkCompanyPlane('Custom', 1000);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_plan_check');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

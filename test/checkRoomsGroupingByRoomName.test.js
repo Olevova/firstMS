@@ -8,7 +8,6 @@ const config = require('../src/utils/config');
 // const { nanoid } = require('nanoid');
 
 describe('Check rooms grouping by the room name, test case #149', async () => {
-  
   // here add parameters for creation
   let driverChrome = null;
   const project = 'one-floor';
@@ -24,7 +23,10 @@ describe('Check rooms grouping by the room name, test case #149', async () => {
   });
 
   it('Check rooms grouping by the room name', async () => {
-    await lambdaParameters('Check rooms grouping by the room name', driverChrome);
+    await lambdaParameters(
+      'Check rooms grouping by the room name',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 

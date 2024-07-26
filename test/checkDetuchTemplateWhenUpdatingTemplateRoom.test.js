@@ -29,7 +29,7 @@ describe('Detach Template when Updating a template room, test-cases: 67/4', asyn
   });
 
   it('create template room via template', async () => {
-    await lambdaParameters('create template room via template',driverChrome);
+    await lambdaParameters('create template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -50,16 +50,16 @@ describe('Detach Template when Updating a template room, test-cases: 67/4', asyn
         roomBasedOnTemplate
       );
       await createRoom.checkCreateNewRoom(roomBasedOnTemplate);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'create_room_via_template');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('detuch template room, and save as unique room', async () => {
-    await lambdaParameters('create template room via template',driverChrome);
+    await lambdaParameters('create template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -92,17 +92,17 @@ describe('Detach Template when Updating a template room, test-cases: 67/4', asyn
       ) {
         throw new Error('detuch not work');
       }
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       // await createRoom.checkCreateNewRoom(roomBasedOnTemplate);
     } catch (error) {
       await makeScreenshot(driverChrome, 'detuch_template_room');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw new error();
     }
   });
 
   it('delete unique room', async () => {
-    await lambdaParameters('delete unique room',driverChrome);
+    await lambdaParameters('delete unique room', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -119,13 +119,13 @@ describe('Detach Template when Updating a template room, test-cases: 67/4', asyn
       await deleteRoom.goToView(config.projectStatus);
       await deleteRoom.deleteRoom(roomBasedOnTemplate);
       await deleteRoom.checkDeleteFloor(roomBasedOnTemplate);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
 
       await driverChrome.sleep(1000);
       // await createRoom.checkCreateNewRoom(roomBasedOnTemplate);
     } catch (error) {
       await makeScreenshot(driverChrome, 'delete_unique_room');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

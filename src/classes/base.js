@@ -4,6 +4,7 @@ const path = require('path');
 class Base {
   // The method used for finding values in dropdown menus in forms.
   async findDateInDropDown(array, text) {
+    // console.log(await array.length, 'len');
     for (const option of array) {
       const date = (await option.getText()).trim().toLowerCase();
       // console.log(date, 'drop', text);
@@ -378,7 +379,7 @@ async clickAreaStatusDropdown(){
     await this.driver.wait(until.elementIsEnabled(statusBtn), 10000);
     await statusBtn.click();
     await this.driver.wait(
-      until.elementLocated(By.css('.customize-menu[open="true"]')),
+      until.elementLocated(By.css('.customize-menu')),
       10000
     );
     const cunstomizeStatus = await this.driver.findElements(

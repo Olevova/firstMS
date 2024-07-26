@@ -11,6 +11,28 @@ class ChangeAreaStatusInProjectProgress extends ChangeAreaStatus{
         this.selectStatusName = '';
     }
 
+    async hoverAreaAndCheckCommentsAndAttachments(comments=0, attach=0){
+        await this.driver.wait(until.elementLocated(By.css('html')), 10000);
+        await this.driver.executeScript('return document.readyState');
+        await this.driver.wait(until.elementsLocated(By.css(`.area-progress-list-areas__item[status-name="To Do"]`)), 10000);
+        const areaElements = await this.driver.findElements(By.css(`.area-progress-list-areas__item`));
+        const firstArea = await areaElements[0]
+        await this.driver.actions().move({origin: firstArea}).perform()
+        await this.driver.wait(until.elementLocated(By.css('.area-modal-mini')), 10000);
+        const informAreaWindow = await firstArea.findElement(By.css('.area-modal-mini'));
+        const commentsEl = await informAreaWindow.findElement(By.css('.comments-wrapper span'));
+        const commentsNumber = await commentsEl.getText();
+        const attachEl = await informAreaWindow.findElement(By.css('.files-wrapper span'));
+        const attacheNumber = await attachEl.getText();
+        // console.log(commentsNumber, 'comments',comments , attacheNumber, 'attach', attach);
+        if(comments === +commentsNumber && +attacheNumber === attach){
+            console.log(`Test passed, area has ${commentsNumber} comment(s) and ${attacheNumber} attachment(s)`);
+            return;
+        }
+        throw new Error('Test failed, check screenshot')
+        // await this.driver.sleep(10000);
+    }
+
     async findeAreaInTheTable(status = '-3') {
         await this.driver.wait(until.elementLocated(By.css('html')), 10000);
         await this.driver.executeScript('return document.readyState');

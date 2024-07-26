@@ -23,7 +23,10 @@ describe('Check the area weight changing, test case #160 ', async () => {
   });
 
   it(' change area status and weight in view', async () => {
-    await lambdaParameters(' change area status and weight in view', driverChrome)
+    await lambdaParameters(
+      ' change area status and weight in view',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -52,10 +55,10 @@ describe('Check the area weight changing, test case #160 ', async () => {
       await changeWeight.findeWeightAndChangeIt(config.medium);
       await changeAreaStatus.changeStatusInProgressOnToDo();
       await changeAreaStatus.closeAreaAndCheckProgress('decrease');
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_weight_change');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

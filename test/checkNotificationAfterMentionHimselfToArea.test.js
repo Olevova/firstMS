@@ -23,7 +23,10 @@ describe('Receive notification about mentioning in the comment within the Area b
   });
 
   it('mentioning himself and check notification', async () => {
-    await lambdaParameters('mentioning himself and check notification', driverChrome);
+    await lambdaParameters(
+      'mentioning himself and check notification',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -47,16 +50,19 @@ describe('Receive notification about mentioning in the comment within the Area b
       areaName = await addUserToComment.goToUserList();
       await checkUserNotificationsList.goToNotificationList();
       await checkUserNotificationsList.checkLastNotification(areaName);
-      await lambdaParameters('passed', driverChrome)
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'mention_user_to_area');
-      await lambdaParameters('failed', driverChrome)
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('Delete yourself from the comments of the area', async () => {
-    await lambdaParameters('Delete yourself from the comments of the area', driverChrome)
+    await lambdaParameters(
+      'Delete yourself from the comments of the area',
+      driverChrome
+    );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -76,10 +82,10 @@ describe('Receive notification about mentioning in the comment within the Area b
       //   await addComment.addComment('@Yuliia');
 
       await addUserToComment.deleteUserFromComment('@Vova CA test1');
-      await lambdaParameters('passed',driverChrome)
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'mention_user_to_area');
-      await lambdaParameters('failed', driverChrome)
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

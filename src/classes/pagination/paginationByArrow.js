@@ -48,14 +48,13 @@ class PaginationByArrow extends Base {
     const paginationBtn = await this.driver.findElements(
       By.css('.pagination-list__item:not(.hidden)')
     );
-    await PaginationByArrow.waitNewListDate(
-      this.driver,
-      firstElName,
-      '.company-name'
-    );
-    const endElNumber = await this.driver.findElements(
-      By.className('company-name')
-    );
+    // await PaginationByArrow.waitNewListDate(
+    //   this.driver,
+    //   firstElName,
+    //   '.company-name'
+    // );
+    await this.waitListDate('.company-name', 2);
+    const companiesList = await this.driver.findElements(By.className('list-name-wrapper'))
 
     const activeBtn = await paginationBtn[1].getAttribute('current');
     const leftArrow = await this.driver.wait(
@@ -63,7 +62,7 @@ class PaginationByArrow extends Base {
     );
 
     if (
-      (await endElNumber[0].getText()) !== firstElName &&
+      (await companiesList[0].getText()) !== firstElName &&
       activeBtn === 'true' &&
       leftArrow
     ) {

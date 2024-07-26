@@ -40,7 +40,7 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
   });
 
   it('create new unit', async () => {
-    await lambdaParameters('create new unit',driverChrome);
+    await lambdaParameters('create new unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -57,16 +57,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await createUnit.goToView(config.projectNameMain);
       await createUnit.createUnit(newUnitName);
       await createUnit.checkCreateUnit(newUnitName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_create');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('edit new unit', async () => {
-    await lambdaParameters('edit new unit',driverChrome);
+    await lambdaParameters('edit new unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -83,16 +83,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await editUnit.goToView(config.projectNameMain);
       await editUnit.editUnit(newUnitName, editUnitName);
       await editUnit.checkCreateUnit(editUnitName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_edit');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('create new Room(unique)', async () => {
-    await lambdaParameters('create new Room(unique)',driverChrome);
+    await lambdaParameters('create new Room(unique)', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -109,16 +109,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await createRoom.goToView(config.projectNameMain);
       await createRoom.createRoom('_', newRoomName);
       await createRoom.checkCreateNewRoom(newRoomName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'room_create');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('create new Area and create template', async () => {
-    await lambdaParameters('create new Area and create template',driverChrome);
+    await lambdaParameters('create new Area and create template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -136,16 +136,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await createArea.openEditRoomFormViaThreeDots(newRoomName);
       await createArea.addAreaInRoom(newAreaName);
       await createArea.checkCreateArea(newRoomName, newAreaName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'area_create');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('delete new area', async () => {
-    await lambdaParameters('delete new area',driverChrome);
+    await lambdaParameters('delete new area', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -163,16 +163,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await deleteArea.openEditRoomFormViaThreeDots(newRoomName);
       await deleteArea.deleteArea(newAreaName);
       await deleteArea.checkDeleteArea(newRoomName, newAreaName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'area_delete');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('delete new room (unique)', async () => {
-    await lambdaParameters('delete new room (unique)',driverChrome);
+    await lambdaParameters('delete new room (unique)', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -189,16 +189,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await deleteRoom.goToView(config.projectNameMain);
       await deleteRoom.deleteRoom(newRoomName);
       await deleteRoom.checkDeleteFloor(newRoomName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'room_delete');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('delete new unit', async () => {
-    await lambdaParameters('delete new unit',driverChrome);
+    await lambdaParameters('delete new unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -215,16 +215,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await deleteUnit.goToView(config.projectNameMain);
       await deleteUnit.deleteUnit(editUnitName);
       await deleteUnit.checkDeleteUnit(editUnitName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_delete');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('template edit', async () => {
-    await lambdaParameters('template edit',driverChrome);
+    await lambdaParameters('template edit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -241,16 +241,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await roomTemplate.goToView(config.projectNameMain);
       await roomTemplate.editTemplate('_', newAreaName, editTemplateName);
       await roomTemplate.checkTemplateInList('_', editTemplateName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'template_edit');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('create template room via template', async () => {
-    await lambdaParameters('create template room via template',driverChrome);
+    await lambdaParameters('create template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -271,16 +271,16 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
         roomBasedOnTemplate
       );
       await createRoom.checkCreateNewRoom(roomBasedOnTemplate);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'create_room_via_template');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('edit template room via template', async () => {
-    await lambdaParameters('edit template room via template',driverChrome);
+    await lambdaParameters('edit template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -298,18 +298,18 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await createRoom.openEditRoomFormViaThreeDots(roomBasedOnTemplate);
       await createRoom.addSubtitleToTheRoom(subtitleForEditRoom);
       await createRoom.checkCreateNewRoom(editTemplateRoomForCheck);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       await driverChrome.sleep(1000);
       // await createRoom.checkCreateNewRoom(roomBasedOnTemplate);
     } catch (error) {
       await makeScreenshot(driverChrome, 'edit_room_via_template');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('delete template room via template', async () => {
-    await lambdaParameters('delete template room via template',driverChrome);
+    await lambdaParameters('delete template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -326,18 +326,18 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await deleteRoom.goToView(config.projectNameMain);
       await deleteRoom.deleteRoom(editTemplateRoomForCheck);
       await deleteRoom.checkDeleteFloor(editTemplateRoomForCheck);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       await driverChrome.sleep(1000);
       // await createRoom.checkCreateNewRoom(roomBasedOnTemplate);
     } catch (error) {
       await makeScreenshot(driverChrome, 'edit_room_via_template');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
   it('template delete', async () => {
-    await lambdaParameters('template delete',driverChrome);
+    await lambdaParameters('template delete', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -354,11 +354,11 @@ describe('Create,edit,remove Unit,Room,Areas and edit and delete template in the
       await roomTemplate.goToView(config.projectNameMain);
       await roomTemplate.deleteTemplate('_', editTemplateName);
       await roomTemplate.checkDeleteTemplate('_', editTemplateName);
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       // await roomTemplate.checkTemplateInList('_',editTemplateName);
     } catch (error) {
       await makeScreenshot(driverChrome, 'template_delete');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
