@@ -10,22 +10,26 @@ class EmployeeUpdateTask extends CreateTaskByEmployee {
   async editTask(taskName, newName) {
     await this.driver.wait(until.elementsLocated(By.className('task-name')));
     await this.findItemAndOpenThreeDotsMenu(taskName, '.task-name');
-
+    console.log('in task');
+    
     await this.driver.wait(
       until.elementLocated(By.css('#dotsMenu[editmenuopen]')),
       10000
     );
+    console.log('in task');
     const taskMenu = await this.driver.findElement(
-      By.css('#dotsMenu[editmenuopen]')
+      By.css('#dotsMenu[editmenuopen] .editMenuList')
     );
 
     const editBtn = await taskMenu.findElement(By.id('editItem'));
     await this.driver.wait(until.elementIsVisible(editBtn), 10000);
     await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
-
+    await this.driver.sleep(1000);
+    console.log(await editBtn.getAttribute('class'));
+    
     await editBtn.click();
 
-    const taskNameInput = await this.driver.findElement(By.id('taskName'));
+    const taskNameInput = await this.driver.findElement(By.id('taskNameMobile'));
     await this.driver.wait(until.elementIsVisible(taskNameInput), 10000);
     await this.driver.executeScript('return document.readyState');
 
@@ -33,9 +37,9 @@ class EmployeeUpdateTask extends CreateTaskByEmployee {
 
     await taskNameInput.clear();
 
-    await this.driver.findElement(By.id('taskName')).sendKeys(newName);
+    await this.driver.findElement(By.id('taskNameMobile')).sendKeys(newName);
 
-    const saveBtn = await this.driver.findElement(By.id('btnSubmit'));
+    const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     // await this.waitForSpecificTime(9, 29) can use it for set time for a click
     await saveBtn.click();
 

@@ -9,8 +9,7 @@ class RemoveCompany extends Base {
 
     for (let i = 0; i < array.length; i += 1) {
       companyForSearch = await array[i].getText();
-      // console.log(companyForSearch, 'companny');
-
+      
       if (companyForSearch === companyName) {
         companyFound = true;
         await array[i].click();
@@ -112,24 +111,14 @@ class RemoveCompany extends Base {
 
     const modal = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);
+    await this.driver.sleep(500);
 
     const delBtnModal = await this.driver.findElement(By.id('btnDelete'));
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
     await this.driver.wait(until.elementIsEnabled(delBtnModal), 10000);
     await delBtnModal.click();
 
-    await this.driver.wait(
-      until.elementsLocated(By.className('notification')),
-      10000
-    );
-    const windowHandles = await this.driver.findElement(
-      By.className('notification')
-    );
-    const windowHandlesText = await windowHandles.getText();
-
-    if (windowHandlesText === 'Error. Failed to save data') {
-      throw new Error('You have error, check screenshot');
-    }
+    await this.notificationCheck()
 
     try {
       await this.driver.wait(
@@ -156,13 +145,14 @@ class RemoveCompany extends Base {
 
   async removeCompanyViaThreeDotsMenu(companyName){
     await this.driver.wait(until.elementsLocated(By.css('.list-name-wrapper')),10000);
+    await this.driver.sleep(1000);
     await this.findItemAndOpenThreeDotsMenu(companyName,'.list-name-wrapper');
     await this.driver.wait(until.elementLocated(By.css('#dotsMenu[editmenuopen]')),10000);
     const deleteBtn = await this.driver.findElement(By.css('#dotsMenu[editmenuopen] #deleteItem'))
     await this.driver.wait(until.elementIsVisible(deleteBtn), 10000);
     await this.driver.wait(until.elementIsEnabled(deleteBtn), 10000);
     await deleteBtn.click();
-    await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"]')),10000);
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')),10000);
     await this.driver.wait(until.elementLocated(By.css('.modal')),10000);
     const modal = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);

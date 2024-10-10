@@ -4,25 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "DEBUG=testomatio:* TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035 npx mocha --no-timeouts -R ./node_modules/@testomatio/reporter/lib/adapter/mocha.js",
-    "test2": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports",
-    "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/createEditDeleteCustomStatus.test.js",
+    "test": "DEBUG=testomatio:* TESTOMATIO_RUNGROUP_TITLE='Release 0.14' TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035 npx mocha --no-timeouts -R ./node_modules/@testomatio/reporter/lib/adapter/mocha.js 'test/**/*.js'",
+    "test2": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports ",
+    "testLocal": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options  reportDir=colorjob,reportFilename=reports 'test/**/*.js'",
+    "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/**/attachFileToTask.test.js",
     "testp": "mocha --no-timeouts --parallel",
-    "import-tests": "set TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035&& npx check-tests@latest Mocha \"**/*{.,_}{test,spec,cy}.js\""
+    "import-tests": "set TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035&& npx check-tests@latest Mocha \"test/**/*{.,_}{test,spec,cy}.js\" --update-ids --no-detached"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.10",
+    "cheerio": "^1.0.0",
     "chrome-remote-interface": "^0.33.0",
-    "chromedriver": "^125.0.2",
+    "chromedriver": "^129.0.0",
     "devtools": "^8.20.0",
+    "he": "^1.2.0",
     "mocha": "^10.2.0",
     "mochawesome": "^7.1.3",
     "nanoid": "^3.0.0",
     "node-imap": "^0.9.6",
     "puppeteer": "^21.4.0",
-    "selenium-webdriver": "^4.18.1"
+    "selenium-webdriver": "^4.18.1",
+    "webdriver-manager": "^12.1.9"
   },
   "devDependencies": {
     "@testomatio/reporter": "^1.4.4"

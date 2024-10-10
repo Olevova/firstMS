@@ -79,7 +79,7 @@ class InviteUser extends Base {
     const inviteNewUserBtn = await this.driver.findElement(By.id('btnCreate'));
     await this.driver.wait(until.elementIsEnabled(inviteNewUserBtn),10000)
     await inviteNewUserBtn.click();
-    await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"] .modal')),10000);
+    await this.driver.wait(until.elementLocated(By.css('.backdrop .modal')),10000);
     await this.driver.wait(until.elementLocated(By.css('.form-invite')),10000);
     const formTitle = await this.driver.findElement(By.css(".form-modal-title"));
     await this.driver.wait(until.elementIsVisible(formTitle), 3000);
@@ -100,7 +100,8 @@ class InviteUser extends Base {
 
   }
 
-  async fillInviteForm(email, company, role) {
+  async fillInviteForm(email, company, role=false) {
+    await this.driver.wait(until.elementLocated(By.id('userEmail')),10000);
     const selectEmail = await this.driver.findElement(By.id('userEmail'));
     await this.driver.wait(until.elementIsVisible(selectEmail), 3000);
     await selectEmail.sendKeys(email);
@@ -118,32 +119,33 @@ class InviteUser extends Base {
 
     await InviteUser.findDateInDropDown(companyList, company);
     await this.driver.sleep(1000);
+    if(role){
     if (role.trim().toLowerCase() !== 'company admin') {
       const roleDropDown = await this.driver.findElement(By.id('userRole'));
       await roleDropDown.click();
       const roleList = await this.driver.findElements(By.css('.ng-option'));
       await InviteUser.findDateInDropDown(roleList, role);
     }
-
+    }
     const sendAnInvite = this.driver.findElement(By.id('btnInvite'));
     // await this.waitForSpecificTime(18, 27) 
     await sendAnInvite.click();
 
   }
   async fillInviteFormByCA(email, role) {
-    await this.driver.wait(until.elementLocated(By.css(".backdrop[show='true']"),10000));
+    await this.driver.wait(until.elementLocated(By.css(".backdrop"),10000));
     await this.driver.sleep(1000);
     await this.driver.wait(until.elementLocated(By.id('userEmail')),10000);
     const selectEmail = await this.driver.findElement(By.id('userEmail'));
     await this.driver.wait(until.elementIsEnabled(selectEmail), 3000);
     await selectEmail.sendKeys(email);
+    if(role){
     const roleDropDown = await this.driver.findElement(By.id('userRole'));
     await roleDropDown.click();
     await this.driver.wait(until.elementLocated(By.css('.ng-dropdown-panel[role="listbox"]')),10000);
     const roleList =  await roleDropDown.findElements(By.css('.ng-option-label'));
-  
     await this.findDateInDropDown(roleList,role)
-  
+    }
 
     const sendAnInvite = this.driver.findElement(By.id('btnInvite'));
    
@@ -158,7 +160,7 @@ class InviteUser extends Base {
   }
 
   async checkNewUser(emailNew, userPage) {
-    await this.notificationCheck('id','mainErrorText');
+    await this.notificationCheck();
   
     this.endUsersNumber = await this.numberOfItems(this.driver);
     console.log('number of useres before',this.startUsersNumber,'after', this.endUsersNumber, 'user invited successfully');

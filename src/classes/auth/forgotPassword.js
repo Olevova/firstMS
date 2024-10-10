@@ -1,7 +1,9 @@
 const { By, until } = require('selenium-webdriver');
+const Base = require('../base');
 
-class ForgotPassword {
+class ForgotPassword extends Base {
   constructor(driver) {
+    super(driver);
     this.driver = driver;
   }
 
@@ -18,6 +20,7 @@ class ForgotPassword {
   }
 
   async changePassword(email) {
+    await this.driver.wait(until.elementLocated(By.id('email')),10000);
     const emailInputLocator = this.driver.findElement(By.id('email'));
     await emailInputLocator.sendKeys(email);
   }
@@ -33,7 +36,7 @@ class ForgotPassword {
   async changePasswordSubmit() {
     const submitLincLocator = this.driver.findElement(By.id('btn-submit'));
     await submitLincLocator.click();
-  
+
     const formError = await this.driver
       .wait(until.elementLocated(By.id('mainErrorText')), 1000)
       .catch(() => null);
@@ -58,6 +61,41 @@ class ForgotPassword {
   async currentUrl() {
     const currentUrl = await this.driver.getCurrentUrl();
     return currentUrl;
+  }
+
+  async changePasswordOwnUser(oldPassword, newPassword) {
+    await this.clickElement('#btnChangePassword');
+    await this.driver.wait(until.elementLocated(By.css('.backdrop .modal')),10000);
+    await this.driver.wait(until.elementLocated(By.id('btnSave')),10000)
+    const saveBtn = await this.driver.findElement(By.id('btnSave'));
+    await this.driver.wait(until.elementLocated(By.id('currentPassword')),10000);
+    const currentPassword = await this.driver.findElement(
+      By.id('currentPassword')
+    );
+    await currentPassword.sendKeys(oldPassword);
+    await this.driver.wait(until.elementLocated(By.id('newPassword')),10000);
+    const passwordForChange = await this.driver.findElement(By.id('newPassword'));
+    await passwordForChange.sendKeys(newPassword);
+    await this.driver.sleep(500);
+    await this.driver.wait(until.elementLocated(By.id('confirmPassword')),10000);
+    const confirmPassword = await this.driver.findElement(
+      By.id('confirmPassword')
+    );
+    await confirmPassword.sendKeys(newPassword);
+    await this.driver.wait(until.elementIsEnabled(saveBtn),10000);
+    await saveBtn.click();
+    await this.notificationCheck();
+  }
+
+  async authFormErrorMsg(){
+    const errors = await this.formErrorMsgArray();
+    if(errors){
+      for(let er of errors){
+        console.log(er);
+      }
+      return true
+    }
+    return false
   }
 }
 

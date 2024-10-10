@@ -40,18 +40,23 @@ class CreateRoom extends Base {
     this.driver = driver;
   }
 
-  async createTemplateRoomWithAreas(unit = null, room, first = false, areasNumber = 1) {
+  async createTemplateRoomWithAreas(
+    unit = null,
+    room,
+    first = false,
+    areasNumber = 1
+  ) {
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
     await this.driver.executeScript('return document.readyState');
     await this.addRoomInUnit(unit);
     await this.driver.sleep(1000);
     if (!first) {
       await this.driver.wait(
-        until.elementLocated(By.css('.add-floor-menu.add-room-menu[openmenu]')),
+        until.elementLocated(By.css('.add-floor-menu.add-room-menu')),
         10000
       );
       const addRoomMenu = await this.driver.findElement(
-        By.css('.add-floor-menu.add-room-menu[openmenu]')
+        By.css('.add-floor-menu.add-room-menu')
       );
       const createRoomBtn = await addRoomMenu.findElement(
         By.id('createNewRoom')
@@ -60,15 +65,11 @@ class CreateRoom extends Base {
       await this.driver.sleep(1000);
       await createRoomBtn.click();
     }
-    await this.driver.wait(
-      until.elementLocated(By.css(".backdrop[show='true']")),
-      10000
-    );
-    const addRoomModal = this.driver.findElement(
-      By.css(".backdrop[show='true']")
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
+    const addRoomModal = this.driver.findElement(By.css('.backdrop'));
     const inputRoom = await addRoomModal.findElement(By.id('roomName'));
     await this.driver.wait(until.elementIsEnabled(inputRoom), 10000);
+    await this.driver.sleep(500);
     await inputRoom.sendKeys(room);
     const addAreaBtn = await this.driver.findElement(By.id('addAreaField'));
     await this.driver.wait(until.elementIsEnabled(addAreaBtn), 10000);
@@ -83,6 +84,7 @@ class CreateRoom extends Base {
       const areaInput = await this.driver.findElement(
         By.css(`input[forminput="ROOM_AREA_NAME"][id="${idForArea}"]`)
       );
+      await this.driver.sleep(500);
       await areaInput.sendKeys(click + 'area');
       await this.driver.sleep(500);
       await addAreaBtn.click();
@@ -106,11 +108,11 @@ class CreateRoom extends Base {
     await this.driver.sleep(1000);
     if (!first) {
       await this.driver.wait(
-        until.elementLocated(By.css('.add-floor-menu.add-room-menu[openmenu]')),
+        until.elementLocated(By.css('.add-floor-menu.add-room-menu')),
         10000
       );
       const addRoomMenu = await this.driver.findElement(
-        By.css('.add-floor-menu.add-room-menu[openmenu]')
+        By.css('.add-floor-menu.add-room-menu')
       );
       const createRoomBtn = await addRoomMenu.findElement(
         By.id('createNewRoom')
@@ -119,13 +121,8 @@ class CreateRoom extends Base {
       await this.driver.sleep(1000);
       await createRoomBtn.click();
     }
-    await this.driver.wait(
-      until.elementLocated(By.css(".backdrop[show='true']")),
-      10000
-    );
-    const addRoomModal = this.driver.findElement(
-      By.css(".backdrop[show='true']")
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
+    const addRoomModal = this.driver.findElement(By.css('.backdrop'));
     const inputRoom = await addRoomModal.findElement(By.id('roomName'));
     await this.driver.wait(until.elementIsEnabled(inputRoom), 10000);
     await inputRoom.sendKeys(room);
@@ -141,7 +138,7 @@ class CreateRoom extends Base {
     await this.addRoomInUnit(unit);
     await this.driver.sleep(1000);
     await this.driver.wait(
-      until.elementLocated(By.css('.add-floor-menu[openmenu]')),
+      until.elementLocated(By.css('.add-floor-menu')),
       10000
     );
     await this.driver.wait(
@@ -149,14 +146,11 @@ class CreateRoom extends Base {
       10000
     );
 
-    // const listOfTemplate = await this.driver.findElements(By.css('.duplicate-floor-variants__item'));
     await this.findAndClickOnLinInTheList(
       templatename,
       '.duplicate-floor-variants__item'
     );
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]'), 10000)
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop'), 10000));
     const roomNameInput = await this.driver.findElement(By.id('roomName'));
     await roomNameInput.click();
     await this.driver.sleep(1000);
@@ -174,35 +168,30 @@ class CreateRoom extends Base {
     await btnCreateRoom.click();
   }
 
-
   async createRoomViaTemplate(unit = null, templatename, newroom) {
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
     await this.driver.executeScript('return document.readyState');
     await this.addRoomInUnit(unit);
     await this.driver.sleep(1000);
     await this.driver.wait(
-      until.elementLocated(By.css('.add-floor-menu[openmenu]')),
+      until.elementLocated(By.css('.add-floor-menu')),
       10000
     );
     await this.driver.wait(
       until.elementsLocated(By.css('.duplicate-floor-variants__item')),
       10000
     );
-
-    // const listOfTemplate = await this.driver.findElements(By.css('.duplicate-floor-variants__item'));
     await this.findAndClickOnLinInTheList(
       templatename,
       '.duplicate-floor-variants__item'
     );
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]'), 10000)
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop'), 10000));
     const roomNameInput = await this.driver.findElement(By.id('roomName'));
     await roomNameInput.click();
     await this.driver.sleep(1000);
     await roomNameInput.clear();
     await roomNameInput.sendKeys(newroom);
-    
+
     const btnCreateRoom = await this.driver.findElement(By.id('btnInvite'));
     await this.driver.wait(until.elementIsEnabled(btnCreateRoom), 10000);
     await btnCreateRoom.click();
@@ -216,17 +205,31 @@ class CreateRoom extends Base {
     await this.driver.wait(until.elementIsEnabled(subtitleInput));
     await subtitleInput.clear();
     await subtitleInput.sendKeys(subtitle);
+    await this.driver.sleep(500);
     const saveBtn = await this.driver.findElement(By.id('btnInvite'));
     await saveBtn.click();
+  }
+
+  async changeRoomTitle(roomtitle, save=false) {
+    await this.driver.wait(until.elementLocated(By.css('html')), 10000);
+    await this.driver.executeScript('return document.readyState');
+    await this.driver.wait(until.elementLocated(By.id('roomName')), 10000);
+    const roomtitleInput = await this.driver.findElement(By.id('roomName'));
+    await this.driver.wait(until.elementIsEnabled(roomtitleInput));
+    await roomtitleInput.clear();
+    await this.driver.sleep(500);
+    await roomtitleInput.sendKeys(roomtitle);
+    await this.driver.sleep(500);
+    if(save){
+      const saveBtn = await this.driver.findElement(By.id('btnInvite'));
+      await saveBtn.click();
+    }
   }
 
   async createUniqueRoomByDetachingTemplate() {
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
     await this.driver.executeScript('return document.readyState');
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]')),
-      10000
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
     const detuchBtn = await this.driver.findElement(By.css('.detach-btn'));
     await this.driver.wait(until.elementIsEnabled(detuchBtn), 10000);
     await detuchBtn.click();
@@ -242,10 +245,7 @@ class CreateRoom extends Base {
   async getArrayOfAreasInRoomModalForm(
     locator = '.area-form-dragIcon-with-input-wrapper .form-input-modal'
   ) {
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]')),
-      10000
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
     await this.driver.wait(until.elementsLocated(By.css(locator)), 10000);
     const areaList = await this.driver.findElements(By.css(locator));
     let areaArray = [];
@@ -275,14 +275,12 @@ class CreateRoom extends Base {
           const findRoomName = await room.findElement(
             By.css('.room-arrow-with-name-wrapper')
           );
-          // console.log(await findRoomName.getAttribute('title'));
           if ((await findRoomName.getAttribute('title')) === roomName) {
             let areas = [];
             const listOfAreas = await room.findElements(
               By.css('li.room-areas-list__item span:nth-of-type(2)')
             );
             for (let area of listOfAreas) {
-              // console.log(await area.getText(), 'area');
               areas.push(await area.getText());
             }
             return areas;
@@ -292,7 +290,6 @@ class CreateRoom extends Base {
         return null;
       }
     }
-    // const roomListawait this.driver.findElements(By.css('.rooms-list__item'));
   }
 
   async checkCreateNewRoom(room) {
@@ -311,23 +308,18 @@ class CreateRoom extends Base {
     await this.addRoomInUnit(unit);
     await this.driver.sleep(1000);
     await this.driver.wait(
-      until.elementLocated(By.css('.add-floor-menu.add-room-menu[openmenu]')),
+      until.elementLocated(By.css('.add-floor-menu.add-room-menu')),
       10000
     );
     const addRoomMenu = await this.driver.findElement(
-      By.css('.add-floor-menu.add-room-menu[openmenu]')
+      By.css('.add-floor-menu.add-room-menu')
     );
     const createRoomBtn = await addRoomMenu.findElement(By.id('createNewRoom'));
     await this.driver.wait(until.elementIsEnabled(createRoomBtn), 10000);
     await this.driver.sleep(1000);
     await createRoomBtn.click();
-    await this.driver.wait(
-      until.elementLocated(By.css(".backdrop[show='true']")),
-      10000
-    );
-    const addRoomModal = this.driver.findElement(
-      By.css(".backdrop[show='true']")
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
+    const addRoomModal = this.driver.findElement(By.css('.backdrop'));
     const inputRoom = await addRoomModal.findElement(By.id('roomName'));
     await this.driver.wait(until.elementIsEnabled(inputRoom), 10000);
     await inputRoom.sendKeys(room);
@@ -355,7 +347,7 @@ class CreateRoom extends Base {
     await this.addRoomInUnit(unit);
     await this.driver.sleep(1000);
     await this.driver.wait(
-      until.elementLocated(By.css('.add-floor-menu[openmenu]')),
+      until.elementLocated(By.css('.add-floor-menu')),
       10000
     );
     await this.driver.wait(
@@ -367,9 +359,7 @@ class CreateRoom extends Base {
       templatename,
       '.duplicate-floor-variants__item'
     );
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]'), 10000)
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop'), 10000));
     const roomNameInput = await this.driver.findElement(By.id('roomName'));
     await this.driver.wait(until.elementIsEnabled(roomNameInput), 10000);
     const suggestName = roomNameInput.getAttribute('value');

@@ -8,6 +8,30 @@ class AddCommentToArea extends Base {
     this.driver = driver;
   }
 
+  async checkNumberCommentsAndAttachmens(){
+    await this.driver.wait(until.elementLocated(By.css('app-area-form .backdrop app-activity-area')),10000);
+    await this.driver.sleep(1000);
+    const commentsEl = await this.driver.findElements(By.css('.comments-list__item'));
+    
+    let commentsCounter = 0;
+    let attachmentCounter = 0;
+    for(let comment of commentsEl){
+      let commentTextElements = await comment.findElements(By.css('.comments-list__comment-text p'));
+      let attachmentElements = await comment.findElements(By.css('.file-item'));
+      if(commentTextElements.length > 0){
+          commentsCounter += 1;
+      } 
+      if(attachmentElements.length > 0){
+        attachmentCounter += 1
+      }
+    }
+      return {
+        comments: commentsCounter,
+        attachment: attachmentCounter
+      }
+
+  }
+
   async addComment(comment) {
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
     await this.driver.executeScript('return document.readyState');
@@ -36,8 +60,9 @@ class AddCommentToArea extends Base {
     await this.driver.wait(until.elementIsVisible(saveBtn), 10000);
     await saveBtn.click();
     await this.notificationCheck();
-    await this.driver.sleep(2000);
+    await this.driver.sleep(1000);
   }
+
   async editComment(oldcomment, newcomment) {
     const allComments = await this.driver.findElements(
       By.css('.comments-list__item--inner')
@@ -102,6 +127,29 @@ class AddCommentToArea extends Base {
     await commentMenu.findElement(By.id('deleteUnitBtn')).click();
     await this.notificationCheck();
   }
+
+  async openAreasWithComment() {
+    await this.driver.wait(until.elementLocated(By.css('html')), 10000);
+    await this.driver.executeScript('return document.readyState');
+    await this.driver.sleep(1000);
+    await this.driver.wait(
+      until.elementsLocated(By.css('.room-areas-list__item.ng-star-inserted')),
+      10000
+    );
+    const areas = await this.driver.findElements(
+      By.css(`.room-areas-list__item.ng-star-inserted`)
+    );
+    await this.driver.wait(until.elementIsEnabled(areas[0]), 10000);
+
+    await areas[0].click();
+    await this.driver.wait(
+      until.elementLocated(By.css('.ql-editor.ql-blank')),
+      10000
+    );
+    await this.driver.wait(until.elementsLocated(By.css('.comments-list__item--inner')),10000)
+  }
+
+
 }
 
 module.exports = AddCommentToArea;

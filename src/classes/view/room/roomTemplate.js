@@ -47,21 +47,18 @@ class RoomTemplate extends CreateRoom {
     await this.waitForElements(this.driver, unit);
     console.log('roomname', roomname);
     await this.findAndClickTemplate(this.driver, roomname, 0);
-    
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]')),
-      10000
-    );
-    const templatePopUp = await this.driver.findElement(
-      By.css('.backdrop[show="true"]')
-    );
-    const templateInput = await templatePopUp.findElement(By.id('roomName'));
+
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
+    const templatePopUp = await this.driver.findElement(By.css('.backdrop'));
+    // await this.driver.sleep(3000);
+    await this.driver.wait(until.elementLocated(By.id('roomName')),10000);
+    const templateInput = await this.driver.findElement(By.id('roomName'));
     await this.driver.wait(until.elementIsEnabled(templateInput));
     await templateInput.clear();
     await this.driver.sleep(1000);
     await templateInput.sendKeys(newname);
     // await this.driver.sleep(1000);
-    const saveTemplateBtn = await templatePopUp.findElement(By.id('btnInvite'));
+    const saveTemplateBtn = await this.driver.findElement(By.id('btnInvite'));
     await this.driver.wait(until.elementIsEnabled(saveTemplateBtn));
     await saveTemplateBtn.click();
     await this.notificationCheck();
@@ -78,13 +75,8 @@ class RoomTemplate extends CreateRoom {
   async deleteTemplate(unit = null, newname) {
     await this.waitForElements(this.driver, unit);
     await this.findAndClickTemplate(this.driver, newname, 1);
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]')),
-      10000
-    );
-    const templatePopUp = await this.driver.findElement(
-      By.css('.backdrop[show="true"]')
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
+    const templatePopUp = await this.driver.findElement(By.css('.backdrop'));
     const delBtn = await templatePopUp.findElement(By.id('btnDeleteProject'));
     await this.driver.wait(until.elementIsEnabled(delBtn));
     await delBtn.click();
@@ -97,6 +89,37 @@ class RoomTemplate extends CreateRoom {
       '.duplicate-floor-variants__item.rooms-variants__item',
       newname
     );
+  }
+
+  async createTemplateRoomViaLinkEditTemplateInAddRoomForm(roomName) {
+    await this.driver.wait(until.elementLocated(By.css('html')), 10000);
+    await this.driver.executeScript('return document.readyState');
+    await this.clickElement('.switchBtnEditTemplate');
+    await this.driver.sleep(1000);
+
+    const templatePopUp = await this.driver.findElement(By.css('app-room-form app-room-form .backdrop'));
+    const templateInput = await this.driver.findElement(By.id('roomName'));
+    await this.driver.wait(until.elementIsEnabled(templateInput));
+    console.log('hereeee');
+    await this.waitListDate('.form-input-modal',2)
+    const areasInput = await this.driver.findElements(
+      By.css('.form-input-modal')
+    );
+    const lenghtArea = areasInput.length
+        await areasInput[lenghtArea-1].clear();
+        await this.driver.sleep(1000);
+        await areasInput[lenghtArea-1].sendKeys(roomName);
+        await this.driver.sleep(1000);
+        
+        await this.driver.sleep(1000);
+        await this.clickElement('app-room-form app-room-form #btnInvite');
+        
+        await this.notificationCheck();
+      // }
+    // }
+
+    await this.clickElement('#btnInvite');
+
   }
 }
 

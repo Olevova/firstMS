@@ -15,18 +15,18 @@ class EditProject extends RemoveProject {
     const editBtn = await this.driver.findElement(By.css('.settings-wrapper__btn-edit'));
     await this.driver.wait(until.elementIsEnabled(editBtn),10000);
     await editBtn.click();
-    await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"]')),10000);
-    const nameInput = await this.driver.findElement(By.id('projectName'));
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')),10000);
+    const nameInput = await this.driver.findElement(By.id('projectNameMobile'));
     await nameInput.click();
     await this.driver.sleep(1000);
     await nameInput.clear();
     await this.driver.sleep(1000);
     await nameInput.sendKeys(newProjectName);
-    const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
+    const submitBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     await submitBtn.click();
-    await this.notificationCheck('id','mainErrorText');
+    await this.notificationCheck();
     console.log(`New Project name ${newProjectName}`);
-
+    
   }
 
   async editProjectViaThreeDotsMenu(nameOld, newName){
@@ -37,16 +37,16 @@ class EditProject extends RemoveProject {
     await this.driver.wait(until.elementIsVisible(editBtn), 10000);
     await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
     await editBtn.click();
-    await this.driver.sleep(2000);
-    await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"]')),10000);
-    const nameInput = await this.driver.findElement(By.id('projectName'));
+    await this.driver.sleep(1000);
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')),10000);
+    const nameInput = await this.driver.findElement(By.id('projectNameMobile'));
     await nameInput.click();
     await nameInput.clear();
     await this.driver.sleep(1000);
     await nameInput.sendKeys(newName);
-    const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
+    const submitBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     await submitBtn.click();
-    await this.notificationCheck('id','mainErrorText');
+    await this.notificationCheck();
     console.log(`New Project name ${newName}`);
   }
 

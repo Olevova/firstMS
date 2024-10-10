@@ -11,16 +11,16 @@ class DuplicateFloor extends CreatFloor {
 
   async duplicateFloor(floor='default') {
     await this.driver.wait(
-      until.elementsLocated(By.css('.cdk-drag.floor-item')),
+      until.elementsLocated(By.css('.cdk-drag .floor-item')),
       10000
     );
     const floors = await this.driver.findElements(
-      By.css('.cdk-drag.floor-item')
+      By.css('.cdk-drag .floor-item')
     );
     const addFloorBtn = await this.driver.findElement(By.id('addFloor'))
     await this.driver.wait(until.elementIsEnabled(addFloorBtn), 10000);
     await addFloorBtn.click();
-    await this.driver.wait(until.elementLocated(By.css('.add-floor-menu-with-btn-wrapper[opened]')),10000);
+    await this.driver.wait(until.elementLocated(By.css('.add-floor-menu-with-btn-wrapper')),10000);
     await this.driver.sleep(2000);
     const duplicateBlock = await this.driver.wait(until.elementLocated(By.css('.duplicate-floor-variants-list')),3000).catch(()=>null);
     if (duplicateBlock===null){
@@ -44,7 +44,7 @@ class DuplicateFloor extends CreatFloor {
     }
     await this.notificationCheck();
     // await this.waitListDate()
-    await this.checkCreateItem('.cdk-drag.floor-item', this.duplicateFloorTitle)
+    await this.checkCreateItem('.cdk-drag .floor-item', this.duplicateFloorTitle)
     console.log(this.duplicateFloorTitle, 'Duplicate floor title');
     return this.duplicateFloorTitle
   } 

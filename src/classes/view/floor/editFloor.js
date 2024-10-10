@@ -9,11 +9,11 @@ class EditFloor extends CreatFloor {
 
   async editFloor(floor, newfloor) {
     await this.driver.wait(
-      until.elementsLocated(By.css('.cdk-drag.floor-item')),
+      until.elementsLocated(By.css('.cdk-drag .floor-item')),
       10000
     );
     const floors = await this.driver.findElements(
-      By.css('.cdk-drag.floor-item')
+      By.css('.cdk-drag .floor-item')
     );
     for (let item of floors) {
       if (item) {
@@ -45,10 +45,10 @@ class EditFloor extends CreatFloor {
     }
 
     await this.driver.wait(
-      until.elementLocated(By.css('form.form-edit-floor[opened]'))
+      until.elementLocated(By.css('form.form-edit-floor')),10000
     );
     const form = await this.driver.findElement(
-      By.css('form.form-edit-floor[opened]')
+      By.css('form.form-edit-floor')
     );
     const inputFloor = await form.findElement(By.css('.input-create-item'));
     await this.driver.wait(until.elementIsEnabled(inputFloor), 10000);

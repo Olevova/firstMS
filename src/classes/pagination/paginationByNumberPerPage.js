@@ -39,12 +39,12 @@ class PaginationByNumberPerPage extends Base {
       By.className('ng-option')
     );
     await this.findDateInDropDown(paginationList, numberofel);
-    await this.waitListDate('.company-name', 11);
+    await this.waitListDate('.company-name', numberofel);
 
     const endElNumber = await this.driver.findElements(
       By.className('company-name')
     );
-    console.log(await endElNumber.length, 'end', await startElNumber.length);
+    // console.log(await endElNumber.length, 'end', await startElNumber.length);
 
     if (
       (await endElNumber.length) > (await startElNumber.length) &&

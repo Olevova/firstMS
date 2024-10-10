@@ -3,26 +3,7 @@ const Base = require('../base');
 
 class CreateCompany extends Base {
   
-  constructor(driver) {
-    super(driver);
-    this.driver = driver;
-    this.companyName = '';
-    this.endCompanyNumber = 0;
-    this.startCompanyNumber = 0;
-  }
-
-  async goToCreateCompanyForm() {
-    const companyBtn = await this.driver.findElement(By.id('linkCompanies'));
-    await companyBtn.click();
-
-    // this.startCompanyNumber = await CreateCompany.numberOfCompanies(this.driver);
-    this.startCompanyNumber = await this.numberOfItems(this.driver);
-
-    const createCompanyBtn = await this.driver.findElement(By.id('btnCreate'));
-    await createCompanyBtn.click();
-  }
-
-  async fillCreateCompany(
+  async fillCompanyForm(
     name,
     street,
     app,
@@ -32,23 +13,27 @@ class CreateCompany extends Base {
     phone,
     email,
     plan,
-    type
-  ) {
-    const createForm = this.driver.findElement(By.className('modal'));
+    type){
+      const createForm = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(createForm), 10000);
 
-    const companyName = await this.driver.findElement(By.id('companyName'));
+    const companyName = await this.driver.findElement(By.id('companyNameMobile'));
     await companyName.sendKeys(name);
+    await this.driver.sleep(500);
 
     const addressStreet = await this.driver.findElement(
-      By.id('companyAddress')
+      By.id('companyAddressMobile')
     );
     await addressStreet.sendKeys(street);
 
+    if(app){
     const addressApart = await this.driver.findElement(
       By.id('companyAddressSecond')
     );
+    await this.driver.sleep(500);
     await addressApart.sendKeys(app);
+  }
+    
 
     const stateDropdown = await this.driver.findElement(By.id('companyState'));
     await stateDropdown.click();
@@ -80,14 +65,88 @@ class CreateCompany extends Base {
 
     const typeList = await this.driver.findElements(By.className('ng-option'));
     await this.findDateInDropDown(typeList, type);
+  }
 
+
+  constructor(driver) {
+    super(driver);
+    this.driver = driver;
+    this.companyName = '';
+    this.endCompanyNumber = 0;
+    this.startCompanyNumber = 0;
+  }
+
+  async goToCreateCompanyForm() {
+    const companyBtn = await this.driver.findElement(By.id('linkCompanies'));
+    await companyBtn.click();
+
+    // this.startCompanyNumber = await CreateCompany.numberOfCompanies(this.driver);
+    this.startCompanyNumber = await this.numberOfItems(this.driver);
+
+    const createCompanyBtn = await this.driver.findElement(By.id('btnCreate'));
+    await createCompanyBtn.click();
+  }
+
+  async fillCreateCompany(
+    name,
+    street,
+    app,
+    state,
+    city,
+    zipcode,
+    phone,
+    email,
+    plan,
+    type
+  ) {
+    await this.fillCompanyForm( name,
+      street,
+      app,
+      state,
+      city,
+      zipcode,
+      phone,
+      email,
+      plan,
+      type)
     const createBtn = await this.driver.findElement(By.id('btnSubmit'));
-    // await this.driver.sleep(2000)
     createBtn.click();
   }
 
+  async fillCreateCompanyWithCustomUserNumber(
+    name,
+    street,
+    app,
+    state,
+    city,
+    zipcode,
+    phone,
+    email,
+    plan,
+    type,
+    usersNumber = 1
+  ) {
+    await this.fillCompanyForm( name,
+      street,
+      app,
+      state,
+      city,
+      zipcode,
+      phone,
+      email,
+      plan,
+      type)
+     const userNumberInput =  await this.driver.findElement(By.id('companyPlanMaxNumberUsers'));
+     await userNumberInput.clear();
+     await this.driver.sleep(500);
+     await userNumberInput.sendKeys(usersNumber);
+     const createBtn = await this.driver.findElement(By.id('btnSubmit'));
+     createBtn.click();
+
+  };
+
   async checkCreationOfNewCompany() {
-    await this.notificationCheck('id','mainErrorText');
+    await this.notificationCheck();
    
     this.endCompanyNumber = await this.numberOfItems(this.driver);
     try {

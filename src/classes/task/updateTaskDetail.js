@@ -8,6 +8,7 @@ const {
   inDocker,
   withoutLambda,
 } = require('../../utils/webdriver');
+const config = require('../../../src/utils/config');
 
 class UpdateTaskDetail extends Base {
   constructor(driver) {
@@ -57,7 +58,7 @@ class UpdateTaskDetail extends Base {
         await task.click();
         // await this.driver.sleep(1000);
         await this.driver.wait(
-          until.elementLocated(By.css('.backdrop[show="true"] .modal')),
+          until.elementLocated(By.css('.backdrop .modal')),
           10000
         );
         const taskForm = await this.driver.findElement(
@@ -67,12 +68,13 @@ class UpdateTaskDetail extends Base {
 
         const editBtn = await this.driver.findElement(By.id('btnEditTask'));
         await editBtn.click();
-        await this.driver.wait(until.elementLocated(By.id('taskName')), 10000);
-        const taskNameInput = await this.driver.findElement(By.id('taskName'));
+        await this.driver.wait(until.elementLocated(By.id('taskNameMobile')), 10000);
+        const taskNameInput = await this.driver.findElement(By.id('taskNameMobile'));
         await taskNameInput.clear();
+        await this.driver.sleep(1000);
         await taskNameInput.sendKeys(newName);
-        await this.driver.sleep(2000);
-        const saveBtn = await this.driver.findElement(By.id('btnSubmit'));
+        await this.driver.sleep(1000);
+        const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
         await saveBtn.click();
         await this.driver.sleep(500);
         return;
@@ -82,28 +84,34 @@ class UpdateTaskDetail extends Base {
     await this.checkCreateItem('.task-name', newName);
   }
 
-  async addAttachment(taskName) {
+  async addAttachment(taskName, file='JavaScript.png') {
     await this.findAndClickOnLinInTheList(taskName, '.task-name');
     await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"] .modal')),
+      until.elementLocated(By.css('.backdrop .modal')),
       10000
     );
     const editBtn = await this.driver.findElement(By.id('btnEditTask'));
+    await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
     await editBtn.click();
-    await this.driver.wait(until.elementLocated(By.id('drop-area')), 10000);
+    await this.driver.wait(until.elementLocated(By.id('drop-areaMobile')), 10000);
 
-    const inputFile = await this.driver.findElement(By.id('fileInput'));
+    const inputFile = await this.driver.findElement(By.id('fileInputMobile'));
 
     if (!withoutLambda) {
-      const filePath = path.join(__dirname, 'Logo.png');
+      console.log(__dirname, '__dirname');
+      
+      const filePath = path.join(__dirname, file);
       console.log(filePath);
       await inputFile.sendKeys(filePath);
     } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
-      console.log('running in Lambda', __dirname);
-      await this.listDirectoryContents(__dirname);
+      const pathLambda = config.lambdaPathWindows + `${file}`
+      console.log('lambda', pathLambda);
+      await inputFile.sendKeys(pathLambda);
     } else {
-      console.log('docker');
-      await inputFile.sendKeys('/external_jars/.classpath.txt');
+      const pathSel = config.lambdaPathDockerChrom + `${file}`
+      console.log('running in Selenium hub', pathSel);
+      await inputFile.sendKeys(pathSel);
+      
     }
     //For local use
     // const inputFilePath = await this.fileReturn();
@@ -114,7 +122,7 @@ class UpdateTaskDetail extends Base {
     //  await inputFile.sendKeys("/external_jars/.classpath.txt")
     // for Docker Use
 
-    const saveBtn = await this.driver.findElement(By.id('btnSubmit'));
+    const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     await this.driver.wait(until.elementIsEnabled(saveBtn), 10000);
     await saveBtn.click();
     await this.notificationCheck();
@@ -124,7 +132,7 @@ class UpdateTaskDetail extends Base {
   async checkAttachment(taskName, filename) {
     await this.findAndClickOnLinInTheList(taskName, '.task-name');
     await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"] .modal')),
+      until.elementLocated(By.css('.backdrop .modal')),
       10000
     );
     await this.driver.wait(
@@ -135,17 +143,22 @@ class UpdateTaskDetail extends Base {
       By.css('.task-files-list')
     );
     await this.waitListDate('.file-link', 1);
-    const attacheFile = await attacheFileList.findElement(By.css('.file-link'));
-    const fileSrc = await attacheFile.getAttribute('href');
-    console.log(fileSrc, 'fileSrc');
-    const fileNameArray = await fileSrc.split('/');
-    const fileName = await fileNameArray[fileNameArray.length - 1];
-    if (filename.toLowerCase() !== fileName.toLowerCase()) {
+    const attacheFile = await attacheFileList.findElements(By.css('.file-link'));
+    let filesTitle=[];
+    for(let file of attacheFile){
+      const fileSrc = await file.getAttribute('href');
+      console.log(fileSrc, 'fileSrc');
+      const fileNameArray = await fileSrc.split('/');
+      const fileName = await fileNameArray[fileNameArray.length - 1];
+      filesTitle.push(fileName);
+    }
+   
+    if (!filesTitle.includes(filename)) {
       throw new Error('file did not added');
     } else {
       console.log('file was added');
     }
-    console.log(await fileName);
+    console.log(filesTitle);
   }
 }
 

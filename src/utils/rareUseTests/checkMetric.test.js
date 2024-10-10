@@ -1,4 +1,4 @@
-const { createWebdriverChrom } = require('../webdriver');
+const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
 const ChangeAreaStatus = require('../../classes/view/area/changeAreaStatusInView');
 const ChangeAreaStatusInProjectProgress = require('../../classes/view/area/changeAreaStatusInProjectProgress');
@@ -6,7 +6,7 @@ const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
 const config = require('../config');
-// const { nanoid } = require('nanoid');
+
 
 describe('check metrics', async () => {
   // here add parameters for creation
@@ -24,12 +24,12 @@ describe('check metrics', async () => {
   const email = 'superadmin@gmail.com';
   const password = 'colorjob';
   const project = 'testing template';
-  let obtainedMetrics 
-  let performance
-  let navigationTimings
+  let obtainedMetrics;
+  let performance;
+  let navigationTimings;
 
   beforeEach(async () => {
-    driverChrome = await createWebdriverChrom();
+    driverChrome = await createWebdriverChrome();
   });
 
   afterEach(async () => {
@@ -47,36 +47,45 @@ describe('check metrics', async () => {
       driverChrome
     );
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(config.email);
-    await logginPageTest.fillPasswordInput(config.password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(config.urlhomePageForCheck);
+    await logginPageTest.userLogIn(
+      config.email,
+      config.password,
+      config.urlhomePageForCheck
+    );
 
     try {
       await changeAreaStatusInProgress.goToView(project);
-      await changeAreaStatusInProgress.goToSelektTab('Project Progress');
-      await driverChrome.sendAndGetDevToolsCommand("Performance.enable");
+      await changeAreaStatusInProgress.goToSelectTab('Project Progress');
+      await driverChrome.sendAndGetDevToolsCommand('Performance.enable');
       obtainedMetrics = await driverChrome.sendAndGetDevToolsCommand(
-        "Performance.getMetrics"
-        );
-        performance = await driverChrome.executeScript('return window.performance.timing;');
-        navigationTimings =await driverChrome.executeScript("return window.performance.getEntriesByType('navigation')");
-        // const timeToFirstByte = performance.responseStart - performance.requestStart;
-        // console.log(`Time to First Byte (TTFB): ${timeToFirstByte} ms`);
-        // const domContentLoadedTime = performance.domContentLoadedEventEnd - performance.navigationStart;
-        // console.log(`DOM Content Loaded Time: ${domContentLoadedTime} ms`);
-        // const pageLoadTime = performance.loadEventEnd - performance.navigationStart;
-        // console.log(`Page Load Time: ${pageLoadTime} ms`);
+        'Performance.getMetrics'
+      );
+      performance = await driverChrome.executeScript(
+        'return window.performance.timing;'
+      );
+      navigationTimings = await driverChrome.executeScript(
+        "return window.performance.getEntriesByType('navigation')"
+      );
+      // const timeToFirstByte = performance.responseStart - performance.requestStart;
+      // console.log(`Time to First Byte (TTFB): ${timeToFirstByte} ms`);
+      // const domContentLoadedTime = performance.domContentLoadedEventEnd - performance.navigationStart;
+      // console.log(`DOM Content Loaded Time: ${domContentLoadedTime} ms`);
+      // const pageLoadTime = performance.loadEventEnd - performance.navigationStart;
+      // console.log(`Page Load Time: ${pageLoadTime} ms`);
 
-        console.log(obtainedMetrics, '1', performance, '2', navigationTimings, '3');
-        await lambdaParameters('passed',driverChrome);
+      console.log(
+        obtainedMetrics,
+        '1',
+        performance,
+        '2',
+        navigationTimings,
+        '3'
+      );
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'change_area_status_project');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
-
-  
 });

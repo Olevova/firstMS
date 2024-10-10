@@ -29,8 +29,9 @@ class RemoveTaskByEmployee extends RemoveTask {
 
   async goToTasksList(project) {
    
-    await this.driver.wait(until.elementsLocated(By.id('linkProjectAdminOrEmployee')), 10000);
-    const projectsBtn = await this.driver.findElement(By.id('linkProjectAdminOrEmployee'));
+    // await this.driver.wait(until.elementsLocated(By.id('linkProjectAdminOrEmployee')), 10000);
+    await this.driver.wait(until.elementsLocated(By.css('.project-item')), 10000);
+    const projectsBtn = await this.driver.findElement(By.css('.project-item'));
     await projectsBtn.click();
 
     await this.driver.wait(until.elementsLocated(By.css('.company-name')), 10000);

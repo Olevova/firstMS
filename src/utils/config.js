@@ -1,10 +1,12 @@
+const { nanoid } = require('nanoid');
 module.exports = {
     // URLs for Auto tests
     urlLoginPage: 'https://dev-frontend.colorjob.terenbro.com/login',
     //for local use 'http://localhost:4300/login',
     urlhomePageForCheck: 'https://dev-frontend.colorjob.terenbro.com/system/dashboard',
     //for local use "http://localhost:4300/system/dashboard",
-    mainCompanyPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24',
+    mainCompanyPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24/dashboard',
+    mainCompanyProjectsPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24',
     mainCompanyUsersPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24/users',
     projectsPage: 'https://dev-frontend.colorjob.terenbro.com/system/projects',
     companiesPage: 'https://dev-frontend.colorjob.terenbro.com/system/companies',
@@ -12,6 +14,8 @@ module.exports = {
     usersPage: 'https://dev-frontend.colorjob.terenbro.com/system/users',
     emailForTest: 'justtesting.den@gmail.com',
     emailUseForTest: 'volodymyr_o@terenbro.com',
+    emailUseForTestCA: 'volodymyrCA@terenbro.com',
+    wrongEmailFormat:'error@',
     // SA,CA,PM,SU credentials
     email: 'superadmin@gmail.com',
     password: 'colorjob',
@@ -21,11 +25,30 @@ module.exports = {
     passwordPM:'222222',
     emailSU: 'olevova@ukr.net',
     passwordSU: '222222',
+    passwordSUForChange: '333333',
+    inviteUserEmailSU: 'invitePM@gmail.com',
+    inviteUserEmail:'serigof730@cetnob.com',
+    inviteUserNewEmail: 'pekaw54044@asaud.com',
+    inviteUserName: 'Invite',
+    inviteUserNameEdit: 'Edit',
+    inviteUserPhone: 7778876555,
+    taskTestUser:'task-test',
+    taskTestUserEmail:'testtask@gmail.com',
+    taskTestUserCA: 'CA_parallel',
+    taskTestUserPM: 'PM_parallel',
     //company name for test
     companyName: 'AT2024',
     //main test project
     projectNameMain: 'ColorjobAT',
     projectNameEdit: 'unitEdit',
+    projectNameForCA: 'CA test',
+    projectNameForPM: 'PM test',
+    projectNameForSU: 'SU test',
+    projectIDForPM: 'PR-PMPR',
+    // create project items optional
+    newProjectApp:"without",
+    startDate:'12.12.23',
+    eneDate:'12.12.25',
     //test project for status tests
     projectStatus: 'ProjectDoneStatus',
     // projects tabs
@@ -33,9 +56,15 @@ module.exports = {
     projectProgress:'Project Progress',
     users:'Users',
     tasks:'Tasks',
+    activity: 'Activity',
+    settings: 'Settings',
+    materials: 'Materials',
     // users
     userCAName:'Vova CA test1',
     userSUName:'Vova employee test',
+    userSUNameEdit: 'Vova employee edit',
+    userPMName: 'Vova PM test',
+    userPMNameEdit: 'Vova PM edit',
     //tasks Status
     toDo:'To do',
     inProgress: 'In Progress',
@@ -46,7 +75,98 @@ module.exports = {
     // users Role type
     projManager: 'Project Manager',
     standartUser: 'Standard User',
+    companyUser: 'Company Admin',
     // dashbord tabs
     projects: 'Projects',
-
+    dashboardTables:{
+      company:'cm',
+      project:'pj',
+      task:'ts'
+    },
+    //custom status
+    statusForEdit: 'color',
+    //class locators
+    locatorUserNames:'company-name',
+    locatorTaskName:'task-name',
+    locatorProjects:'table-projects__row',
+    // css locator
+    locatorProjectsLinkCss:'#linkProjectsAdminOrEmployee',
+    locatorProjectFormCss:'app-project-form',
+    locatorProjectsCss:'.table-projects__row',
+    locatorProjectClientNameCss: '.project-client-wrapper',
+    locatorProjectNameInListCss:'.project-name__wrapper',
+    locatorListOfProjectInProfileCss: '.table-details__project-row',
+    locatorProjectTitleCss:'.table-details-projectName',
+    locatorViewProjectBtnUserMenuCss:'#viewProject',
+    locatorProjectHeaderTitleCss: '.sub-header__title span',
+    locatorDeleteProjectCss: '#btnDeleteProjectOpenModal',
+    locatorProjectCloseFormCss: '#btnCloseMobile',
+    locatorProjectCancelFormCss: '#btnCancelMobile',
+    locatorProjectEditBtnCss:'.settings-wrapper__btn-edit',
+    locatorCompanyListCss: '.company-id',
+    locatorCompanyFormCss:'app-company-form .backdrop .form-invite.form-create',
+    locatorTasksElementsCss: '.item-info-list',
+    locatorCustomMenuBtnCss: '.customize-status-btn',
+    locatorAddFloorBtnCss: '.add-floor-menu-with-btn-wrapper',
+    locatorAddUnitBtnCss: '#addUnit',
+    locatorAddRoomBtnCss: '#addRoom',
+    locatorCreateRoomBtnCss: '.add-floor-menu #createNewRoom',
+    locatorThreeDotsRoomMenuCss:'.room-name .menu-list-dots-wrapper',
+    locatotDeleteUserOpenModalCss: '#deleteUserOpenModal',
+    locatorDeletePoUpBtnCss:'#btnDelete',
+    locatorClosePoUpBtnCss:'#btnClose',
+    locatorCancelPoUpBtnCss:'#btnCancel',
+    locatorCreatePouUpBtnCss: '#btnCreate',
+    locatorDeleteUserCss:'#deleteUserOpenModal',
+    locatorEditUserCss:'#btnEdit',
+    locatorBackdropCss:'.backdrop',
+    locatorModalWindowCss:'.backdrop .modal',
+    locatorInviteUserWindowCss:'.backdrop .form-invite',
+    locatorHideCompliteBtnCss: '.hide-completed-btn',
+    linkSubmitBtnCss: '#btn-submit',
+    locatorCancelLinkLoginCss:'#linkCancel',
+    locatorAreaTabsCss: '.area-details-tabs-list__link',
+    //taske createion
+    taskDescription:'Test description',
+    taskDate: '15.12.25',
+    //View tab create items
+    newFloorName : 'TestFloor',
+    newUnitName : 'TestUnit',
+    newRoomName : 'TestUnique',
+    newAreaName : 'TestArea',
+    newSubtitle : 'Test',
+    editRoom : 'Testedit',
+    editArea : 'edit',
+    template : 'Testtemplate',
+    roomBasedOnTemplate : 'roomBasedOnTemplate',
+    detuchRoom : 'TestDetuch',
+    editFloorName:'test2',
+    newTaskName:'FortestTaskRl',
+    newTaskNameForUpdate:'TestEditRl2',
+    // Materials date
+    tag:'test tag',
+    unit:{
+      SF:"SF",
+      PCS:'PCS'
+    },
+    SubmittalStatus:{
+      Rejected:'Rejected',
+      SamplesOrdered:'Samples Ordered',
+      Submitted:'Submitted',
+      ApprovedAsNoted:'Approved As Noted',
+      Approved:'Approved'
+    },
+    OrderStatus:{
+      NotOrdered:'Not Ordered',
+      POSubmitted:'PO Submitted',
+      PartiallyOrdered:'Partially Ordered',
+      Ordered:'Ordered',
+      Arrived:'Arrived'
+    },
+    OrderDateMaterials:Date.now(),
+    // random date
+    randomDate:nanoid(6),
+    // files path
+    lambdaPathWindows:'C:\\Users\\ltuser\\Downloads\\',
+    lambdaPathDockerChrom:'/home/selenium_files/'
   };

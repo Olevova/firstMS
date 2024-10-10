@@ -1,7 +1,8 @@
 const { By, until } = require('selenium-webdriver');
 const Base = require('../base');
+const PaginationByButton = require('./paginationByBtn');
 
-class PaginationByArrow extends Base {
+class PaginationByArrow extends Base{
   static async waitNewListDate(driver, name, selector) {
     let element = name;
     let count = 0;
@@ -21,6 +22,7 @@ class PaginationByArrow extends Base {
     super(driver);
     this.driver = driver;
     this.startEntiteNumber = 0;
+    this.paginationByButton = new PaginationByButton();
   }
 
   async goToProjectsPage() {
@@ -42,35 +44,13 @@ class PaginationByArrow extends Base {
     const firstElName = await startElNumber[0].getText();
 
     const paginationArrow = await this.driver.findElement(By.id('btnNextPage'));
-    await this.driver.actions().scroll(0, 0, 0, 0, paginationArrow).perform();
-    await paginationArrow.click();
-
-    const paginationBtn = await this.driver.findElements(
+    const paginationDropDown = await this.driver.findElements(
       By.css('.pagination-list__item:not(.hidden)')
     );
-    // await PaginationByArrow.waitNewListDate(
-    //   this.driver,
-    //   firstElName,
-    //   '.company-name'
-    // );
-    await this.waitListDate('.company-name', 2);
-    const companiesList = await this.driver.findElements(By.className('list-name-wrapper'))
-
-    const activeBtn = await paginationBtn[1].getAttribute('current');
-    const leftArrow = await this.driver.wait(
-      until.elementLocated(By.id('btnPrevPage'), 10000)
-    );
-
-    if (
-      (await companiesList[0].getText()) !== firstElName &&
-      activeBtn === 'true' &&
-      leftArrow
-    ) {
-      console.log('Pagination by arrow work');
-      return;
-    } else {
-      throw new Error('Pagination not work');
-    }
+    await this.driver.actions().scroll(0, 0, 0, 0, paginationArrow).perform();
+    await paginationArrow.click();
+    this.paginationByButton.waitListAndCheckPagination(firstElName)
+  
   }
 }
 

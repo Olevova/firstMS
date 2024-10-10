@@ -8,13 +8,32 @@ class PaginationByButton extends Base {
 
     while (name === element && count < 10) {
       const list = await driver.findElements(By.css(selector));
-      const firstElement = await list[0]
+      const firstElement = await list[0];
       element = await firstElement?.getText();
-      if (element === name || element===undefined) {
+      if (element === name || element === undefined) {
         await driver.sleep(1000);
         count += 1;
       }
     }
+  }
+
+  async waitListAndCheckPagination(firstElName) {
+    let waitTime = 0;
+    let companiesList = [];
+
+    do {
+      await this.waitListDate('.project-name__wrapper', 20);
+      companiesList = await this.driver.findElements(By.className('project-name__wrapper'));
+
+      if ((await companiesList[0].getText()) === firstElName) {
+        await this.driver.sleep(1000);
+        waitTime += 1;
+      } else {
+        break;
+      }
+    } while (waitTime < 5);
+
+    return companiesList;
   }
 
   constructor(driver) {
@@ -36,11 +55,15 @@ class PaginationByButton extends Base {
   }
 
   async executionOfPagination() {
-    await this.driver.wait(until.elementLocated(By.className('company-name')),10000);
+    await this.driver.wait(
+      until.elementLocated(By.className('company-name')),
+      10000
+    );
     const startElNumber = await this.driver.findElements(
       By.className('company-name')
     );
     const firstElName = await startElNumber[0].getText();
+    console.log(firstElName, 'first');
 
     const paginationDropDown = await this.driver.findElements(
       By.css('.pagination-list__item:not(.hidden)')
@@ -50,29 +73,8 @@ class PaginationByButton extends Base {
       .scroll(0, 0, 0, 0, paginationDropDown[0])
       .perform();
     await paginationDropDown[1].click();
-
-    // await PaginationByButton.waitNewListDate(
-    //   this.driver,
-    //   firstElName,
-    //   '.company-name'
-    // );
-    await this.waitListDate('.company-name', 2);
-    // const endElNumber = await this.driver.findElements(
-    //   By.className('company-name')
-    // );
-    
-    const companiesList = await this.driver.findElements(By.className('list-name-wrapper'))
-    const activeBtn = await paginationDropDown[1].getAttribute('current');
-    console.log(await companiesList.length, 'len', await companiesList[0].getText());
-    if (
-      (await companiesList[0].getText()) !== firstElName &&
-      activeBtn === 'true'
-    ) {
-      console.log('pagination by button work');
-      return;
-    } else {
-      throw new Error('Pagination not work');
-    }
+    await this.waitListAndCheckPagination(firstElName);
+   
   }
 }
 

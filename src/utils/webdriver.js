@@ -12,7 +12,7 @@ const withoutLambda = process.env.RUNNING_WITHOUT_VIDEO === 'true';
 const browsers = [{ browser: 'Chrome', bVersion: '126', os: 'Windows 10' }];
 let inDocker = false;
 
-async function createWebdriverChrom() {
+async function createWebdriverChrome() {
   let driver;
   try {
     if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
@@ -73,9 +73,9 @@ async function createWebdriverChrom() {
 }
 
 module.exports = {
-  createWebdriverChrom,
+  createWebdriverChrome,
   isRunningInDocker,
   isRunningInTeamCity,
   inDocker,
-  withoutLambda
+  withoutLambda,
 };

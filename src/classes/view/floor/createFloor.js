@@ -33,7 +33,7 @@ class CreatFloor extends Base {
 
   async checkFloorCreation(floor) {
     await this.notificationCheck();
-    await this.checkCreateItem('.cdk-drag.floor-item', floor);
+    await this.checkCreateItem('.cdk-drag .floor-item', floor);
   }
 }
 

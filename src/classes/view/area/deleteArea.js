@@ -10,11 +10,11 @@ class DeleteArea extends CreateArea{
 
 async deleteArea(area){
     await this.driver.wait(
-        until.elementLocated(By.css(".backdrop[show='true']")),
+        until.elementLocated(By.css(".backdrop")),
         10000
       );
       const roomModal = await this.driver.findElement(
-        By.css(".backdrop[show='true']")
+        By.css(".backdrop")
       );
       await this.driver.wait(until.elementLocated(By.className('detach-btn')),10000);
       const detachBtn = await roomModal.findElement(By.className('detach-btn'));

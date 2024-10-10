@@ -38,24 +38,25 @@ class RemoveProject extends Base {
     });
   }
 
-  async goToProjectList(user="sa") {
-    if(user === 'sa'){
+  async goToProjectList(user = 'sa') {
+    if (user === 'sa') {
       const projectBtnSa = await this.driver.findElement(By.id('linkProjects'));
       await projectBtnSa.click();
+    } else {
+      const projectBtn = await this.driver.findElement(
+        By.id('linkProjectsAdminOrEmployee')
+      );
+      await projectBtn.click();
     }
-    // else{
-    //   const projectBtn = await this.driver.findElement(By.id('linkProjectsAdminOrEmployee'));
-    //   await projectBtn.click();
-    // }
 
     await this.driver.executeScript('return document.readyState');
     const numberOfProject = this.numberOfItemsInTheList('.item-info-list');
-    if(numberOfProject >=20){
+    if (numberOfProject >= 20) {
       await this.driver.wait(
         until.elementLocated(By.id('selectAmountItems')),
         10000
       );
-  
+
       const paginationDropDown = await this.driver.findElement(
         By.id('selectAmountItems')
       );
@@ -66,7 +67,6 @@ class RemoveProject extends Base {
       await this.findDateInDropDown(paginationList, '100');
       await this.waitListDate('.company-name', 11);
     }
-
   }
 
   async findProject(project, page) {
@@ -75,15 +75,15 @@ class RemoveProject extends Base {
       until.elementsLocated(By.className('company-name')),
       10000
     );
+    await this.waitListDate('.company-name',3);
     const allProjects = await this.driver.findElements(
       By.className('company-name')
     );
-   
 
     if (allProjects) {
       await RemoveProject.findProjectInList(allProjects, project);
-      await this.driver.wait(until.elementLocated(By.id('settingsTab')),10000)
-      await this.driver.findElement(By.id('settingsTab')).click()
+      await this.driver.wait(until.elementLocated(By.id('settingsTab')), 10000);
+      await this.driver.findElement(By.id('settingsTab')).click();
     }
   }
 
@@ -110,7 +110,7 @@ class RemoveProject extends Base {
     await this.driver.sleep(1000);
 
     await this.driver.wait(until.elementIsEnabled(delBtnModalProject), 10000);
-    
+
     await delBtnModalProject.click();
 
     await this.driver.wait(
@@ -135,9 +135,9 @@ class RemoveProject extends Base {
         By.className('company-name')
       );
 
-      const isCompanyRemoved = allProjectsAfterDel.every(
-        async (i) =>{(await i.getText()) !== projectName}
-      );
+      const isCompanyRemoved = allProjectsAfterDel.every(async i => {
+        (await i.getText()) !== projectName;
+      });
       console.log(isCompanyRemoved);
 
       if (isCompanyRemoved) {
@@ -150,16 +150,27 @@ class RemoveProject extends Base {
     }
   }
 
-  async removeProjectViaThreeDotsMenu(nameOfProject){
-    await this.driver.wait(until.elementsLocated(By.css('.table-projects__row .item-info-list')),10000);
-    await this.findItemAndOpenThreeDotsMenu(nameOfProject,'.table-projects__row .item-info-list .company-name .list-name-wrapper');
-    await this.driver.wait(until.elementLocated(By.css('#dotsMenu[editmenuopen]')),10000);
-    const deleteBtn = await this.driver.findElement(By.css('#dotsMenu[editmenuopen] #deleteItem'))
+  async removeProjectViaThreeDotsMenu(nameOfProject) {
+    await this.driver.wait(
+      until.elementsLocated(By.css('.table-projects__row .item-info-list')),
+      10000
+    );
+    await this.findItemAndOpenThreeDotsMenu(
+      nameOfProject,
+      '.table-projects__row .item-info-list .company-name .list-name-wrapper'
+    );
+    await this.driver.wait(
+      until.elementLocated(By.css('#dotsMenu[editmenuopen]')),
+      10000
+    );
+    const deleteBtn = await this.driver.findElement(
+      By.css('#dotsMenu[editmenuopen] #deleteItem')
+    );
     await this.driver.wait(until.elementIsVisible(deleteBtn), 10000);
     await this.driver.wait(until.elementIsEnabled(deleteBtn), 10000);
     await deleteBtn.click();
-    await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"]')),10000);
-    await this.driver.wait(until.elementLocated(By.css('.modal')),10000);
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
+    await this.driver.wait(until.elementLocated(By.css('.modal')), 10000);
     const modal = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);
     const delBtnModalProject = await this.driver.findElement(
@@ -169,7 +180,7 @@ class RemoveProject extends Base {
     await this.driver.executeScript('return document.readyState');
     // await this.driver.sleep(1000);
     await this.driver.wait(until.elementIsEnabled(delBtnModalProject), 10000);
-    
+
     await delBtnModalProject.click();
     await this.notificationCheck();
     await this.checkDeleteItem('.company-name', nameOfProject);

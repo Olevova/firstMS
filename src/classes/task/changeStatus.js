@@ -47,7 +47,7 @@ class ChangeStatusTask extends Base {
     //     .scroll(0, 0, 0, 0, taskStatus)
     //     .perform();
         
-    await this.driver.sleep(2000);
+    await this.driver.sleep(1000);
     this.startTaskStatus = await taskStatus.getText();
 
     await taskStatus.click();

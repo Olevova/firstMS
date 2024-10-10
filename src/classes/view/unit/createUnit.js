@@ -6,14 +6,14 @@ class CreateUnit extends Base {
     const firstUnitForm = await driver
       .wait(
         until.elementLocated(
-          By.css('form.form-create-unit-instead-btn[openedunit="true"]')
+          By.css('form.form-create-unit-instead-btn')
         ),
         3000
       )
       .catch(() => null);
     if (firstUnitForm !== null) {
       const inputUnit = await firstUnitForm.findElement(
-        By.id('createUnitInput')
+        By.id('createUnitInputDesk')
       );
       await this.driver.wait(until.elementIsEnabled(inputUnit), 10000);
     } else {
@@ -45,13 +45,13 @@ class CreateUnit extends Base {
     await this.createForm(this.driver);
 
     await this.driver.wait(
-      until.elementLocated(By.id('createUnitInput')),
+      until.elementLocated(By.id('createUnitInputDesk')),
       10000
     );
-    const unitInput = await this.driver.findElement(By.id('createUnitInput'));
+    const unitInput = await this.driver.findElement(By.id('createUnitInputDesk'));
     await unitInput.sendKeys(unit);
-    await this.driver.wait(until.elementLocated(By.id('createUnitBtn')), 10000);
-    const submitBtn = await this.driver.findElement(By.id('createUnitBtn'));
+    await this.driver.wait(until.elementLocated(By.id('createUnitBtnDesk')), 10000);
+    const submitBtn = await this.driver.findElement(By.id('createUnitBtnDesk'));
     await this.driver.wait(until.elementIsEnabled(submitBtn), 10000);
     await submitBtn.click();
   }

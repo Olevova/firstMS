@@ -1,4 +1,4 @@
-const { createWebdriverChrom } = require('../webdriver');
+const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
 const DuplicateUnit = require('../../classes/view/unit/duplicateUnit');
 
@@ -25,7 +25,7 @@ describe('duplicate 20 units', async () => {
   const projectName = '20 units';
 
   beforeEach(async () => {
-    driverChrome = await createWebdriverChrom();
+    driverChrome = await createWebdriverChrome();
   });
 
   afterEach(async () => {
@@ -41,22 +41,22 @@ describe('duplicate 20 units', async () => {
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const duplicateUnit = new DuplicateUnit(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(config.email);
-    await logginPageTest.fillPasswordInput(config.password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(config.urlhomePageForCheck);
+    await logginPageTest.userLogIn(
+      config.email,
+      config.password,
+      config.urlhomePageForCheck
+    );
 
     try {
       await duplicateUnit.goToView(projectName);
-      for(let i = 0; i < 15; i += 1 ){
+      for (let i = 0; i < 15; i += 1) {
         await duplicateUnit.duplicateUnit();
       }
-      
-      await lambdaParameters('passed',driverChrome);
+
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, '20unit_duplicate');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

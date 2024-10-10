@@ -33,12 +33,12 @@ class CreateTask extends Base {
     await this.waitListDate('.company-name',3)
     const listOfItem = await this.driver.findElements(By.css('.company-name'));
     
-    console.log( await listOfItem.length , 'he');
+    // console.log( await listOfItem.length , 'he');
     if ((await listOfItem.length) >= 20){
       const noPagination = await this.driver
       .wait(until.elementLocated(By.id('selectAmountItems')), 3000)
       .catch(() => null);
-      console.log("here");
+      // console.log("here");
       if (noPagination === null) {
         console.log('20 companies');
       }
@@ -62,8 +62,7 @@ class CreateTask extends Base {
       10000
     );
     await this.openTaskForm();
-    // const tasksBtn = await this.driver.findElement(By.id('tasksTab'));
-    // await tasksBtn.click();
+   
   }
 
   async fillCreateTask(name, description, taskDueData, user=null) {
@@ -77,11 +76,11 @@ class CreateTask extends Base {
     const createForm = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(createForm), 10000);
 
-    const taskName = await this.driver.findElement(By.id('taskName'));
+    const taskName = await this.driver.findElement(By.id('taskNameMobile'));
     await taskName.sendKeys(name);
 
     const usersDropDownBtn = await this.driver.findElement(
-      By.id('taskSelectMember')
+      By.id('taskSelectMemberMobile')
     );
     await usersDropDownBtn.click();
 
@@ -97,11 +96,11 @@ class CreateTask extends Base {
     }
 
     const taskDescription = await this.driver.findElement(
-      By.id('taskDescription')
+      By.id('taskDescriptionMobile')
     );
     await taskDescription.sendKeys(description);
 
-    const taskPriority = await this.driver.findElement(By.id('prioritySelect'));
+    const taskPriority = await this.driver.findElement(By.id('prioritySelectMobile'));
     await taskPriority.click();
 
     await this.waitListDate('.ng-option', 1);
@@ -114,13 +113,13 @@ class CreateTask extends Base {
     const taskData = await this.driver.findElement(By.id('taskDueDate'));
     await taskData.sendKeys(taskDueData);
 
-    const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
+    const submitBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     // await this.waitForSpecificTime(12,55 ) can use it for set the time for click
     await submitBtn.click();
   }
 
   async checkTaskCreation(newTaskName) {
-    await this.notificationCheck('id','mainErrorText');
+    await this.notificationCheck();
     await this.checkCreateItem('.table-tasks__row .item-info-list .task-name .task-name__wrapper .list-name-wrapper',newTaskName)
   }
 }

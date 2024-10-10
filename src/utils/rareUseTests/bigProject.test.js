@@ -1,4 +1,4 @@
-const { createWebdriverChrom } = require('../webdriver');
+const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
 const CreateProject = require('../../classes/project/createProject');
 const CreateRoom = require('../../classes/view/room/createRoom');
@@ -10,18 +10,18 @@ const DuplicateFloor = require('../../classes/view/floor/duplicateFloor');
 const CreateTask = require('../../classes/task/createTask');
 const { describe } = require('mocha');
 const config = require('../config');
-const { customAlphabet, nanoid  } = require('nanoid');
+const { customAlphabet, nanoid } = require('nanoid');
 
-describe('Create, edit and remove project in the chrom browser, test-cases #5,19,12', async () => {
+describe('Create, edit and remove project in the chrome browser, test-cases #5,19,12', async () => {
   // here add parameters for creation
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-// Створюємо функцію для генерації ID довжиною 2 символи з використанням лише букв
+  // Створюємо функцію для генерації ID довжиною 2 символи з використанням лише букв
   const nanoidLettersOnly = customAlphabet(alphabet, 2);
   let driverChrome = null;
 
   const newProjectName = '1' + nanoidLettersOnly(2);
-  const newProjectkey = 'A'+ nanoidLettersOnly(2);
+  const newProjectkey = 'A' + nanoidLettersOnly(2);
   const newProjectNumber = nanoid(2);
   const newProjectStreet = 'Test2 new';
   const newProjectApp = '22';
@@ -37,7 +37,7 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
   const newTaskDueData = '15.12.2024';
 
   beforeEach(async () => {
-    driverChrome = await createWebdriverChrom();
+    driverChrome = await createWebdriverChrome();
   });
 
   afterEach(async () => {
@@ -56,7 +56,6 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
   //   const createRoom = new CreateRoom(driverChrome);
   //   const createUnit = new CreateUnit(driverChrome);
   //   const roomTemplate = new RoomTemplate(driverChrome);
-    
 
   //   await logginPageTest.openLoginForm();
   //   await logginPageTest.fillEmailInput(config.email);
@@ -86,7 +85,7 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
   //     await createUnit.checkCreateUnit(newProjectName);
   //     await createRoom.createTemplateRoomWithAreas('_','room',true , 10);
   //     await roomTemplate.checkTemplateInList('_', 'room');
-      
+
   //     // await createProjectTest.chekCreationOfNewProject(newProjectName);
   //   } catch (error) {
   //     await makeScreenshot(driverChrome, 'project_create');
@@ -111,22 +110,22 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
     await logginPageTest.fillEmailInput(config.email);
     await logginPageTest.fillPasswordInput(config.password);
     await logginPageTest.checkSaveForFuture();
-    
+
     // await logginPageTest.login('http://localhost:4200/system/dashboard');
     await logginPageTest.login(config.urlhomePageForCheck);
 
     try {
       await createTask.goToCreateTasksForm('Performance');
-      for(let i = 0; i < 20; i += 1){
-        const taskName = "t" + i;
-        const taskDescription = 'description'+ i
+      for (let i = 0; i < 20; i += 1) {
+        const taskName = 't' + i;
+        const taskDescription = 'description' + i;
         await createTask.fillCreateTask(
           taskName,
           taskDescription,
           newTaskDueData,
           'perfom PM'
         );
-        await createTask.notificationCheck('id','mainErrorText')
+        await createTask.notificationCheck();
       }
       // await createUnit.goToView('1GV(25 Water street)', 'ca');
       // for(let i = 0; i < 1; i += 1){
@@ -144,17 +143,15 @@ describe('Create, edit and remove project in the chrom browser, test-cases #5,19
       //   await duplicateUnit.duplicateUnit();
       // }
       // console.log("duplicate floors");
-      for(let i = 24; i < 80; i += 1){
-      await duplicateFloorInProject.duplicateFloor();
+      for (let i = 24; i < 80; i += 1) {
+        await duplicateFloorInProject.duplicateFloor();
       }
 
       // await createProjectTest.chekCreationOfNewProject(newProjectName);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
-
-  
 });

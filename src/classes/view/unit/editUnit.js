@@ -23,11 +23,11 @@ class EditUnit extends CreateUnit {
           await this.driver.wait(until.elementIsEnabled(menuBtn));
           noBtn = true;
           await menuBtn.click();
-          const menu = await this.driver.findElement(
-            By.css('.editMenuList[editmenuunitopen]')
-          );
+          // const menu = await this.driver.findElement(
+          //   By.css('.editMenuList')
+          // );
 
-          const editUnitBtn = await menu.findElement(By.id('editUnitBtn'));
+          const editUnitBtn = await this.driver.findElement(By.id('editUnitBtn'));
           await this.driver.wait(until.elementIsEnabled(editUnitBtn), 10000);
           await editUnitBtn.click();
           break;
@@ -36,12 +36,12 @@ class EditUnit extends CreateUnit {
     }
     await this.driver.wait(
       until.elementLocated(
-        By.css('.form-create-unit-instead-btn[openformeditunit="true"]')
+        By.css('.form-create-unit-instead-btn')
       ),
       10000
     );
     const unitForm = await this.driver.findElement(
-      By.css('.form-create-unit-instead-btn[openformeditunit="true"]')
+      By.css('.form-create-unit-instead-btn')
     );
     const inputUnit = await unitForm.findElement(By.id('editUnitInput'));
     await this.driver.wait(until.elementIsEnabled(inputUnit), 10000);
@@ -70,25 +70,17 @@ class EditUnit extends CreateUnit {
           noBtn = true;
           await this.driver.wait(
             until.elementLocated(
-              By.css('.form-create-unit-instead-btn[openformeditunit="true"]')
+              By.css('.form-create-unit-instead-btn')
             ),
             10000
           );
           
-          // await menuBtn.click();
-          // const menu = await this.driver.findElement(
-          //   By.css('.editMenuList[editmenuunitopen]')
-          // );
-
-          // const editUnitBtn = await menu.findElement(By.id('editUnitBtn'));
-          // await this.driver.wait(until.elementIsEnabled(editUnitBtn), 10000);
-          // await editUnitBtn.click();
           break;
         }
       }
     }
     const unitForm = await this.driver.findElement(
-      By.css('.form-create-unit-instead-btn[openformeditunit="true"]')
+      By.css('.form-create-unit-instead-btn')
     );
     const inputUnit = await unitForm.findElement(By.id('editUnitInput'));
     await this.driver.wait(until.elementIsEnabled(inputUnit), 10000);

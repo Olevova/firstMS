@@ -6,7 +6,6 @@ class SequenceRoomChange extends Base{
         for (let floor of floors){
             const areas = await floor.findElements(By.css('li .rooms-list__item'));
             if( await areas.length > 1){
-                console.log('here');
                 const draggable = await areas[0];
                 const droppable = await areas[1];
                 this.firstElement = await draggable.getText();
@@ -22,7 +21,6 @@ class SequenceRoomChange extends Base{
                 return
 
             }
-            console.log('not here', await areas.length);
         }
         
     }

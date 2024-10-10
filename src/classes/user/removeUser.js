@@ -68,9 +68,10 @@ class RemoveUser extends InviteUser {
         userForSearch = await allUsers[i].getText();
 
         if (userForSearch === user) {
-          const allThreeDotsMenu = await this.driver.findElements(By.css('.dots-actions'));
-          const userMenu = await allThreeDotsMenu[i]
+          const userListInfo = await this.driver.findElements(By.css('.item-info-list'));
+          const userMenu = await userListInfo[i].findElement(By.css('.dots-actions'));
           await userMenu.click();
+          await this.driver.sleep(1000)
           return;
         }
       }
@@ -102,7 +103,7 @@ class RemoveUser extends InviteUser {
   }
 
   async checkIfUserRemove(delemail, userPage) {
-    await this.driver.wait(until.elementLocated(By.className('notification')));
+    await this.driver.wait(until.elementLocated(By.className('notification')),10000);
     const windowHandles = await this.driver.findElement(
       By.className('notification')
     );

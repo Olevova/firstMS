@@ -69,7 +69,7 @@ class AddFileToArea extends Base{
     await this.driver.sleep(1000)
     console.log(__dirname, 'dirName');
     const files = fs.readdirSync(__dirname);
-    console.log('Files in directory:', files);
+    // console.log('Files in directory:', files);
     await this.driver.wait(until.elementsLocated(By.css('.room-areas-list__item.ng-star-inserted')), 10000);
     const areas = await this.driver.findElements(By.css(`.room-areas-list__item.ng-star-inserted`));
     await this.driver.wait(until.elementIsEnabled(areas[0]),10000)
@@ -83,8 +83,9 @@ class AddFileToArea extends Base{
     const saveBtn = await this.driver.findElement(By.css('.btn-save-comment'));
     await commentArea.sendKeys(comment);
     // add file
+    await this.driver.wait(until.elementLocated(By.id('fileInput')),10000);
+    await this.driver.sleep(500);
     const inputFile = await this.driver.findElement(By.id('fileInput'));
-    console.log(isRunningInDocker,'isRunDocker' , isRunningInTeamCity, 'isRunningInTeamCity' , !withoutLambda, '!withoutLambda');
     // for local Use
     // const pathFile = path.join(__dirname, 'Logo.png');
     // await inputFile.sendKeys(pathFile)
@@ -103,7 +104,7 @@ class AddFileToArea extends Base{
     else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda){
         
         console.log('running in Lambda', __dirname);
-        await this.listDirectoryContents(__dirname);
+        // await this.listDirectoryContents(__dirname);
         // await this.listDirectoryContents('C/Users/ltuser');
         // const filePath = path.join(__dirname, 'Logo.png');
         // const testFilePath = path.join(__dirname, 'testfile.txt');
@@ -132,7 +133,7 @@ class AddFileToArea extends Base{
         
         // console.log(imgR, 'imgR')
         const imgArray =  await this.driver.wait(until.elementsLocated(By.css('a.file-link')),5000).catch(()=>null);
-        console.log(imgArray, 'imgArray');
+        // console.log(imgArray, 'imgArray');
         if(imgArray === null && state !== 'add'){
             console.log('attachment was deleted');
             return

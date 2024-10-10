@@ -9,11 +9,11 @@ class DeleteFloor extends CreatFloor {
 
   async deleteFloor(floor) {
     await this.driver.wait(
-      until.elementsLocated(By.css('.cdk-drag.floor-item')),
+      until.elementsLocated(By.css('.cdk-drag .floor-item')),
       10000
     );
     const floors = await this.driver.findElements(
-      By.css('.cdk-drag.floor-item')
+      By.css('.cdk-drag .floor-item')
     );
     for (let item of floors) {
       if (item) {

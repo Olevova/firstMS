@@ -42,7 +42,7 @@ class CheckRoomGrouping extends Base {
     );
     const rooms = await this.driver.findElements(By.css('.rooms-list__item'));
     const floorActive = await this.driver.findElement(
-      By.css('.cdk-drag.floor-item.active')
+      By.css('.cdk-drag .floor-item.active')
     );
     this.floor = await floorActive.getAttribute('title');
     for (const room of rooms) {

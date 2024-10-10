@@ -13,7 +13,7 @@ class DuplicateUnit extends Base {
       By.css('.cdk-drag[cdkdragpreviewcontainer="parent"]')
     );
     const floors = await this.driver.findElements(
-      By.css('.cdk-drag.floor-item')
+      By.css('.cdk-drag .floor-item')
     );
     if ((await units.length) > 0 && (await floors.length) > 1) {
       this.duplicateUnitName = await units[0]
@@ -131,13 +131,13 @@ class DuplicateUnit extends Base {
           this.duplicatedUnitForDeleting = await unitTitle;
           console.log(await unitTitle);
           console.log('Unit was duplicate succesful');
+          await this.driver.sleep(500);
           return;
         }
       }
     }
     throw new Error('Duplicate not work');
   }
-
 
   async duplicateUnit() {
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
@@ -148,29 +148,37 @@ class DuplicateUnit extends Base {
     await this.driver.wait(until.elementIsEnabled(addUnit));
     await this.driver.actions().scroll(0, 0, 0, 0, addUnit).perform();
     await addUnit.click();
-    await this.driver.wait(until.elementLocated(By.css('.add-floor-menu[openaddunitmenu]')),10000);
     await this.driver.wait(
-      until.elementLocated(
-        By.css('.duplicate-units-lists-wrapper')
-      ),
+      until.elementLocated(By.css('.add-floor-menu')),
       10000
     );
-    const floorList = await this.driver.findElements(By.css('.duplicate-units-variants-floors-list__item'));
-    await floorList[0].click()
-    await this.driver.wait(until.elementLocated(By.css('.duplicate-units-variants-list')),10000);
-    await this.waitListDate('.duplicate-units-variants__item',1);
-    const unitsList = await this.driver.findElements(By.css('.duplicate-units-variants__item'));
+    await this.driver.wait(
+      until.elementLocated(By.css('.duplicate-units-lists-wrapper')),
+      10000
+    );
+    const floorList = await this.driver.findElements(
+      By.css('.duplicate-units-variants-floors-list__item')
+    );
+    await floorList[0].click();
+    await this.driver.wait(
+      until.elementLocated(By.css('.duplicate-units-variants-list')),
+      10000
+    );
+    await this.waitListDate('.duplicate-units-variants__item', 1);
+    const unitsList = await this.driver.findElements(
+      By.css('.duplicate-units-variants__item')
+    );
     const unitsForDuplicate = await unitsList[0];
-    await this.driver.wait(until.elementIsEnabled(unitsForDuplicate),10000);
+    const unitsTitle = await unitsForDuplicate.getText()
+    await this.driver.wait(until.elementIsEnabled(unitsForDuplicate), 10000);
     await this.driver.actions().scroll(0, 0, 0, 0, addUnit).perform();
-  
-    await unitsForDuplicate.click()
+
+    await unitsForDuplicate.click();
     await this.driver.executeScript('return document.readyState');
-    await this.notificationCheck()
+    await this.notificationCheck();
     await this.driver.sleep(1000);
+    return unitsTitle;
   }
-
-
 
   async deleteDuplicateUnit() {
     await this.driver.wait(until.elementLocated(By.id('addUnit')), 10000);
@@ -194,32 +202,34 @@ class DuplicateUnit extends Base {
           .findElement(By.css('.unit-name-wrapper'))
           .getAttribute('title');
         if ((await unitName) === this.duplicatedUnitForDeleting) {
+          console.log(
+            await unitName,
+            'unit name for del',
+            this.duplicatedUnitForDeleting
+          );
+
           const menuBtn = await item.findElement(By.id('menuListAddRoomOpen'));
           await this.driver.wait(until.elementIsEnabled(menuBtn), 10000);
           noBtn = true;
           await menuBtn.click();
           const menu = await this.driver.findElement(
-            By.css('.editMenuList[editmenuunitopen]')
+            By.css('.editMenuList')
           );
 
           // await menu.wait(until.elementLocated(By.id('deleteUnitBtn')),10000);
-          const delUnitBtn = await menu.findElement(By.id('deleteUnitBtn'));
+          const delUnitBtn = await this.driver.findElement(By.id('deleteUnitBtn'));
           await this.driver.wait(until.elementIsEnabled(delUnitBtn), 10000);
-          this.driver.sleep(1000);
+          this.driver.sleep(500);
           await delUnitBtn.click();
+          this.driver.sleep(500);
           break;
         }
       }
     }
 
-    await this.driver.wait(
-      until.elementLocated(By.css('.backdrop[show="true"]')),
-      10000
-    );
+    await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
 
-    const modal = await this.driver.findElement(
-      By.css('.backdrop[show="true"]')
-    );
+    const modal = await this.driver.findElement(By.css('.backdrop'));
     const confirmDelBtn = await modal.findElement(By.id('btnDeleteProject'));
     await this.driver.sleep(1000);
     await this.driver.wait(until.elementIsEnabled(confirmDelBtn), 10000);

@@ -1,4 +1,6 @@
 const Imap = require('node-imap');
+const he = require('he');
+const cheerio = require('cheerio');
 
 function checkEmailsFromAddress(targetAddress, searchText) {
   return new Promise((resolve, reject) => {
@@ -41,7 +43,14 @@ function checkEmailsFromAddress(targetAddress, searchText) {
               });
 
               msg.once('end', function () {
-                if (emailContent.includes(searchText)) {
+                const decodedContent = he.decode(emailContent);
+                const $ = cheerio.load(decodedContent);
+
+                const plainText = $.text();
+                
+                if (plainText.includes(searchText)) {
+                  console.log('text in', receivedDate);
+                  
                   resolve(receivedDate);
                 } else {
                   resolve(false);

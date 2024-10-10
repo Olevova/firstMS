@@ -1,7 +1,8 @@
 const { By, until } = require('selenium-webdriver');
 const Base = require('../../base');
+const AddCommentToArea = require('./addCommentToArea')
 
-class ChangeAreaStatus extends Base {
+class ChangeAreaStatus extends AddCommentToArea {
  
   constructor(driver) {
     super(driver);
@@ -17,6 +18,7 @@ class ChangeAreaStatus extends Base {
     );
     this.progress= parseInt(await projectProgres.getText(), 10);
     console.log(`Start project percent status: ${this.progress} %`);
+    return this.progress
    };
 
   async findAreaInView(status = '-3') {
@@ -122,17 +124,10 @@ class ChangeAreaStatus extends Base {
   }
 
   async changeStatusInProgressOnDone() {
-    // const selectStatus = await this.driver.findElement(
-    //   By.id('areaStatusSelect')
-    // );
     const selectStatus = await this.driver.findElement(
       By.css('.area__status-btn')
     );
     await this.clickAreaStatusDropdown();
-    // const inputEl = this.driver.findElement(By.className('area__status-icon-dropdown'));
-    // await this.driver.wait(until.elementIsEnabled(inputEl), 10000);
-    // await inputEl.click();
-    // await this.waitListDate('.area__status-menu__item', 1);
     const statusElements = this.driver.findElements(By.css('.area__status-menu__item'));
     await this.findDateInDropDown(await statusElements, 'Done');
     await this.notificationCheck();
@@ -155,10 +150,7 @@ class ChangeAreaStatus extends Base {
   }
 
   async changeStatusInProgressOnToDo() {
-    // const selectStatus = await this.driver.findElement(
-    //   By.id('areaStatusSelect')
-    // );
-    const selectStatus = await this.driver.findElement(
+      const selectStatus = await this.driver.findElement(
       By.css('.area__status-btn')
     );
     // console.log(await selectStatus.getAttribute('value'));
@@ -172,15 +164,12 @@ class ChangeAreaStatus extends Base {
   }
 
   async closeAreaPopUpAndCheckStatusInView() {
-    // const selectStatus = await this.driver.findElement(
-    //   By.id('areaStatusSelect')
-    // );
+   
     const areaName = await this.driver.findElement(
       By.css('.area-details-name')
     );
     const titleOfArea = await areaName.getText()
     this.statusNow = await titleOfArea.trim();
-    console.log(this.statusNow , 'st now');
     await this.closeAreaModalWindow();
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);
     await this.driver.executeScript('return document.readyState');
@@ -191,7 +180,6 @@ class ChangeAreaStatus extends Base {
     const areas = await this.driver.findElements(By.css("[areastatus='-3'] + span"));
     const firstArea = await areas[0];
     const firstAreaText = await firstArea.getText()
-    console.log(await firstAreaText, 'firstAreaText');
     if (await firstAreaText.trim() !== this.statusNow) {
       throw new Error('Close area Pop-up not work, check screenshot');
     }

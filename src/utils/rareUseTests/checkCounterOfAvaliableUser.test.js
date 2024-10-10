@@ -1,4 +1,4 @@
-const { createWebdriverChrom } = require('../webdriver');
+const { createWebdriverChrome } = require('../webdriver');
 const InviteUser = require('../../classes/user/inviteUser');
 const LoginPage = require('../../classes/auth/login');
 const RemoveUser = require('../../classes/user/removeUser');
@@ -26,7 +26,7 @@ describe('invite user by the project manager and check the counter of avaliable 
   let driverChrome = null;
 
   beforeEach(async () => {
-    driverChrome = await createWebdriverChrom();
+    driverChrome = await createWebdriverChrome();
   });
 
   afterEach(async () => {
@@ -50,11 +50,11 @@ describe('invite user by the project manager and check the counter of avaliable 
     try {
       await inviteUserTest.checkNumberOfUsersInUsersList('pm');
       await inviteUserTest.checkAvailibleNumberOfUsersInInviteForm();
-      await lambdaParameters('passed',driverChrome);
+      await lambdaParameters('passed', driverChrome);
       //   await inviteUserTest.checkCreateNewUser(emailUserCA);
     } catch (error) {
       await makeScreenshot(driverChrome, 'check_avaliable_invitations');
-      await lambdaParameters('failed',driverChrome);
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

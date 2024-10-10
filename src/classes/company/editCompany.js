@@ -26,8 +26,8 @@ class EditCompany extends RemoveCompany {
     const editBtn = this.driver.findElement(By.css('.settings-wrapper__btn-edit'));
     await this.driver.wait(until.elementIsEnabled(editBtn),10000);
     await editBtn.click();
-    await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"]')),10000);
-    const nameInput = await this.driver.findElement(By.id('companyName'));
+    await this.driver.wait(until.elementLocated(By.css('app-company-form .backdrop')),10000);
+    const nameInput = await this.driver.findElement(By.id('companyNameMobile'));
     await nameInput.clear();
     await nameInput.sendKeys(newName);
     const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
@@ -52,16 +52,14 @@ class EditCompany extends RemoveCompany {
   await this.driver.wait(until.elementIsEnabled(editBtn),10000);
   await editBtn.click();
   await this.driver.sleep(1000)
-  await this.driver.wait(until.elementLocated(By.css('.backdrop[show="true"]')),10000);
+  await this.driver.wait(until.elementLocated(By.css('.backdrop')),10000);
   const companyPlan = await this.driver.findElement(By.id('companyPlan'));
   await companyPlan.click();
   await this.driver.wait(until.elementLocated(By.css('.ng-dropdown-panel-items')),10000);
   const planList = await this.driver.findElements(By.css('.ng-option'));
-  for(let i of planList){
-    // console.log(await i.getText(), 'tut');
-  }
+ 
   if(planeName ==='Custom'){
-    console.log("in customs");
+    
     await this.findDateInDropDown(planList, planeName);
     await this.driver.wait(until.elementLocated(By.id('companyPlanMaxNumberUsers')));
     const numberOfUser = await this.driver.findElement(By.id('companyPlanMaxNumberUsers'));
@@ -69,12 +67,12 @@ class EditCompany extends RemoveCompany {
     await numberOfUser.sendKeys(customs);
 
   }else {
-    console.log("not customs");
+    
     await this.findDateInDropDown(planList, planeName);
     }
     const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
     await submitBtn.click();
-    await this.notificationCheck('id','mainErrorText');
+    await this.notificationCheck();
  }
 
  async checkCompanyPlane(plane, users=100){
@@ -88,7 +86,6 @@ class EditCompany extends RemoveCompany {
     By.id('linkCompanySettings')
   );
   await companyBtn.click();
-  console.log("here in");
   await this.driver.wait(until.elementLocated(By.css('.table-details-wrapper')),10000);
   const tableDetaile = await this.driver.findElement(By.css('.table-details-wrapper'));
   const tableDate = await tableDetaile.findElements(By.css(".table-details__title"));

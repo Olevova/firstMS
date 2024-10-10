@@ -11,7 +11,16 @@ const capability = {
 		"console": true,
 		"network": true,
 		"w3c": true,
-		"plugin": "node_js-mocha"
-	}
+		"plugin": "node_js-mocha",
+		"chromeOptions" : {
+               "args" : ["incognito"]
+   			}
+	},
+	"lambda:userFiles": [
+      "JavaScript.png",
+      "doc.pdf",
+      "doc.zip",
+	  "video.MP4"
+    ],
 }
 module.exports = {capability}

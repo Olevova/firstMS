@@ -8,12 +8,13 @@ class CreateTaskByEmployee extends CreatTask {
   }
 
   async goToCreateTasksForm() {
-    await this.driver.wait(until.elementsLocated(By.id('linkProjectAdminOrEmployee')), 10000);
-    const firstLink = await this.driver.findElements(By.id('linkProjectAdminOrEmployee'));
-    console.log('element');
+    await this.driver.wait(until.elementsLocated(By.id('linkProjectsAdminOrEmployee')), 10000);
+    await this.driver.wait(until.elementsLocated(By.css('.project-item')), 10000);
+    const firstLink = await this.driver.findElements(By.css('.project-item'));
+    // console.log('element');
     await this.driver.sleep(1000);
     for(let i of firstLink){
-      console.log(await i.getText());
+      // console.log(await i.getText());
     }
     await firstLink[0].click();
 
@@ -27,7 +28,7 @@ class CreateTaskByEmployee extends CreatTask {
 
   async fillCreateTask(name, description, taskDueData, user) {
     await this.driver.wait(until.elementLocated(By.id('btnCreate')),5000);
-    console.log('find');
+    // console.log('find');
     const createTaskBtn = await this.driver.findElement(By.id('btnCreate'));
     await this.driver.wait(until.elementIsEnabled(createTaskBtn), 10000);
 
@@ -38,10 +39,10 @@ class CreateTaskByEmployee extends CreatTask {
     const createForm = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(createForm), 10000);
 
-    const taskName = await this.driver.findElement(By.id('taskName'));
+    const taskName = await this.driver.findElement(By.id('taskNameMobile'));
     await taskName.sendKeys(name);
-
-    const nameDropdown = await this.driver.findElement(By.id('taskSelectMember'));
+    await this.driver.sleep(500);
+    const nameDropdown = await this.driver.findElement(By.id('taskSelectMemberMobile'));
     await nameDropdown.click();
     const nameList = await this.driver.findElements(By.className('ng-option'));
     if(user){
@@ -53,11 +54,11 @@ class CreateTaskByEmployee extends CreatTask {
     }
     
     const taskDescription = await this.driver.findElement(
-      By.id('taskDescription')
+      By.id('taskDescriptionMobile')
     );
     await taskDescription.sendKeys(description);
 
-    const taskPriority = await this.driver.findElement(By.id('prioritySelect'));
+    const taskPriority = await this.driver.findElement(By.id('prioritySelectMobile'));
     await taskPriority.click();
 
     await this.waitListDate('.ng-option', 2);
@@ -71,7 +72,7 @@ class CreateTaskByEmployee extends CreatTask {
     const taskData = await this.driver.findElement(By.id('taskDueDate'));
     await taskData.sendKeys(taskDueData);
 
-    const submitBtn = await this.driver.findElement(By.id('btnSubmit'));
+    const submitBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     await submitBtn.click();
     await this.notificationCheck();
 

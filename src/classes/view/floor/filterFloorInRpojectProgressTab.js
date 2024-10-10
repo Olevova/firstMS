@@ -62,7 +62,7 @@ class FilterFloor extends Base {
       10000
     );
     const filterFloorForCheck = await this.driver.findElements(
-      By.css('.floors-list__item .floor-cell-name[title]')
+      By.css('.floors-list__item[style*="display: flex;"] .floor-cell-name[title]')
     );
     const titleOfFilterFloor = await filterFloorForCheck[0].getAttribute(
       'title'

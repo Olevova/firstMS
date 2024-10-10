@@ -15,16 +15,17 @@ class SequenceFloorChange extends Base{
    
         await this.driver.wait(until.elementLocated(By.css('html')), 10000);
         await this.driver.executeScript('return document.readyState');
-        const numberOfItems =await this.driver.wait(until.elementsLocated(By.css('.cdk-drag.floor-item')),10000);
+        const numberOfItems =await this.driver.wait(until.elementsLocated(By.css('.cdk-drag .floor-item')),10000);
         if(await numberOfItems === null){
             throw new Error('Insufficient quantity of items')
         };
-        const floors = await this.driver.findElements(By.css('.cdk-drag.floor-item'));
+        const floors = await this.driver.findElements(By.css('.cdk-drag .floor-item'));
         
         const draggable = await floors[0];
         const droppable = await floors[1];
         this.firstElement = await draggable.getText();
         this.secondElement = await droppable.getText();
+        
         const start = await this.getCoordinates(droppable);
         console.log(start);
         const actions = this.driver.actions({ async: true });
@@ -36,7 +37,7 @@ class SequenceFloorChange extends Base{
         
     }
     async checkSequence(){
-        const afterChange = await this.driver.findElements(By.css('.cdk-drag.floor-item'));
+        const afterChange = await this.driver.findElements(By.css('.cdk-drag .floor-item'));
         if(await afterChange[0].getText() === this.secondElement && 
         await afterChange[1].getText()  === this.firstElement){
             console.log("Changing the floor sequence was successfully");
