@@ -126,10 +126,14 @@ module.exports = {
     linkSubmitBtnCss: '#btn-submit',
     locatorCancelLinkLoginCss:'#linkCancel',
     locatorAreaTabsCss: '.area-details-tabs-list__link',
+    locarorUploadFileErrorCss: '#uploadFileErrordrop-area',
     //taske createion
     taskDescription:'Test description',
     taskDate: '15.12.25',
-    //View tab create items
+    attachmentFileVideo: 'video.MP4',
+    attachmentFileDoc: 'doc.pdf',
+    attachmentFileZip:'doc.zip',
+  //View tab create items
     newFloorName : 'TestFloor',
     newUnitName : 'TestUnit',
     newRoomName : 'TestUnique',

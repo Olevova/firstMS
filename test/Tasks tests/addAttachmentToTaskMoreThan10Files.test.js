@@ -55,8 +55,8 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('Add media attachment to the task edit @T9f8ae49e', async () => {
-    await lambdaParameters('Add media attachment to the task edit @T9f8ae49e', driverChrome);
+  it('Add Attachment to the task more than 10 files @T1d72849f', async () => {
+    await lambdaParameters('Add Attachment to the task more than 10 files @T1d72849f', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -73,80 +73,26 @@ describe('Tasks tests @S26f6875e', async () => {
 
     try {
         await updateTaskDetail.findAllTasksInProject();
-        await updateTaskDetail.addAttachment(newTaskName, config.attachmentFileVideo);
-        await updateTaskDetail.checkAttachment(
-            newTaskName,
-            config.attachmentFileVideo
-        );
-      
+        await updateTaskDetail.openTaskPopUp(newTaskName);
+        for (let i=0; i<10; i+=1){
+            let fileForAttach
+            if(i%2===0){
+              fileForAttach = config.attachmentFileDoc;
+            }
+            else{
+                fileForAttach = config.attachmentFileZip;
+            }
+        await updateTaskDetail.addAttachmentWithoutSave(fileForAttach);
+        }
+        const errorUpload = await updateTaskDetail.formErrorMsgArray(config.locarorUploadFileErrorCss);
+        if(errorUpload.includes('Error to upload. Files amount must not be over 10.')){
+            console.log('test passed');  
+        }
+        else{throw new Error('Test failed')}
         await lambdaParameters('passed', driverChrome);
     } catch (error) {
         await lambdaParameters('failed', driverChrome);
-        await makeScreenshot(driverChrome, 'task_attachment');
-        throw error;
-    }
-  });
-
-  it('Add document attachment to the task @Ta8fb3301', async () => {
-    await lambdaParameters('Add document attachment to the task @Ta8fb3301', driverChrome);
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
-
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
-
-    await logginPageTest.userLogIn(
-      config.email,
-      config.password,
-      config.urlhomePageForCheck
-    );
-    await goToTasks.goToTasksList(config.projectNameMain);
-
-    try {
-        await updateTaskDetail.findAllTasksInProject();
-        await updateTaskDetail.addAttachment(newTaskName, config.attachmentFileDoc);
-        await updateTaskDetail.checkAttachment(
-            newTaskName,
-            config.attachmentFileDoc
-        );
-      
-        await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-        await lambdaParameters('failed', driverChrome);
-        await makeScreenshot(driverChrome, 'task_attachment');
-        throw error;
-    }
-  });
-
-  it('Add other attachment to the task (.zip/.rar, .exe) @T1231ae22', async () => {
-    await lambdaParameters('Add other attachment to the task (.zip/.rar, .exe) @T1231ae22', driverChrome);
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
-
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
-
-    await logginPageTest.userLogIn(
-      config.email,
-      config.password,
-      config.urlhomePageForCheck
-    );
-    await goToTasks.goToTasksList(config.projectNameMain);
-
-    try {
-        await updateTaskDetail.findAllTasksInProject();
-        await updateTaskDetail.addAttachment(newTaskName, config.attachmentFileZip);
-        await updateTaskDetail.checkAttachment(
-            newTaskName,
-            config.attachmentFileZip
-        );
-      
-        await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-        await lambdaParameters('failed', driverChrome);
-        await makeScreenshot(driverChrome, 'task_attachment');
+        await makeScreenshot(driverChrome, 'task_attachment_10_file');
         throw error;
     }
   });

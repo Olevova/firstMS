@@ -97,9 +97,8 @@ class UpdateTaskDetail extends Base {
 
     const inputFile = await this.driver.findElement(By.id('fileInputMobile'));
 
-    if (!withoutLambda) {
+    if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity)  {
       console.log(__dirname, '__dirname');
-      
       const filePath = path.join(__dirname, file);
       console.log(filePath);
       await inputFile.sendKeys(filePath);
@@ -111,7 +110,6 @@ class UpdateTaskDetail extends Base {
       const pathSel = config.lambdaPathDockerChrom + `${file}`
       console.log('running in Selenium hub', pathSel);
       await inputFile.sendKeys(pathSel);
-      
     }
     //For local use
     // const inputFilePath = await this.fileReturn();
@@ -127,7 +125,45 @@ class UpdateTaskDetail extends Base {
     await saveBtn.click();
     await this.notificationCheck();
     await this.driver.sleep(2000);
+  };
+
+  async addAttachmentWithoutSave(file='JavaScript.png') {
+    await this.driver.wait(until.elementLocated(By.id('drop-areaMobile')), 10000);
+
+    const inputFile = await this.driver.findElement(By.id('fileInputMobile'));
+
+    if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity)  {
+      console.log(__dirname, '__dirname');
+      const filePath = path.join(__dirname, '..', 'utils', 'files', file);
+      console.log(filePath);
+      await inputFile.sendKeys(filePath);
+    } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
+      const pathLambda = config.lambdaPathWindows + `${file}`
+      console.log('lambda', pathLambda);
+      await inputFile.sendKeys(pathLambda);
+    } else {
+      const pathSel = config.lambdaPathDockerChrom + `${file}`
+      console.log('running in Selenium hub', pathSel);
+      await inputFile.sendKeys(pathSel);
+    }
+
+    const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
+    await this.driver.wait(until.elementIsEnabled(saveBtn), 10000);
+    await this.driver.sleep(500);
+    
   }
+
+  async openTaskPopUp(taskName){
+    await this.findAndClickOnLinInTheList(taskName, '.task-name');
+    await this.driver.wait(
+      until.elementLocated(By.css('.backdrop .modal')),
+      10000
+    );
+    const editBtn = await this.driver.findElement(By.id('btnEditTask'));
+    await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
+    await editBtn.click();
+  }
+  
 
   async checkAttachment(taskName, filename) {
     await this.findAndClickOnLinInTheList(taskName, '.task-name');
@@ -143,14 +179,12 @@ class UpdateTaskDetail extends Base {
       By.css('.task-files-list')
     );
     await this.waitListDate('.file-link', 1);
-    const attacheFile = await attacheFileList.findElements(By.css('.file-link'));
+    const attacheFile = await attacheFileList.findElements(By.css('.fileName-with-timeLeft'));
     let filesTitle=[];
     for(let file of attacheFile){
-      const fileSrc = await file.getAttribute('href');
-      console.log(fileSrc, 'fileSrc');
-      const fileNameArray = await fileSrc.split('/');
-      const fileName = await fileNameArray[fileNameArray.length - 1];
+      const fileName = await file.getText();
       filesTitle.push(fileName);
+      console.log(filesTitle);
     }
    
     if (!filesTitle.includes(filename)) {
