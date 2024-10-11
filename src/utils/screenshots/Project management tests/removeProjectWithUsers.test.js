@@ -1,13 +1,13 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const CreateProject = require('../../src/classes/project/createProject');
-const RemoveProject = require('../../src/classes/project/removeProject');
-const InviteUser = require('../../src/classes/user/inviteUser');
-const RemoveUser = require('../../src/classes/user/removeUser');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const CreateProject = require('../../../classes/project/createProject');
+const RemoveProject = require('../../../classes/project/removeProject');
+const InviteUser = require('../../../classes/user/inviteUser');
+const RemoveUser = require('../../../classes/user/removeUser');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 
 describe('Project management tests @Sbae16311', async () => {
   let driverChrome = null;

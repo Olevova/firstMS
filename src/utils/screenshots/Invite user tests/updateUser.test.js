@@ -1,10 +1,10 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const UpdateUser = require('../../src/classes/user/updateUser');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const UpdateUser = require('../../../classes/user/updateUser');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 
 describe('Invite users tests @S22695f61', async () => {
   let driverChrome = null;

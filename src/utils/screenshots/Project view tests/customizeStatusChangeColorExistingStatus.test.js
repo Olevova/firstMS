@@ -1,11 +1,11 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const EditCustomStatus = require('../../src/classes/statusAndWeight/editCustomStatus');
-const CreateArea = require('../../src/classes/view/area/createArea');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const EditCustomStatus = require('../../../classes/statusAndWeight/editCustomStatus');
+const CreateArea = require('../../../classes/view/area/createArea');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 
 describe('Project view tests, @S1a26e659', async () => {
   let driverChrome = null;

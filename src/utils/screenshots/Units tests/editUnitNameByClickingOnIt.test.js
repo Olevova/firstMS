@@ -1,10 +1,10 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const EditUnit = require('../../src/classes/view/unit/editUnit');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const EditUnit = require('../../../classes/view/unit/editUnit');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 
 describe('Unit tests @S023a0c9b', async () => {
   let driverChrome = null;

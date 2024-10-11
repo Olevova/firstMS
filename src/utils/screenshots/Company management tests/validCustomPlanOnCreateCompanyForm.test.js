@@ -1,12 +1,12 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const CreateCompany = require('../../src/classes/company/createCompany');
-const RemoveCompany = require('../../src/classes/company/removeCompany');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const CreateCompany = require('../../../classes/company/createCompany');
+const RemoveCompany = require('../../../classes/company/removeCompany');
 const { By, until } = require('selenium-webdriver');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 const { elementTextIs } = require('selenium-webdriver/lib/until');
 
 describe('Company management tests @Sb36e9099', async () => {

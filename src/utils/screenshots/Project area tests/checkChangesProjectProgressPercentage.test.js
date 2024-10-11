@@ -1,14 +1,14 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const ChangeAreaStatus = require('../../src/classes/view/area/changeAreaStatusInView');
-const CreateRoom = require('../../src/classes/view/room/createRoom');
-const DeleteRoom = require('../../src/classes/view/room/deleteRoom');
-const CreateArea = require('../../src/classes/view/area/createArea');
-const WeightChange = require('../../src/classes/statusAndWeight/weightChange');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const ChangeAreaStatus = require('../../../classes/view/area/changeAreaStatusInView');
+const CreateRoom = require('../../../classes/view/room/createRoom');
+const DeleteRoom = require('../../../classes/view/room/deleteRoom');
+const CreateArea = require('../../../classes/view/area/createArea');
+const WeightChange = require('../../../classes/statusAndWeight/weightChange');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 
 describe('Project area tests @S2687e915', async () => {
   let driverChrome = null;

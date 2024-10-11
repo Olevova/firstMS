@@ -1,10 +1,10 @@
-const DashBoardPart = require('../../src/classes/dashboard/dashBoardPart');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
+const DashBoardPart = require('../../../classes/dashboard/dashBoardPart');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const { createWebdriverChrome } = require('../../webdriver');
 const { describe } = require('mocha');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
-const config = require('../../src/utils/config');
+const makeScreenshot = require('../../makeScreenShot');
+const config = require('../../config');
 
 describe('Company admin role @Se7b2355c', async () => {
   let driverChrome = null;

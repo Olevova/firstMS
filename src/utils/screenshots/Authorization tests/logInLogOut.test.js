@@ -1,10 +1,10 @@
-const LogOut = require('../../src/classes/auth/logOut');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
+const LogOut = require('../../../classes/auth/logOut');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const { createWebdriverChrome } = require('../../webdriver');
 const { describe } = require('mocha');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
-const config = require('../../src/utils/config');
+const makeScreenshot = require('../../makeScreenShot');
+const config = require('../../config');
 
 describe('Authorization tests @Se24225b7', async () => {
   let driverChrome = null;

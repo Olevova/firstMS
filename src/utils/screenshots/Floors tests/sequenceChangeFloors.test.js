@@ -1,11 +1,11 @@
-const { createWebdriverChrome } = require('../../src/utils/webdriver');
-const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const LoginPage = require('../../src/classes/auth/login');
-const SequenceFloorChange = require('../../src/classes/view/floor/sequenceFloorChange');
-const SequenceUnitChange = require('../../src/classes/view/unit/sequenceUnitChange');
-const makeScreenshot = require('../../src/utils/makeScreenShot');
+const { createWebdriverChrome } = require('../../webdriver');
+const lambdaParameters = require('../../lambdaAddParameters');
+const LoginPage = require('../../../classes/auth/login');
+const SequenceFloorChange = require('../../../classes/view/floor/sequenceFloorChange');
+const SequenceUnitChange = require('../../../classes/view/unit/sequenceUnitChange');
+const makeScreenshot = require('../../makeScreenShot');
 const { describe } = require('mocha');
-const config = require('../../src/utils/config');
+const config = require('../../config');
 
 describe('Floors tests @S85063df9', async () => {
   let driverChrome = null;
