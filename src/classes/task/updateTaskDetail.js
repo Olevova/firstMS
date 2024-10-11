@@ -11,6 +11,25 @@ const {
 const config = require('../../../src/utils/config');
 
 class UpdateTaskDetail extends Base {
+
+  async attachFile(file){
+    const inputFile = await this.driver.findElement(By.id('fileInputMobile'));
+    if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity)  {
+      console.log(__dirname, '__dirname');
+      const filePath = path.join(__dirname, '..','..', 'utils', 'files', file);
+      console.log(filePath);
+      await inputFile.sendKeys(filePath);
+    } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
+      const pathLambda = config.lambdaPathWindows + `${file}`
+      console.log('lambda', pathLambda);
+      await inputFile.sendKeys(pathLambda);
+    } else {
+      const pathSel = config.lambdaPathDockerChrom + `${file}`
+      console.log('running in Selenium hub', pathSel);
+      await inputFile.sendKeys(pathSel);
+    }
+  }
+
   constructor(driver) {
     super(driver);
     this.driver = driver;
@@ -94,31 +113,7 @@ class UpdateTaskDetail extends Base {
     await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
     await editBtn.click();
     await this.driver.wait(until.elementLocated(By.id('drop-areaMobile')), 10000);
-
-    const inputFile = await this.driver.findElement(By.id('fileInputMobile'));
-
-    if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity)  {
-      console.log(__dirname, '__dirname');
-      const filePath = path.join(__dirname, file);
-      console.log(filePath);
-      await inputFile.sendKeys(filePath);
-    } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
-      const pathLambda = config.lambdaPathWindows + `${file}`
-      console.log('lambda', pathLambda);
-      await inputFile.sendKeys(pathLambda);
-    } else {
-      const pathSel = config.lambdaPathDockerChrom + `${file}`
-      console.log('running in Selenium hub', pathSel);
-      await inputFile.sendKeys(pathSel);
-    }
-    //For local use
-    // const inputFilePath = await this.fileReturn();
-    // await inputFile.sendKeys(inputFilePath);
-    //For local use
-
-    // for Docker Use
-    //  await inputFile.sendKeys("/external_jars/.classpath.txt")
-    // for Docker Use
+    await this.attachFile(file);
 
     const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     await this.driver.wait(until.elementIsEnabled(saveBtn), 10000);
@@ -129,24 +124,7 @@ class UpdateTaskDetail extends Base {
 
   async addAttachmentWithoutSave(file='JavaScript.png') {
     await this.driver.wait(until.elementLocated(By.id('drop-areaMobile')), 10000);
-
-    const inputFile = await this.driver.findElement(By.id('fileInputMobile'));
-
-    if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity)  {
-      console.log(__dirname, '__dirname');
-      const filePath = path.join(__dirname, '..', 'utils', 'files', file);
-      console.log(filePath);
-      await inputFile.sendKeys(filePath);
-    } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
-      const pathLambda = config.lambdaPathWindows + `${file}`
-      console.log('lambda', pathLambda);
-      await inputFile.sendKeys(pathLambda);
-    } else {
-      const pathSel = config.lambdaPathDockerChrom + `${file}`
-      console.log('running in Selenium hub', pathSel);
-      await inputFile.sendKeys(pathSel);
-    }
-
+    await this.attachFile(file);
     const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
     await this.driver.wait(until.elementIsEnabled(saveBtn), 10000);
     await this.driver.sleep(500);
