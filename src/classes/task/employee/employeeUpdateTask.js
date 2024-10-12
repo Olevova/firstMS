@@ -8,7 +8,7 @@ class EmployeeUpdateTask extends CreateTaskByEmployee {
   }
 
   async editTask(taskName, newName) {
-    await this.driver.wait(until.elementsLocated(By.className('task-name')));
+    await this.driver.wait(until.elementsLocated(By.className('task-name')),10000);
     await this.findItemAndOpenThreeDotsMenu(taskName, '.task-name');
     console.log('in task');
     

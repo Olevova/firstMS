@@ -26,58 +26,58 @@ class CreateTaskByEmployee extends CreatTask {
     await tasksBtn.click();
   }
 
-  async fillCreateTask(name, description, taskDueData, user) {
-    await this.driver.wait(until.elementLocated(By.id('btnCreate')),5000);
-    // console.log('find');
-    const createTaskBtn = await this.driver.findElement(By.id('btnCreate'));
-    await this.driver.wait(until.elementIsEnabled(createTaskBtn), 10000);
+  // async fillCreateTask(name, description, taskDueData, user) {
+  //   await this.driver.wait(until.elementLocated(By.id('btnCreate')),5000);
+  //   // console.log('find');
+  //   const createTaskBtn = await this.driver.findElement(By.id('btnCreate'));
+  //   await this.driver.wait(until.elementIsEnabled(createTaskBtn), 10000);
 
-    this.startTaskNumber = await this.numberOfItems(this.driver);
+  //   this.startTaskNumber = await this.numberOfItems(this.driver);
 
-    await createTaskBtn.click();
+  //   await createTaskBtn.click();
 
-    const createForm = this.driver.findElement(By.className('modal'));
-    await this.driver.wait(until.elementIsEnabled(createForm), 10000);
+  //   const createForm = this.driver.findElement(By.className('modal'));
+  //   await this.driver.wait(until.elementIsEnabled(createForm), 10000);
 
-    const taskName = await this.driver.findElement(By.id('taskNameMobile'));
-    await taskName.sendKeys(name);
-    await this.driver.sleep(500);
-    const nameDropdown = await this.driver.findElement(By.id('taskSelectMemberMobile'));
-    await nameDropdown.click();
-    const nameList = await this.driver.findElements(By.className('ng-option'));
-    if(user){
-      await this.findDateInDropDown(nameList, user);
-    }
-    else{
+  //   const taskName = await this.driver.findElement(By.id('taskNameMobile'));
+  //   await taskName.sendKeys(name);
+  //   await this.driver.sleep(500);
+  //   const nameDropdown = await this.driver.findElement(By.id('taskSelectMemberMobile'));
+  //   await nameDropdown.click();
+  //   const nameList = await this.driver.findElements(By.className('ng-option'));
+  //   if(user){
+  //     await this.findDateInDropDown(nameList, user);
+  //   }
+  //   else{
       
-      await nameList[0].click();
-    }
+  //     await nameList[0].click();
+  //   }
     
-    const taskDescription = await this.driver.findElement(
-      By.id('taskDescriptionMobile')
-    );
-    await taskDescription.sendKeys(description);
+  //   const taskDescription = await this.driver.findElement(
+  //     By.id('taskDescriptionMobile')
+  //   );
+  //   await taskDescription.sendKeys(description);
 
-    const taskPriority = await this.driver.findElement(By.id('prioritySelectMobile'));
-    await taskPriority.click();
+  //   const taskPriority = await this.driver.findElement(By.id('prioritySelectMobile'));
+  //   await taskPriority.click();
 
-    await this.waitListDate('.ng-option', 2);
+  //   await this.waitListDate('.ng-option', 2);
 
-    const priorietyList = await this.driver.findElements(
-      By.className('ng-option')
-    );
+  //   const priorietyList = await this.driver.findElements(
+  //     By.className('ng-option')
+  //   );
 
-    await this.findDateInDropDown(priorietyList, 'Low');
+  //   await this.findDateInDropDown(priorietyList, 'Low');
 
-    const taskData = await this.driver.findElement(By.id('taskDueDate'));
-    await taskData.sendKeys(taskDueData);
+  //   const taskData = await this.driver.findElement(By.id('taskDueDate'));
+  //   await taskData.sendKeys(taskDueData);
 
-    const submitBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
-    await submitBtn.click();
-    await this.notificationCheck();
+  //   const submitBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
+  //   await submitBtn.click();
+  //   await this.notificationCheck();
 
-    await this.driver.sleep(1000);
-  }
+  //   await this.driver.sleep(1000);
+  // }
 
   async getTaskId(taskName){
     await this.driver.wait(until.elementLocated(By.css('html')), 10000);

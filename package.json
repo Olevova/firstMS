@@ -7,7 +7,7 @@
     "test": "DEBUG=testomatio:* TESTOMATIO_RUNGROUP_TITLE='Release 0.14' TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035 npx mocha --no-timeouts -R ./node_modules/@testomatio/reporter/lib/adapter/mocha.js 'test/**/*.js'",
     "test2": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports ",
     "testLocal": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options  reportDir=colorjob,reportFilename=reports 'test/**/*.js'",
-    "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/**/createEditRemoveProject.test.js",
+    "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/**/CACanCreateEditRemoveTask.test.js",
     "testp": "mocha --no-timeouts --parallel",
     "import-tests": "set TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035&& npx check-tests@latest Mocha \"test/**/*{.,_}{test,spec,cy}.js\" --update-ids --no-detached"
   },
