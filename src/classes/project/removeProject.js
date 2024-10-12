@@ -99,7 +99,7 @@ class RemoveProject extends Base {
     );
     await delBtnProject[0].click();
 
-    const modal = this.driver.findElement(By.className('modal'));
+    const modal = this.driver.findElement(By.className('modal-narrow'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);
 
     const delBtnModalProject = await this.driver.findElement(

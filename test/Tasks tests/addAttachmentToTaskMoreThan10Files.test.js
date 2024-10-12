@@ -74,7 +74,7 @@ describe('Tasks tests @S26f6875e', async () => {
     try {
         await updateTaskDetail.findAllTasksInProject();
         await updateTaskDetail.openTaskPopUp(newTaskName);
-        for (let i=0; i<10; i+=1){
+        for (let i=0; i<11; i+=1){
             let fileForAttach
             if(i%2===0){
               fileForAttach = config.attachmentFileDoc;

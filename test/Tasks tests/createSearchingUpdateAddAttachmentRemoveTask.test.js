@@ -8,12 +8,6 @@ const UpdateTaskDetail = require('../../src/classes/task/updateTaskDetail');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
-const {
-  isRunningInDocker,
-  isRunningInTeamCity,
-  inDocker,
-  withoutLambda,
-} = require('../../src/utils/webdriver');
 
 describe('Tasks tests @S26f6875e', async () => {
   let driverChrome = null;

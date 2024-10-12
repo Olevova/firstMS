@@ -80,17 +80,10 @@ class UpdateTaskDetail extends Base {
           until.elementLocated(By.css('.backdrop .modal')),
           10000
         );
-        const taskForm = await this.driver.findElement(
-          By.className('modalViewTask')
-        );
-        await this.driver.wait(until.elementIsEnabled(taskForm));
-
-        const editBtn = await this.driver.findElement(By.id('btnEditTask'));
-        await editBtn.click();
         await this.driver.wait(until.elementLocated(By.id('taskNameMobile')), 10000);
         const taskNameInput = await this.driver.findElement(By.id('taskNameMobile'));
-        await taskNameInput.clear();
         await this.driver.sleep(1000);
+        await taskNameInput.clear();
         await taskNameInput.sendKeys(newName);
         await this.driver.sleep(1000);
         const saveBtn = await this.driver.findElement(By.id('btnSubmitMobile'));
@@ -109,9 +102,6 @@ class UpdateTaskDetail extends Base {
       until.elementLocated(By.css('.backdrop .modal')),
       10000
     );
-    const editBtn = await this.driver.findElement(By.id('btnEditTask'));
-    await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
-    await editBtn.click();
     await this.driver.wait(until.elementLocated(By.id('drop-areaMobile')), 10000);
     await this.attachFile(file);
 
@@ -137,9 +127,6 @@ class UpdateTaskDetail extends Base {
       until.elementLocated(By.css('.backdrop .modal')),
       10000
     );
-    const editBtn = await this.driver.findElement(By.id('btnEditTask'));
-    await this.driver.wait(until.elementIsEnabled(editBtn), 10000);
-    await editBtn.click();
   }
   
 
@@ -150,13 +137,13 @@ class UpdateTaskDetail extends Base {
       10000
     );
     await this.driver.wait(
-      until.elementLocated(By.css('.task-files-list')),
+      until.elementLocated(By.css('.files-list')),
       10000
     );
     const attacheFileList = await this.driver.findElement(
-      By.css('.task-files-list')
+      By.css('.files-list')
     );
-    await this.waitListDate('.file-link', 1);
+    await this.waitListDate('.file-item', 1);
     const attacheFile = await attacheFileList.findElements(By.css('.fileName-with-timeLeft'));
     let filesTitle=[];
     for(let file of attacheFile){

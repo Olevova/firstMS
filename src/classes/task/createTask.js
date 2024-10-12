@@ -65,7 +65,7 @@ class CreateTask extends Base {
    
   }
 
-  async fillCreateTask(name, description, taskDueData, user=null) {
+  async fillCreateTask(name, description, taskDueData, user=null, status="To Do") {
     const createTaskBtn = await this.driver.findElement(By.id('btnCreate'));
     await this.driver.wait(until.elementIsEnabled(createTaskBtn), 10000);
 
@@ -92,8 +92,15 @@ class CreateTask extends Base {
       await CreateTask.findDateInDropDown(usersList);
     }
     else{
-      await this.findDateInDropDown(usersList, user)
+      await this.findDateInDropDown(usersList, user);
     }
+
+    const statusInput = await this.driver.findElement(By.css('#filterByStatus[formcontrolname="status"]'));
+    await this.driver.wait(until.elementIsEnabled(statusInput),10000);
+    await statusInput.click();
+    await this.waitListDate('.ng-option', 3);
+    const statusList = await this.driver.findElements(By.css('.ng-option'));
+    await this.findDateInDropDown(statusList, status); 
 
     const taskDescription = await this.driver.findElement(
       By.id('taskDescriptionMobile')

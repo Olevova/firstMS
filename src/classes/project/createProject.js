@@ -99,7 +99,7 @@ class CreateProject extends Base {
     await addressStreet.sendKeys(street);
 
     const addressApart = await this.driver.findElement(
-      By.id('projectAddressSecondMobile')
+      By.id('projectAddressSecond')
     );
     if(app){
       await addressApart.click();
@@ -114,15 +114,16 @@ class CreateProject extends Base {
 
     await this.findDateInDropDown(stateList, state);
 
-    const cityDropDown = await this.driver.findElement(
-      By.id('projectSelectCityMobile')
+    const cityInput = await this.driver.findElement(
+      By.id('projectCity')
     );
-    await cityDropDown.click();
-    const cityList = await this.driver.findElements(By.className('ng-option'));
-    await this.findDateInDropDown(cityList, city);
+    await cityInput.sendKeys(city)
+    // await cityDropDown.click();
+    // const cityList = await this.driver.findElements(By.className('ng-option'));
+    // await this.findDateInDropDown(cityList, city);
 
     const projectZip = await this.driver.findElement(
-      By.id('projectZipCodeMobile')
+      By.id('projectZipCode')
     );
     await projectZip.click();
     await projectZip.sendKeys(zipcode);

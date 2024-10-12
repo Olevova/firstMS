@@ -127,6 +127,8 @@ module.exports = {
     locatorCancelLinkLoginCss:'#linkCancel',
     locatorAreaTabsCss: '.area-details-tabs-list__link',
     locarorUploadFileErrorCss: '#uploadFileErrordrop-area',
+    locatorTaskNameCss: '.task-name',
+    locatorTaskWraperCss: '.task-name__wrapper',
     //taske createion
     taskDescription:'Test description',
     taskDate: '15.12.25',

@@ -53,9 +53,9 @@ describe('Tasks tests @S26f6875e', async () => {
       await addRemoveUserToProject.addExistingUser(config.taskTestUser);
       await addRemoveUserToProject.goToSelectTab(config.tasks);
       startTaskNumber = await createTask.numberOfItemsInTheList(
-        '.task-name__wrapper',
+        config.locatorTaskWraperCss,
         '100',
-        '.task-name'
+        config.locatorTaskNameCss
       );
       console.log(startTaskNumber, 'startTaskNumber');
       await createTask.openTaskForm();
@@ -67,18 +67,18 @@ describe('Tasks tests @S26f6875e', async () => {
       );
       await createTask.checkTaskCreation(taskTitle);
       taskNumberAfterAddTask = await createTask.numberOfItemsInTheList(
-        '.task-name__wrapper',
+        config.locatorTaskWraperCss,
         '100',
-        '.task-name'
+        config.locatorTaskNameCss
       );
       console.log(taskNumberAfterAddTask, 'taskNumberAfterAddTask');
       await addRemoveUserToProject.goToSelectTab(config.users);
       await addRemoveUserToProject.removeUserFromProject(config.taskTestUser);
       await addRemoveUserToProject.goToSelectTab(config.tasks);
       taskNumberAfterRemoveUser = await createTask.numberOfItemsInTheList(
-        '.task-name__wrapper',
+        config.locatorTaskWraperCss,
         '100',
-        '.task-name'
+        config.locatorTaskNameCss
       );
       if (
         taskNumberAfterAddTask == !taskNumberAfterRemoveUser ||

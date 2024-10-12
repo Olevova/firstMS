@@ -82,7 +82,7 @@ describe('Tasks tests @S26f6875e', async () => {
         await lambdaParameters('passed', driverChrome);
     } catch (error) {
         await lambdaParameters('failed', driverChrome);
-        await makeScreenshot(driverChrome, 'task_attachment');
+        await makeScreenshot(driverChrome, 'task_attachment_media');
         throw error;
     }
   });
@@ -114,7 +114,7 @@ describe('Tasks tests @S26f6875e', async () => {
         await lambdaParameters('passed', driverChrome);
     } catch (error) {
         await lambdaParameters('failed', driverChrome);
-        await makeScreenshot(driverChrome, 'task_attachment');
+        await makeScreenshot(driverChrome, 'task_attachment_doc');
         throw error;
     }
   });
@@ -146,7 +146,7 @@ describe('Tasks tests @S26f6875e', async () => {
         await lambdaParameters('passed', driverChrome);
     } catch (error) {
         await lambdaParameters('failed', driverChrome);
-        await makeScreenshot(driverChrome, 'task_attachment');
+        await makeScreenshot(driverChrome, 'task_attachment_zip');
         throw error;
     }
   });
