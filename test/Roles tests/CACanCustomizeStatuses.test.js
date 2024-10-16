@@ -11,7 +11,7 @@ const config = require('../../src/utils/config');
 describe('Company admin role @Se7b2355c', async () => {
   let driverChrome = null;
 
-  const colorNumber = 6
+  const colorNumber = 11
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();

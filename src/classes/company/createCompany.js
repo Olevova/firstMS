@@ -1,5 +1,6 @@
 const { By, until } = require('selenium-webdriver');
 const Base = require('../base');
+const { nanoid } = require('nanoid');
 
 class CreateCompany extends Base {
   
@@ -13,7 +14,9 @@ class CreateCompany extends Base {
     phone,
     email,
     plan,
-    type){
+    type,
+    subdomain='test' + nanoid(2),
+  ){
       const createForm = this.driver.findElement(By.className('modal'));
     await this.driver.wait(until.elementIsEnabled(createForm), 10000);
 
@@ -40,10 +43,8 @@ class CreateCompany extends Base {
     const stateList = await this.driver.findElements(By.className('ng-option'));
     await this.findDateInDropDown(stateList, state);
 
-    const cityDropDown = await this.driver.findElement(By.id('companyCity'));
-    await cityDropDown.click();
-    const cityList = await this.driver.findElements(By.className('ng-option'));
-    await this.findDateInDropDown(cityList, city);
+    const cityInput = await this.driver.findElement(By.id('companyCity'));
+    await cityInput.sendKeys(city);
 
     const companyZip = await this.driver.findElement(By.id('companyZipCode'));
     await companyZip.sendKeys(zipcode);
@@ -57,12 +58,16 @@ class CreateCompany extends Base {
     const companyPlan = await this.driver.findElement(By.id('companyPlan'));
     await companyPlan.click();
     await this.driver.sleep(1000);
+
+    const subdomainName = await this.driver.findElement(By.id('subdomainName'));
+    await subdomainName.sendKeys(subdomain);
+
     const planList = await this.driver.findElements(By.className('ng-option'));
     await this.findDateInDropDown(planList, plan)
 
     const typeDropDown = await this.driver.findElement(By.id('companyType'));
     await typeDropDown.click();
-
+    await this.driver.sleep(1000);
     const typeList = await this.driver.findElements(By.className('ng-option'));
     await this.findDateInDropDown(typeList, type);
   }
@@ -124,7 +129,8 @@ class CreateCompany extends Base {
     email,
     plan,
     type,
-    usersNumber = 1
+    usersNumber = 1,
+    save = true
   ) {
     await this.fillCompanyForm( name,
       street,
@@ -139,10 +145,24 @@ class CreateCompany extends Base {
      const userNumberInput =  await this.driver.findElement(By.id('companyPlanMaxNumberUsers'));
      await userNumberInput.clear();
      await this.driver.sleep(500);
+     if(usersNumber >= 0){
+      console.log('number');
      await userNumberInput.sendKeys(usersNumber);
      const createBtn = await this.driver.findElement(By.id('btnSubmit'));
-     createBtn.click();
+     if(save){
+     createBtn.click();}
 
+     }
+     else{
+      console.log('null');
+      await userNumberInput.sendKeys('A');
+      const createBtn = await this.driver.findElement(By.id('btnSubmit'));
+      if(save){
+      createBtn.click();
+      await userNumberInput.clear();
+      await this.driver.sleep(1000);}
+     }
+     
   };
 
   async checkCreationOfNewCompany() {

@@ -42,8 +42,8 @@ class CreateCustomStatus extends Base {
             await this.driver.sleep(500);
             
             await colorEl.findElement(By.css('.color-box-with-list-wrapper')).click();
-            await this.driver.wait(until.elementLocated(By.css('.colors-list[open="true"]')), 10000);
-            const colorList = await this.driver.findElement(By.css('.colors-list[open="true"]'));           
+            await this.driver.wait(until.elementLocated(By.css('.color-box-with-list-wrapper[open]')), 10000);
+            const colorList = await this.driver.findElement(By.css('.color-box-with-list-wrapper[open]'));           
             const customColors = await colorList.findElements(By.css('.colors-list__item'));
             if (color) {
                 await customColors[color].click();

@@ -2,6 +2,7 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
+const EditCompany = require('../../src/classes/company/editCompany');
 const CreateProject = require('../../src/classes/project/createProject');
 const EditProject = require('../../src/classes/project/editProject');
 const InviteUser = require('../../src/classes/user/inviteUser');
@@ -25,6 +26,8 @@ describe('Company management tests @Sb36e9099', async () => {
   const taskCreate = 'focus on the first element of the create Task form';
   const userInvite = 'focus on the first element of the invite user form';
   const userEdit = 'focus on the first element of the edit user form';
+  const companyEdit = 'focus on the first element of the edit company form';
+
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -45,8 +48,6 @@ describe('Company management tests @Sb36e9099', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const createCompany = new CreateCompany(driverChrome);
-    const createProjectTest = new CreateProject(driverChrome);
     const createFloor = new CreateFloor(driverChrome);
     const createUnit = new CreateUnit(driverChrome);
     const createRoom = new CreateRoom(driverChrome);
@@ -59,12 +60,12 @@ describe('Company management tests @Sb36e9099', async () => {
     );
 
     try {
-      await createCompany.goToCreateCompanyForm();
-      await createCompany.isFirstInputFocused(
-        config.locatorCompanyFormCss,
-        companyCreate
-      );
-      await createCompany.clickElement(config.locatorClosePoUpBtnCss);
+      // await createCompany.goToCreateCompanyForm();
+      // await createCompany.isFirstInputFocused(
+      //   config.locatorCompanyFormCss,
+      //   companyCreate
+      // );
+      // await createCompany.clickElement(config.locatorClosePoUpBtnCss);
       await createFloor.goToView(config.projectStatus);
       //   await createFloor.clickElement('#addFloor');
       //   await createFloor.clickElement('#createNewFloor');
@@ -208,7 +209,8 @@ describe('Company management tests @Sb36e9099', async () => {
 
     try {
       await editProject.goToProjectList();
-      await driverChrome.sleep(1000);
+      await editProject.waitListDate(config.locatorProjectsCss,19);
+      await driverChrome.sleep(500);
       await editProject.findProject(
         config.projectNameEdit,
         config.projectsPage
@@ -221,6 +223,74 @@ describe('Company management tests @Sb36e9099', async () => {
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'cursor_focus_edit_project_form');
+      await lambdaParameters('failed', driverChrome);
+      throw error;
+    }
+  });
+
+  it('Focus to first field Create Company Form @Te0324622', async () => {
+    await lambdaParameters(
+      'Focus to first field Create Company Form @Te0324622',
+      driverChrome
+    );
+    // time and site or lochalhost there tests are going
+    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+
+    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+    const createCompany = new CreateCompany(driverChrome);
+
+    await logginPageTest.userLogIn(
+      config.email,
+      config.password,
+      config.urlhomePageForCheck
+    );
+
+    try {
+      await createCompany.goToCreateCompanyForm();
+      await createCompany.isFirstInputFocused(
+        config.locatorCompanyFormCss,
+        companyCreate
+      );
+      await createCompany.clickElement(config.locatorClosePoUpBtnCss);
+      await driverChrome.sleep(500);
+      await lambdaParameters('passed', driverChrome);
+    } catch (error) {
+      await makeScreenshot(driverChrome, 'cursor_focus_create_company_form');
+      await lambdaParameters('failed', driverChrome);
+      throw error;
+    }
+  });
+
+  it('Focus to first field Edit Company Form @Tef7f18a5', async () => {
+    await lambdaParameters(
+      'Focus to first field Edit Company Form @Tef7f18a5',
+      driverChrome
+    );
+    // time and site or lochalhost there tests are going
+    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+
+    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+    const editCompany = new EditCompany(driverChrome);
+
+    await logginPageTest.userLogIn(
+      config.email,
+      config.password,
+      config.urlhomePageForCheck
+    );
+
+    try {
+      await editCompany.goToCompanyList();
+      await driverChrome.sleep(1000);
+      await editCompany.findCompany(config.companyName, config.companiesPage);
+      await editCompany.clickElement(config.localCompanySettingsCss);
+      await editCompany.clickElement(config.locatorProjectEditBtnCss);
+      await editCompany.isFirstInputFocused(
+        config.locatorCompanyFormCss,
+        companyEdit
+      );
+      await lambdaParameters('passed', driverChrome);
+    } catch (error) {
+      await makeScreenshot(driverChrome, 'cursor_focus_edit_company_form');
       await lambdaParameters('failed', driverChrome);
       throw error;
     }

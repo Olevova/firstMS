@@ -36,7 +36,8 @@ describe('Standard User role @S7e09d7c0', async () => {
     try {
       await roomModification.goToView(config.projectNameForSU, 'su');
       await roomModification.goToSelectTab(config.projectProgress);
-      const modificationRoomLink= await roomModification.checkMissingElement(config.locatorCustomMenuBtnCss,2000);
+      await roomModification.clickElement(config.locatorCustomMenuBtnCss);
+      const modificationRoomLink= await roomModification.checkMissingElement('.customize-menu__item.ng-star-inserted',2000);
       if(modificationRoomLink){
         console.log('Test passed, modification room link is missed');
        

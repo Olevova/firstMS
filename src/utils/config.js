@@ -1,4 +1,5 @@
 const { nanoid } = require('nanoid');
+
 module.exports = {
     // URLs for Auto tests
     urlLoginPage: 'https://dev-frontend.colorjob.terenbro.com/login',
@@ -45,8 +46,24 @@ module.exports = {
     projectNameForPM: 'PM test',
     projectNameForSU: 'SU test',
     projectIDForPM: 'PR-PMPR',
+    // Create Company
+    newCompanyStreet: 'test2',
+    newCompanyApp: '15',
+    newCompanyZip: '00000',
+    newCompanyPhone: '+1111112111',
+    newCompanyEmail: 'fortest@test.com',
+    newCompanyPlan: 'Enterprise',
+    newCompanyCustomPlan: 'Custom',
+    newCompanyType: 'Electrical',
+    newCompanyState: 'New York',
+    newCompanyCity: 'New York',
     // create project items optional
+    newProjectStreet: "street",
     newProjectApp:"without",
+    newProjectState:'New York',
+    newCompanProjectCity:'New York',
+    newProjectClientName: 'Auto Test',
+    newProjectZip: '02200',
     startDate:'12.12.23',
     eneDate:'12.12.25',
     //test project for status tests
@@ -93,7 +110,7 @@ module.exports = {
     locatorProjectsLinkCss:'#linkProjectsAdminOrEmployee',
     locatorProjectFormCss:'app-project-form',
     locatorProjectsCss:'.table-projects__row',
-    locatorProjectClientNameCss: '.project-client-wrapper',
+    locatorProjectClientNameCss: '.project-name__wrapper',
     locatorProjectNameInListCss:'.project-name__wrapper',
     locatorListOfProjectInProfileCss: '.table-details__project-row',
     locatorProjectTitleCss:'.table-details-projectName',
@@ -103,8 +120,12 @@ module.exports = {
     locatorProjectCloseFormCss: '#btnCloseMobile',
     locatorProjectCancelFormCss: '#btnCancelMobile',
     locatorProjectEditBtnCss:'.settings-wrapper__btn-edit',
+    locatorProjectsListCss:'.list-name-wrapper',
     locatorCompanyListCss: '.company-id',
     locatorCompanyFormCss:'app-company-form .backdrop .form-invite.form-create',
+    localCompanySettingsCss: '#linkCompanySettings',
+    locatorUserNumberCss:'#companyPlanMaxNumberUsers',
+    locatorCompaniesListCss: '.table-title-wrapper',
     locatorTasksElementsCss: '.item-info-list',
     locatorCustomMenuBtnCss: '.customize-status-btn',
     locatorAddFloorBtnCss: '.add-floor-menu-with-btn-wrapper',

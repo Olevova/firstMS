@@ -12,16 +12,6 @@ describe('Company management tests @Sb36e9099', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'Fortest';
-  const newCompanyStreet = 'test2';
-  const newCompanyApp = '15';
-  const newCompanyZip = '00000';
-  const newCompanyPhone = '+1111112111';
-  const newCompanyEmail = 'fortest@test.com';
-  const newCompanyPlan = 'Enterprise';
-  const newCompanyType = 'tiling';
-  const newCompanyState = 'New York';
-  const newCompanyCity = 'New York';
-
   const editCompanyName = 'Fortestedit';
 
   beforeEach(async () => {
@@ -52,15 +42,15 @@ describe('Company management tests @Sb36e9099', async () => {
       await createCompany.goToCreateCompanyForm();
       await createCompany.fillCreateCompany(
         newConpanyName,
-        newCompanyStreet,
-        newCompanyApp,
-        newCompanyState,
-        newCompanyCity,
-        newCompanyZip,
-        newCompanyPhone,
-        newCompanyEmail,
-        newCompanyPlan,
-        newCompanyType
+        config.newCompanyStreet,
+        config.newCompanyApp,
+        config.newCompanyState,
+        config.newCompanyCity,
+        config.newCompanyZip,
+        config.newCompanyPhone,
+        config.newCompanyEmail,
+        config.newCompanyPlan,
+        config.newCompanyType
       );
       await createCompany.checkCreationOfNewCompany();
       await lambdaParameters('passed', driverChrome);

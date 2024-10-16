@@ -228,11 +228,12 @@ class DashBoardPart extends Base {
       }, 10000);
       await this.driver.wait(until.elementLocated(By.css('app-tasks')), 10000);
       const taskEl = await this.driver.wait(
-        until.elementLocated(By.css('.backdrop .modalViewTask .task-title')),
+        until.elementLocated(By.css('.backdrop .form-invite #taskNameMobile')),
         10000
       );
       const textWait = itemName.trim();
-      if (await this.driver.wait(until.elementTextIs(taskEl, textWait),10000)) {
+            
+      if (textWait === await taskEl.getAttribute('value')) {
         console.log('test passed successful');
         return;
       }

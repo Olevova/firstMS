@@ -1,12 +1,14 @@
 const { By, until } = require('selenium-webdriver');
 const path = require('path');
+const { elementLocated } = require('selenium-webdriver/lib/until');
 
 class Base {
   // The method used for finding values in dropdown menus in forms.
   async findDateInDropDown(array, text) {
     // console.log(await array.length, 'len');
     for (const option of array) {
-      const date = (await option.getText()).trim().toLowerCase();
+      const dateEl = await option.getText();
+      const date = await dateEl.trim().toLowerCase();
       // console.log(date, 'drop', text);
 
       if (date === text.trim().toLowerCase()) {
@@ -541,7 +543,7 @@ class Base {
     await this.driver.sleep(1000);
     await this.driver.wait(until.elementLocated(By.css(formSelector)), 10000);
     const form = await this.driver.findElement(By.css(formSelector));
-
+    await this.driver.wait(until.elementLocated(By.css(`${formSelector} input`)),10000);
     const firstInput = await form.findElement(By.css('input'));
     const activeElement = await this.driver.switchTo().activeElement();
     // console.log(await firstInput.getAttribute('id'), 'first', await activeElement.getAttribute('id'), 'second');
@@ -678,6 +680,7 @@ class Base {
     const el = await this.driver.findElement(By.css(locator));
     if(text){
       const elText = await el.getText();
+          
       if(elText.length>0 && elText===''){
         console.log('element has not text');
         return
@@ -686,6 +689,7 @@ class Base {
     }
     if(attr){
       const attrText = await el.getAttribute(attr);
+      
       if(attrText.length>0 && attrText===''){
         console.log('element has not attribute');
         return

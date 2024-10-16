@@ -67,7 +67,7 @@ class DeleteMulteTasks extends Base {
     await this.driver.actions().scroll(0, 0, 0, 0, delCheckItemBtn).perform();
 
     await delCheckItemBtn.click();
-    const modalWindow = await this.driver.findElement(By.className('modal'));
+    const modalWindow = await this.driver.findElement(By.className('backdrop'));
     await this.driver.wait(until.elementIsVisible(modalWindow), 10000);
 
     const delBtn = this.driver.findElement(By.id('btnDeleteTask'));

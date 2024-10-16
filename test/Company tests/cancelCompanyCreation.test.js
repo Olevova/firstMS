@@ -2,17 +2,13 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
-const { By, until } = require('selenium-webdriver');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-
-describe('Company management tests @Sb36e9099', async () => {
+describe('Company tests @Sca85247d', async () => {
   let driverChrome = null;
-
-  const newConpanyName = 'Valid';
-  const userNumber = 0;
+  let newConpanyName = 'Cancel';
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -24,8 +20,8 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('Enter 0 to the Number of users field when Custom plan is selected on Create company form', async () => {
-    await lambdaParameters('Enter 0 to the Number of users field when Custom plan is selected on Create company form', driverChrome);
+  it('Cancel company creation @T15e94b93', async () => {
+    await lambdaParameters('create new company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -40,7 +36,7 @@ describe('Company management tests @Sb36e9099', async () => {
 
     try {
       await createCompany.goToCreateCompanyForm();
-      await createCompany.fillCreateCompanyWithCustomUserNumber(
+      await createCompany.fillCompanyForm(
         newConpanyName,
         config.newCompanyStreet,
         config.newCompanyApp,
@@ -49,27 +45,16 @@ describe('Company management tests @Sb36e9099', async () => {
         config.newCompanyZip,
         config.newCompanyPhone,
         config.newCompanyEmail,
-        config.newCompanyCustomPlan,
-        config.newCompanyType,
-        userNumber
+        config.newCompanyPlan,
+        config.newCompanyType
       );
-      const errorTextElement = await driverChrome.wait(
-        until.elementLocated(By.id('companyPlanMaxNumberUsersError')),
-        10000
-      );
-  
-      const errorText = await errorTextElement.getText();
-      if (errorText === 'Number of users cannot be 0') {
-        console.log('Test successfully passed');
-      } else {
-        throw new Error('Test failed, check screenshot');
-      }
+      await createCompany.clickElement(config.locatorClosePoUpBtnCss)
+      await createCompany.checkDeleteItem(config.locatorCompaniesListCss,newConpanyName);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
-      await makeScreenshot(driverChrome, 'company_create');
+      await makeScreenshot(driverChrome, 'company_create_cancel');
       await lambdaParameters('failed', driverChrome);
       throw error;
     }
-  });
-
 });
+})

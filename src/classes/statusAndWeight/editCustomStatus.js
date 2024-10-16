@@ -41,10 +41,10 @@ class EditCustomStatus extends Base {
   async changeCustomStatusColor(customStatus) {
     await this.goToCustomStatusCreateForm();
     await this.driver.sleep(3000);
-    const StatusesList = await this.driver.findElements(
+    const statusesList = await this.driver.findElements(
       By.css('ul.additional-statuses-list .additional-statuses-list__item')
     );
-    for (let status of StatusesList) {
+    for (let status of statusesList) {
       const statusInput = await status.findElement(
         By.css(".form-input-modal[placeholder='Status Name']")
       );
@@ -54,11 +54,11 @@ class EditCustomStatus extends Base {
           .findElement(By.css('.color-box-with-list-wrapper'))
           .click();
         await this.driver.wait(
-          until.elementLocated(By.css('.colors-list[open="true"]')),
+          until.elementLocated(By.css('.colors-list[style="visibility: visible; opacity: 1;"]')),
           10000
         );
         const colorList = await this.driver.findElement(
-          By.css('.colors-list[open="true"]'),
+          By.css('.colors-list[style="visibility: visible; opacity: 1;"]'),
           10000
         );
         await this.driver.wait(until.elementIsEnabled(colorList), 10000);

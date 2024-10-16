@@ -87,6 +87,7 @@ class EditCompany extends RemoveCompany {
   );
   await companyBtn.click();
   await this.driver.wait(until.elementLocated(By.css('.table-details-wrapper')),10000);
+  await this.driver.wait(until.elementLocated(By.css('.table-details__title')),10000);
   const tableDetaile = await this.driver.findElement(By.css('.table-details-wrapper'));
   const tableDate = await tableDetaile.findElements(By.css(".table-details__title"));
   let planeOfCompany;

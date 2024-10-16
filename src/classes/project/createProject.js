@@ -118,9 +118,6 @@ class CreateProject extends Base {
       By.id('projectCity')
     );
     await cityInput.sendKeys(city)
-    // await cityDropDown.click();
-    // const cityList = await this.driver.findElements(By.className('ng-option'));
-    // await this.findDateInDropDown(cityList, city);
 
     const projectZip = await this.driver.findElement(
       By.id('projectZipCode')
@@ -249,17 +246,18 @@ class CreateProject extends Base {
     );
     if(app)
       {
-        await this.driver.wait(until.elementLocated(By.id('projectAddressSecondMobile')),10000);
+        await this.driver.wait(until.elementLocated(By.id('projectAddressSecond')),10000);
         const addressApart = await this.driver.findElement(
-          By.id('projectAddressSecondMobile')
+          By.id('projectAddressSecond')
         );
         await addressApart.click();
         await addressApart.sendKeys(app);
       };
     
     if(startdate){
-     const startdateEl = await this.driver.findElement(By.id('projectStartDate'));
-     await startdateEl.sendKeys(startdate);
+      await this.driver.sleep(500);
+      const startdateEl = await this.driver.findElement(By.id('projectStartDate'));
+      await startdateEl.sendKeys(startdate);
     };
 
     if(enddate){

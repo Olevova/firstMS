@@ -109,7 +109,7 @@ class RemoveCompany extends Base {
 
     await delBtn[0].click();
 
-    const modal = this.driver.findElement(By.className('modal'));
+    const modal = this.driver.findElement(By.className('modal-narrow'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);
     await this.driver.sleep(500);
 
@@ -144,17 +144,17 @@ class RemoveCompany extends Base {
   }
 
   async removeCompanyViaThreeDotsMenu(companyName){
-    await this.driver.wait(until.elementsLocated(By.css('.list-name-wrapper')),10000);
+    await this.driver.wait(until.elementsLocated(By.css('.company-name .ellipsis-text')),10000);
     await this.driver.sleep(1000);
-    await this.findItemAndOpenThreeDotsMenu(companyName,'.list-name-wrapper');
+    await this.findItemAndOpenThreeDotsMenu(companyName,'.company-name .ellipsis-text');
     await this.driver.wait(until.elementLocated(By.css('#dotsMenu[editmenuopen]')),10000);
     const deleteBtn = await this.driver.findElement(By.css('#dotsMenu[editmenuopen] #deleteItem'))
     await this.driver.wait(until.elementIsVisible(deleteBtn), 10000);
     await this.driver.wait(until.elementIsEnabled(deleteBtn), 10000);
     await deleteBtn.click();
     await this.driver.wait(until.elementLocated(By.css('.backdrop')),10000);
-    await this.driver.wait(until.elementLocated(By.css('.modal')),10000);
-    const modal = this.driver.findElement(By.className('modal'));
+    await this.driver.wait(until.elementLocated(By.css('.modal-narrow')),10000);
+    const modal = this.driver.findElement(By.className('modal-narrow'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);
     const delCompanyBtn = await this.driver.findElement(By.id('btnDelete'));
     await this.driver.wait(until.elementIsEnabled(delCompanyBtn), 10000);

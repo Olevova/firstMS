@@ -13,16 +13,7 @@ describe('Project management tests @Sbae16311', async () => {
   const newProjectName = 'FTP' + nanoid(2);
   const newProjectkey = null;
   const newProjectNumber = '71';
-  const newProjectStreet = 'Test2 new';
-  const newProjectApp = '22';
-  const newProjectZip = '02200';
   const newCompanyProjectBelong = config.companyName;
-  const newProjectClientName = 'Auto Test';
-  const newProjectState = 'New York';
-  const newCompanProjectCity = 'New York';
-  const startDate = '12.12.23';
-  const eneDate = '12.12.25';
-  const newEditName = 'testProjectEdit';
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -60,6 +51,7 @@ describe('Project management tests @Sbae16311', async () => {
         true
       );
       const errorMsgArray = await createProjectTest.formErrorMsgArray('.small-error-text-field');
+      console.log(await errorMsgArray.length);
       
       if(await errorMsgArray.length === 9){
 
@@ -106,18 +98,18 @@ describe('Project management tests @Sbae16311', async () => {
         newProjectkey,
         newProjectNumber,
         newCompanyProjectBelong,
-        newProjectStreet,
-        newProjectApp,
-        newProjectState,
-        newCompanProjectCity,
-        newProjectZip,
-        newProjectClientName,
-        startDate,
-        eneDate,
+        config.newProjectStreet,
+        config.newProjectApp,
+        config.newProjectState,
+        config.newCompanProjectCity,
+        config.newProjectZip,
+        config.newProjectClientName,
+        config.startDate,
+        config.eneDate,
         false
       );
       await createProjectTest.clickElement(config.locatorProjectCancelFormCss);
-      await createProjectTest.checkDeleteItem('.list-name-wrapper',newProjectName)
+      await createProjectTest.checkDeleteItem(config.locatorProjectsListCss,newProjectName)
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_cancel');

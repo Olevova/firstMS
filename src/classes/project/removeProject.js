@@ -170,8 +170,8 @@ class RemoveProject extends Base {
     await this.driver.wait(until.elementIsEnabled(deleteBtn), 10000);
     await deleteBtn.click();
     await this.driver.wait(until.elementLocated(By.css('.backdrop')), 10000);
-    await this.driver.wait(until.elementLocated(By.css('.modal')), 10000);
-    const modal = this.driver.findElement(By.className('modal'));
+    await this.driver.wait(until.elementLocated(By.css('.modal-narrow')), 10000);
+    const modal = this.driver.findElement(By.className('modal-narrow'));
     await this.driver.wait(until.elementIsEnabled(modal), 10000);
     const delBtnModalProject = await this.driver.findElement(
       By.id('btnDeleteProject')

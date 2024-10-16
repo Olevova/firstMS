@@ -13,28 +13,11 @@ describe('Company management tests @Sb36e9099', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'CompanyProject';
-  const newCompanyStreet = 'test2';
-  const newCompanyApp = '15';
-  const newCompanyZip = '00000';
-  const newCompanyPhone = '+1111112111';
-  const newCompanyEmail = 'fortest@test.com';
-  const newCompanyPlan = 'Enterprise';
-  const newCompanyType = 'tiling';
-  const newCompanyState = 'New York';
-  const newCompanyCity = 'New York';
 
   const userStatus = 'sa';
   const newProjectName = 'InCom' + nanoid(2);
   const newProjectkey = 'AABB';
   const newProjectNumber = '71';
-  const newProjectStreet = 'Test2 new';
-  const newProjectApp = '22';
-  const newProjectZip = '02200';
-  const newProjectClientName = 'Auto Test';
-  const newProjectState = 'New York';
-  const newCompanProjectCity = 'New York';
-  const startDate = '12.12.23';
-  const eneDate = '12.12.25';
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -65,15 +48,15 @@ describe('Company management tests @Sb36e9099', async () => {
       await createCompany.goToCreateCompanyForm();
       await createCompany.fillCreateCompany(
         newConpanyName,
-        newCompanyStreet,
-        newCompanyApp,
-        newCompanyState,
-        newCompanyCity,
-        newCompanyZip,
-        newCompanyPhone,
-        newCompanyEmail,
-        newCompanyPlan,
-        newCompanyType
+        config.newCompanyStreet,
+        false,
+        config.newCompanyState,
+        config.newCompanyCity,
+        config.newCompanyZip,
+        config.newCompanyPhone,
+        config.newCompanyEmail,
+        config.newCompanyPlan,
+        config.newCompanyType
       );
       await createCompany.checkCreationOfNewCompany();
       await createProjectTest.goToCreateProjectForm();
@@ -83,14 +66,14 @@ describe('Company management tests @Sb36e9099', async () => {
         newProjectkey,
         newProjectNumber,
         newConpanyName,
-        newProjectStreet,
-        newProjectApp,
-        newProjectState,
-        newCompanProjectCity,
-        newProjectZip,
-        newProjectClientName,
-        startDate,
-        eneDate
+        config.newProjectStreet,
+        config.newProjectApp,
+        config.newProjectState,
+        config.newCompanProjectCity,
+        config.newProjectZip,
+        config.newProjectClientName,
+        config.startDate,
+        config.eneDate
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

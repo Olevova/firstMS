@@ -59,14 +59,8 @@ describe('Project area tests @S2687e915', async () => {
         console.log('passed');
       } else {
         await addFile.addFile('photo');
-        // for local Use
-        // await addFile.checkAttachment(attachmentFileName,'add');
-        // for local Use
-
         await addFile.checkAttachment(attachmentFileNameDocker, 'add');
-        // for local Use
-        // await addFile.checkAttachment(attachmentFileName,'delete');
-        // for local Use
+  
       }
 
       await lambdaParameters('passed', driverChrome);
@@ -100,9 +94,6 @@ describe('Project area tests @S2687e915', async () => {
       } else {
         await deleteAttachment.openAreasWithComment();
         await deleteAttachment.deleteComment('photo');
-        // for local Use
-        // await addFile.checkAttachment(attachmentFileName,'delete');
-        // for local Use
         await addFile.checkAttachment(attachmentFileNameDocker, 'delete');
       }
 

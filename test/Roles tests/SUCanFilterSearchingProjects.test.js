@@ -98,9 +98,11 @@ describe('Standard User role @S7e09d7c0', async () => {
       projClient = await filterProject.getElementText(
         config.locatorProjectClientNameCss
       );
+      
+      
       if (
         startProjectsNumber > endProjectsNumber &&
-        projClient === clientName
+        projClient.toLocaleLowerCase() === clientName
       ) {
         console.log(`Test passed, you search client name is ${projClient}`);
       } else {
