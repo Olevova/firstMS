@@ -570,7 +570,7 @@ class Base {
         until.elementsLocated(By.css(locator)),
         10000
       );
-      el = elements[0];
+      el = elements[order];
       await this.driver.wait(until.elementIsEnabled(el), 10000);
     }
     await el.click();

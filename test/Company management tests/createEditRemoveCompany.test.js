@@ -31,6 +31,7 @@ describe('Company management tests @Sb36e9099', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const createCompany = new CreateCompany(driverChrome);
+    const editCompany = new EditCompany(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -53,6 +54,9 @@ describe('Company management tests @Sb36e9099', async () => {
         config.newCompanyType
       );
       await createCompany.checkCreationOfNewCompany();
+      await driverChrome.sleep(500);
+      await editCompany.findCompany(newConpanyName, config.companiesPage);
+      await editCompany.checkCompanyPlane(config.newCompanyPlan, 10000);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create');

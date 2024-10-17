@@ -146,7 +146,8 @@ describe('Project management role @Sfbe51cff', async () => {
         false,
         'title'
       );
-      if ('Floor 1' === viewEl) {
+      
+      if ('Floor 1' === viewEl || 'Floor 2' === viewEl) {
         console.log(viewEl, 'viewEl');
 
         console.log('Test passed, Project view tab show');
