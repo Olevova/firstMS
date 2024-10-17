@@ -20,7 +20,6 @@ describe('Rooms tests @Sa2b0fa77', async () => {
   const newUnitName = 'testUnit';
   const editUnitName = 'test2';
   const newRoomName = 'tr' + nanoid(5);
-  const editFloorName = 'test2';
   const newAreaName = 'testArea';
   const editTemplateName = 'editTemplateTest';
   const roomBasedOnTemplate = 'room-on-template';
