@@ -1,16 +1,15 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const ChangeAreaStatus = require('../../src/classes/view/area/changeAreaStatusInView');
 const CreateRoom = require('../../src/classes/view/room/createRoom');
-const DeleteRoom = require('../../src/classes/view/room/deleteRoom');
 const CreateArea = require('../../src/classes/view/area/createArea');
 const WeightChange = require('../../src/classes/statusAndWeight/weightChange');
+
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Project area tests @S2687e915', async () => {
+describe('Area status ans weight tests @Sc6ecacd5', async () => {
   let driverChrome = null;
 
   const newRoomName = 'testPercentRoom';
@@ -25,20 +24,18 @@ describe('Project area tests @S2687e915', async () => {
       await driverChrome.quit();
     }
   });
-  it('Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes @Tce924f87', async () => {
+  it('Project Progress(%) changes when New room with Area added and later deleted @Tce924f87', async () => {
     // time and site or lochalhost there tests are going
     await lambdaParameters(
-      'Сheck changes of Project Progress(%) when progress is 100% and adding New room with Area and check changes and after delete room and check changes',
+      'Project Progress(%) changes when New room with Area added and later deleted ',
       driverChrome
     );
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeAreaStatus = new ChangeAreaStatus(driverChrome);
-    const changeWeight = new WeightChange(driverChrome);
     const createRoom = new CreateRoom(driverChrome);
     const createArea = new CreateArea(driverChrome);
-    const deleteRoom = new DeleteRoom(driverChrome);
+    // const deleteRoom = new DeleteRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -47,17 +44,17 @@ describe('Project area tests @S2687e915', async () => {
     );
 
     try {
-      await changeAreaStatus.goToView(config.projectStatus);
-      await changeAreaStatus.checkStartProgressProjectPercent();
+      await createArea.goToView(config.projectStatus);
+      await createArea.checkStartProgressProjectPercent();
       await createRoom.createRoom('_', newRoomName);
       await createRoom.checkCreateNewRoom(newRoomName);
       await createArea.openEditRoomFormViaThreeDots(newRoomName);
       await createArea.addAreaInRoomWithoutCreatingTemplate(newAreaName);
       await createArea.checkCreateArea(newRoomName, newAreaName);
-      await changeAreaStatus.comparisonOfProgress('decrease');
-      await deleteRoom.deleteRoom(newRoomName);
-      await deleteRoom.checkDeleteFloor(newRoomName);
-      await changeAreaStatus.comparisonOfProgress('increase');
+      await createArea.comparisonOfProgress('decrease');
+      await createRoom.deleteRoom(newRoomName);
+      await createRoom.checkDeleteFloor(newRoomName);
+      await createArea.comparisonOfProgress('increase');
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(
@@ -69,16 +66,16 @@ describe('Project area tests @S2687e915', async () => {
     }
   });
 
-  it('change area status in view tab and check Project Progress(%) @T5224f8bf', async () => {
+  it('Change area status in view tab and check Project Progress(%) @T5224f8bf', async () => {
     await lambdaParameters(
-      'change area status in view tab and check Project Progress(%)',
+      'Change area status in view tab and check Project Progress(%)',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeAreaStatus = new ChangeAreaStatus(driverChrome);
+    const changeAreaStatus = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

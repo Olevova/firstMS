@@ -1,9 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const PaginationByNumberPerPage = require('../../src/classes/pagination/paginationByNumberPerPage');
-const PaginationByButton = require('../../src/classes/pagination/paginationByBtn');
-const PaginationByArrow = require('../../src/classes/pagination/paginationByArrow');
+const Pagination = require('../../src/classes/pagination/pagination');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -21,16 +19,16 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('Pagination by the Number of Entities per Page @T199518ec', async () => {
+  it('Pagination by the number of rows per page @T199518ec', async () => {
     await lambdaParameters(
-      'Pagination by the Number of Entities per Page',
+      'Pagination by the number of rows per page',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const paginationByNumber = new PaginationByNumberPerPage(driverChrome);
+    const paginationByNumber = new Pagination(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -40,7 +38,7 @@ describe('Project management tests @Sbae16311', async () => {
 
     try {
       await paginationByNumber.goToProjectsPage();
-      await paginationByNumber.executionOfPagination('50');
+      await paginationByNumber.executionOfMenuPagination('50');
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'pagination_by_number');
@@ -49,12 +47,12 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('Pagination by button  @Tb5db969f', async () => {
-    await lambdaParameters('Pagination by button', driverChrome);
+  it('Pagination works by clicking button with page number @Tb5db969f', async () => {
+    await lambdaParameters('Pagination works by clicking button with page number', driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const paginationByBtn = new PaginationByButton(driverChrome);
+    const paginationByBtn = new Pagination(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -73,12 +71,12 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('Pagination by arrow  @T10299de0', async () => {
-    await lambdaParameters('Pagination by arrow', driverChrome);
+  it('Pagination work by  clicking arrow  @T10299de0', async () => {
+    await lambdaParameters('Pagination work by  clicking arrow', driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const paginationByArrow = new PaginationByArrow(driverChrome);
+    const paginationByArrow = new Pagination(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -88,7 +86,7 @@ describe('Project management tests @Sbae16311', async () => {
 
     try {
       await paginationByArrow.goToProjectsPage();
-      await paginationByArrow.executionOfPagination();
+      await paginationByArrow.executionOfArrowPagination();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'pagination_by_arrow');

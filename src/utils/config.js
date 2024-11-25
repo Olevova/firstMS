@@ -1,32 +1,36 @@
 const { nanoid } = require('nanoid');
-
+const baseUrl = process.env.BASE_URL || 'https://dev-frontend.colorjob.terenbro.com';
+const baseUrlBackend = process.env.BASE_URL_BACKEND || 'https://dev-backend.colorjob.terenbro.com';
+// const baseUrlBackend = 'http://localhost:8080'
+// const baseUrl = 'http://localhost:4400'
 module.exports = {
+    baseUrl,
+    baseUrlBackend,
+    baseUrlDev: 'https://dev-frontend.colorjob.terenbro.com',
     // URLs for Auto tests
-    urlLoginPage: 'https://dev-frontend.colorjob.terenbro.com/login',
-    //for local use 'http://localhost:4300/login',
-    urlhomePageForCheck: 'https://dev-frontend.colorjob.terenbro.com/system/dashboard',
-    //for local use "http://localhost:4300/system/dashboard",
-    mainCompanyPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24/dashboard',
-    mainCompanyProjectsPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24',
-    mainCompanyUsersPage: 'https://dev-frontend.colorjob.terenbro.com/system/company/24/users',
-    projectsPage: 'https://dev-frontend.colorjob.terenbro.com/system/projects',
-    companiesPage: 'https://dev-frontend.colorjob.terenbro.com/system/companies',
-    forgotPasswordUrl: 'https://dev-frontend.colorjob.terenbro.com/forgot-password',
-    usersPage: 'https://dev-frontend.colorjob.terenbro.com/system/users',
+    urlLoginPage: `${baseUrl}/login`,
+    urlhomePageForCheck: `${baseUrl}/system/dashboard`,
+    mainCompanyPage: `${baseUrl}/system/company`,
+    projectsPage: `${baseUrl}/system/projects`,
+    companiesPage: `${baseUrl}/system/companies`,
+    forgotPasswordUrl: `${baseUrl}/forgot-password`,
+    usersPage: `${baseUrl}/system/users`,
     emailForTest: 'justtesting.den@gmail.com',
     emailUseForTest: 'volodymyr_o@terenbro.com',
     emailUseForTestCA: 'volodymyrCA@terenbro.com',
     wrongEmailFormat:'error@',
+    matchUrl: `${baseUrl}/system/company`,
     // SA,CA,PM,SU credentials
     email: 'superadmin@gmail.com',
     password: 'colorjob',
     emailCA:'olevova1983@gmail.com',
-    passwordCA:'222222',
+    passwordCA:baseUrl !=='https://dev-frontend.colorjob.terenbro.com' ? 'colorjob' : '222222',
     emailPM:'Oleksiyukvolodymyr@gmail.com',
-    passwordPM:'222222',
+    passwordPM:baseUrl !=='https://dev-frontend.colorjob.terenbro.com' ? 'colorjob' : '222222',
     emailSU: 'olevova@ukr.net',
-    passwordSU: '222222',
-    passwordSUForChange: '333333',
+    passwordSU:baseUrl !=='https://dev-frontend.colorjob.terenbro.com' ? 'colorjob' :  '222222',
+    passwordSUForChange:'333333',
+    emailSUSecond: 'towawo4814@foraro.com',
     inviteUserEmailSU: 'invitePM@gmail.com',
     inviteUserEmail:'serigof730@cetnob.com',
     inviteUserNewEmail: 'pekaw54044@asaud.com',
@@ -37,14 +41,18 @@ module.exports = {
     taskTestUserEmail:'testtask@gmail.com',
     taskTestUserCA: 'CA_parallel',
     taskTestUserPM: 'PM_parallel',
+    taskTestUserSU: 'SU_parallel',
     //company name for test
     companyName: 'AT2024',
+    companyCheckPlane: 'Check-plane',
     //main test project
     projectNameMain: 'ColorjobAT',
+    projectDone: 'DONE',
     projectNameEdit: 'unitEdit',
     projectNameForCA: 'CA test',
     projectNameForPM: 'PM test',
     projectNameForSU: 'SU test',
+    projectStatus: 'ProjectDoneStatus',
     projectIDForPM: 'PR-PMPR',
     // Create Company
     newCompanyStreet: 'test2',
@@ -52,9 +60,12 @@ module.exports = {
     newCompanyZip: '00000',
     newCompanyPhone: '+1111112111',
     newCompanyEmail: 'fortest@test.com',
+    newCompanyEmailTest: 'testtest@test.com',
     newCompanyPlan: 'Enterprise',
     newCompanyCustomPlan: 'Custom',
+    newCompanyTeamPlan:'Team',
     newCompanyType: 'Electrical',
+    newCompanyTypeFlooring: 'Flooring',
     newCompanyState: 'New York',
     newCompanyCity: 'New York',
     // create project items optional
@@ -65,9 +76,7 @@ module.exports = {
     newProjectClientName: 'Auto Test',
     newProjectZip: '02200',
     startDate:'12.12.23',
-    eneDate:'12.12.25',
-    //test project for status tests
-    projectStatus: 'ProjectDoneStatus',
+    eneDate:'12.12.25',    
     // projects tabs
     view:'view',
     projectProgress:'Project Progress',
@@ -121,6 +130,8 @@ module.exports = {
     locatorProjectCancelFormCss: '#btnCancelMobile',
     locatorProjectEditBtnCss:'.settings-wrapper__btn-edit',
     locatorProjectsListCss:'.list-name-wrapper',
+    locatorCompaniesLinkCss:'#linkCompanies',
+    locatorCompaniesNameCss: '.company-name .ellipsis-text',
     locatorCompanyListCss: '.company-id',
     locatorCompanyFormCss:'app-company-form .backdrop .form-invite.form-create',
     localCompanySettingsCss: '#linkCompanySettings',
@@ -135,6 +146,8 @@ module.exports = {
     locatorThreeDotsRoomMenuCss:'.room-name .menu-list-dots-wrapper',
     locatotDeleteUserOpenModalCss: '#deleteUserOpenModal',
     locatorDeletePoUpBtnCss:'#btnDelete',
+    locatorSelectDeleteBtnCss:'#btnDeleteSelect',
+    locatorSelectDeleteBtnTask:'#btnDeleteTask',
     locatorClosePoUpBtnCss:'#btnClose',
     locatorCancelPoUpBtnCss:'#btnCancel',
     locatorCreatePouUpBtnCss: '#btnCreate',
@@ -148,15 +161,30 @@ module.exports = {
     locatorCancelLinkLoginCss:'#linkCancel',
     locatorAreaTabsCss: '.area-details-tabs-list__link',
     locarorUploadFileErrorCss: '#uploadFileErrordrop-area',
+    locatorUploadFileAreaErrorCss: '#uploadFileErrorDropArea',
     locatorTaskNameCss: '.task-name',
     locatorTaskWraperCss: '.task-name__wrapper',
+    locatorRoomCss:'.room',
+    locatorMaterialsName:'.material-name',
+    locatorMaterialsNameClass:'material-name',
+    locatorSmallErrorEl: '.small-error-text-field',
+    loccatorEditBtn: '#editItem',
+    locatorFilterIcon: '.filters-icon.close-icon-forCheck',
+    locatorCleraSearching: '.clear-icon',
+    locatorMaterialsSupplier: '.material-supplier',
+    locatorTableSortIcon: '.table-sort-icon-btn',
+    locatorCreateMaterialStatusBtn: '#createUnitBtnDesk',
+    locatorDotsMenuId: "#dotsMenu",
+    locatorMaterialIdCss: '.material-id',
     //taske createion
     taskDescription:'Test description',
     taskDate: '15.12.25',
+    attachmentFilePhoto: 'JavaScript.png',
     attachmentFileVideo: 'video.MP4',
     attachmentFileDoc: 'doc.pdf',
     attachmentFileZip:'doc.zip',
   //View tab create items
+    templateBedroom1: 'Bedroom 1',
     newFloorName : 'TestFloor',
     newUnitName : 'TestUnit',
     newRoomName : 'TestUnique',
@@ -171,8 +199,13 @@ module.exports = {
     newTaskName:'FortestTaskRl',
     newTaskNameForUpdate:'TestEditRl2',
     // Materials date
-    tag:'test tag',
+    tagMT:'test tag',
+    tagMTFull:'test full',
+    supplier:'CA',
+    supplierPM:'PM',
+    areaMT:'room',
     unit:{
+      NOUNIT:'No Unit',
       SF:"SF",
       PCS:'PCS'
     },
@@ -190,10 +223,19 @@ module.exports = {
       Ordered:'Ordered',
       Arrived:'Arrived'
     },
+    materialsPaymentNoStatus: 'No Status',
+    materialPaymentStatus:'longpaymentwith',
+    materialPaymentStatusPaid:'Paid',
+    materialsLocation: 'No Location',
+    materialsNot: 'Notes',
     OrderDateMaterials:Date.now(),
     // random date
     randomDate:nanoid(6),
+    randomDateFunc: ()=>nanoid(6),
     // files path
     lambdaPathWindows:'C:\\Users\\ltuser\\Downloads\\',
-    lambdaPathDockerChrom:'/home/selenium_files/'
+    lambdaPathDockerChrom:'/home/selenium_files/',
+    dockerPathForDownloaddFiles: '/shared/downloads',
+    //errors
+    filesAttachments: 'Error: Unable to upload. The number of files must not exceed 4.'
   };

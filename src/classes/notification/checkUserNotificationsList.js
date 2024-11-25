@@ -1,5 +1,7 @@
 const { By, until } = require('selenium-webdriver');
 const Base = require('../base');
+const locatorNotification = require('../../utils/locators/locatorNotification');
+const locatorsCommon = require('../../utils/locators/locatorsCommon'); 
 
 class CheckUserNotificationsList extends Base {
   async lastNotificationInSeconds(string) {
@@ -19,36 +21,36 @@ class CheckUserNotificationsList extends Base {
   }
 
   async goToNotificationList() {
-    await this.driver.wait(until.elementLocated(By.css('html')), 10000);
+    await this.driver.wait(until.elementLocated(locatorsCommon.baseHtml), 10000);
     await this.driver.executeScript('return document.readyState');
     await this.driver.wait(
-      until.elementLocated(By.css('.notifications-btn')),
+      until.elementLocated(locatorNotification.notificationsBtn),
       10000
     );
     const notificationsMenuBtn = await this.driver.findElement(
-      By.css('.notifications-btn')
+      locatorNotification.notificationsBtn
     );
     await notificationsMenuBtn.click();
 
     await this.driver.wait(
-      until.elementLocated(By.css('.notifications-list-wrapper[show="true"]')),
+      until.elementLocated(locatorNotification.notificationsListWrapper),
       1000
     );
   }
 
   async checkLastNotification(notificationtext) {
     await this.driver.wait(
-      until.elementsLocated(By.css('.notifications-list__item')),
+      until.elementsLocated(locatorNotification.notificationListItem),
       10000
     );
     this.waitListDate('.notifications-list__item', 3);
     const allNotifications = await this.driver.findElements(
-      By.css('.notifications-list__item')
+      locatorNotification.notificationListItem
     );
     const lastNotificatio = await allNotifications[0];
-    const idOfItem = await lastNotificatio.findElement(By.css('.public-id'));
+    const idOfItem = await lastNotificatio.findElement(locatorNotification.publicId);
     const timeOfLastNotification = await lastNotificatio.findElement(
-      By.css('.notif-info-time')
+      locatorNotification.notifInfoTime
     );
     const second = await this.lastNotificationInSeconds(
       await timeOfLastNotification.getText()
@@ -56,7 +58,8 @@ class CheckUserNotificationsList extends Base {
     console.log(
       await idOfItem.getText(),
       await timeOfLastNotification.getText(),
-      second
+      second,
+      notificationtext
     );
     if (second < 60 && (await idOfItem.getText()) === notificationtext) {
       console.log('test notification passed successfully');

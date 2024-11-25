@@ -1,18 +1,24 @@
 const { Builder, Key } = require('selenium-webdriver');
+const path = require('path');
+const os = require('os');
 const chrome = require('selenium-webdriver/chrome');
 const ltCapabilite = require('../../capabilities');
-
 const USERNAME = ltCapabilite.capability['LT:Options'].username;
 const KEY = ltCapabilite.capability['LT:Options'].accessKey;
 const GRID_HOST = 'hub.lambdatest.com/wd/hub';
 const gridUrl = 'https://' + USERNAME + ':' + KEY + '@' + GRID_HOST;
 const isRunningInTeamCity = process.env.RUNNING_IN_TEAMCITY === 'true';
+// const isRunningInTeamCity = true;
 const isRunningInDocker = process.env.RUNNING_IN_DOCKER === 'true';
 const withoutLambda = process.env.RUNNING_WITHOUT_VIDEO === 'true';
+// const withoutLambda = false;
 const browsers = [{ browser: 'Chrome', bVersion: '126', os: 'Windows 10' }];
 let inDocker = false;
+const downloadPath = path.join(os.homedir(), 'Downloads');
 
-async function createWebdriverChrome() {
+
+
+async function createWebdriverChrome(useIncognito=true) {
   let driver;
   try {
     if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
@@ -28,7 +34,9 @@ async function createWebdriverChrome() {
     } else if (withoutLambda) {
       console.log(withoutLambda, 'without video');
       const options = new chrome.Options();
-      options.addArguments('--incognito');
+      if(useIncognito){
+        options.addArguments('--incognito');
+      }
       options.addArguments('--start-maximized');
       options.addArguments('--private');
       driver = await new Builder()
@@ -40,14 +48,17 @@ async function createWebdriverChrome() {
     } else {
       inDocker = true;
       if (process.platform === 'darwin') {
+        const options = new chrome.Options();
         driver = await new Builder()
-          .forBrowser('safari')
+          .forBrowser('chrome')
           .setChromeOptions(options)
           .build();
         return driver;
       }
       const options = new chrome.Options();
-      options.addArguments('--incognito');
+      if(useIncognito){
+        options.addArguments('--incognito');
+      }
       options.addArguments('--start-maximized');
       options.addArguments('--private');
       driver = await new Builder()
@@ -59,7 +70,9 @@ async function createWebdriverChrome() {
   } catch (error) {
     console.log(error, 'error');
     const options = new chrome.Options();
-    options.addArguments('--incognito');
+    if(useIncognito){
+      options.addArguments('--incognito');
+    }
     options.addArguments('--start-maximized');
     options.addArguments('--private');
     driver = await new Builder()

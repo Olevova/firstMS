@@ -1,9 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const CreateTaskByEmployee = require('../../src/classes/task/employee/employeeCreateTask');
-const EmployeeUpdateTask = require('../../src/classes/task/employee/employeeUpdateTask');
-const RemoveTaskByEmployee = require('../../src/classes/task/employee/employeeRemoveTask');
+const CreateTask = require('../../src/classes/task/createTask');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -27,7 +25,7 @@ describe('Company admin role @Se7b2355c', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const createTaskByCA = new CreateTaskByEmployee(driverChrome);
+    const createTaskByCA = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -36,13 +34,14 @@ describe('Company admin role @Se7b2355c', async () => {
     );
 
     try {
-      await createTaskByCA.goToCreateTasksForm();
+      await createTaskByCA.goToCreateTasksForm(null,'ca');
       await createTaskByCA.fillCreateTask(
         config.newTaskName,
         config.taskDescription,
         config.taskDate,
         config.userCAName
       );
+      await createTaskByCA.checkTaskCreation(config.newTaskName)
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create_by_CA');
@@ -57,7 +56,7 @@ describe('Company admin role @Se7b2355c', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const CAUpdateTask = new EmployeeUpdateTask(driverChrome);
+    const CAUpdateTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -66,7 +65,7 @@ describe('Company admin role @Se7b2355c', async () => {
     );
 
     try {
-      await CAUpdateTask.goToCreateTasksForm();
+      await CAUpdateTask.goToCreateTasksForm(null,'ca');
       await CAUpdateTask.editTask(config.newTaskName, config.newTaskNameForUpdate);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -81,7 +80,7 @@ describe('Company admin role @Se7b2355c', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeTaskByCA = new RemoveTaskByEmployee(driverChrome);
+    const removeTaskByCA = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -90,7 +89,7 @@ describe('Company admin role @Se7b2355c', async () => {
     );
 
     try {
-      await removeTaskByCA.goToTasksList();
+      await removeTaskByCA.goToCreateTasksForm(null,'ca');
       await removeTaskByCA.taskRemove(config.newTaskNameForUpdate);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

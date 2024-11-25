@@ -1,6 +1,6 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const EditProject = require('../../src/classes/project/editProject');
+const CreateProject = require('../../src/classes/project/createProject');
 const LoginPage = require('../../src/classes/auth/login');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
@@ -26,7 +26,7 @@ describe('Project management role @Sfbe51cff', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const editProject = new EditProject(driverChrome);
+    const editProject = new CreateProject(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -61,7 +61,7 @@ describe('Project management role @Sfbe51cff', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const editProject = new EditProject(driverChrome);
+    const editProject = new CreateProject(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -96,7 +96,7 @@ describe('Project management role @Sfbe51cff', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const editProject = new EditProject(driverChrome);
+    const editProject = new CreateProject(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -130,7 +130,7 @@ describe('Project management role @Sfbe51cff', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const editProject = new EditProject(driverChrome);
+    const editProject = new CreateProject(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(

@@ -1,7 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const ChangeStatusTask = require('../../src/classes/task/changeStatus');
+const CreateTask = require('../../src/classes/task/createTask');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
@@ -28,7 +28,7 @@ describe('Standard User role @S7e09d7c0', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeTaskStatus = new ChangeStatusTask(driverChrome);
+    const changeTaskStatus = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,
@@ -59,8 +59,7 @@ describe('Standard User role @S7e09d7c0', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const inviteUserTest = new InviteUser(driverChrome);
-    // const userSelect = new RemoveUser(driverChrome);
-    const changeTaskStatus = new ChangeStatusTask(driverChrome);
+    const changeTaskStatus = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,

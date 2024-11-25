@@ -1,7 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const AddRemoveUserToProject = require('../../src/classes/user/addAndRemoveUserToProject');
+const InviteUser = require('../../src/classes/user/inviteUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -27,7 +27,7 @@ describe('Invite users tests @S22695f61', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -38,7 +38,6 @@ describe('Invite users tests @S22695f61', async () => {
     try {
       await addRemoveUserToProject.goToView(config.projectNameForSU);
       await addRemoveUserToProject.goToSelectTab(config.users);
-      await addRemoveUserToProject.removeUserFromProject(config.taskTestUser);
       await addRemoveUserToProject.removeUserFromProject(config.taskTestUserPM);
       await addRemoveUserToProject.addAllExistingUser(false);
       await addRemoveUserToProject.unselectUser(config.taskTestUserPM);
@@ -56,7 +55,7 @@ describe('Invite users tests @S22695f61', async () => {
       'Adding all Users on Add existing user form and click "Cancel"',
       driverChrome
     );
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -91,7 +90,7 @@ describe('Invite users tests @S22695f61', async () => {
       'Add all Users on Add existing user form',
       driverChrome
     );
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(

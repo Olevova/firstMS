@@ -2,14 +2,11 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateTask = require('../../src/classes/task/createTask');
-const SearchingTaskByName = require('../../src/classes/task/searchingTask');
-const RemoveTask = require('../../src/classes/task/removeTask');
-const UpdateTaskDetail = require('../../src/classes/task/updateTaskDetail');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Tasks tests @S02097389', async () => {
   let driverChrome = null;
 
   const newTaskName = config.randomDate;
@@ -61,15 +58,14 @@ describe('Tasks tests @S26f6875e', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+    const updateTaskDetail = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
       config.password,
       config.urlhomePageForCheck
     );
-    await goToTasks.goToTasksList(config.projectNameMain);
+    await updateTaskDetail.goToTasksList(config.projectNameMain);
 
     try {
         await updateTaskDetail.findAllTasksInProject();
@@ -93,15 +89,14 @@ describe('Tasks tests @S26f6875e', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+    const updateTaskDetail = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
       config.password,
       config.urlhomePageForCheck
     );
-    await goToTasks.goToTasksList(config.projectNameMain);
+    await updateTaskDetail.goToTasksList(config.projectNameMain);
 
     try {
         await updateTaskDetail.findAllTasksInProject();
@@ -125,15 +120,15 @@ describe('Tasks tests @S26f6875e', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+    const updateTaskDetail = new CreateTask(driverChrome);
+    
 
     await logginPageTest.userLogIn(
       config.email,
       config.password,
       config.urlhomePageForCheck
     );
-    await goToTasks.goToTasksList(config.projectNameMain);
+    await updateTaskDetail.goToTasksList(config.projectNameMain);
 
     try {
         await updateTaskDetail.findAllTasksInProject();
@@ -157,7 +152,7 @@ describe('Tasks tests @S26f6875e', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeTask = new RemoveTask(driverChrome);
+    const removeTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

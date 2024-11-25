@@ -1,5 +1,7 @@
 const { By, until } = require('selenium-webdriver');
 const Base = require('../base');
+const locatorsCommon = require('../../utils/locators/locatorsCommon');
+const locatorDashboard = require('../../utils/locators/locatorDashboard');
 
 class DashBoardPart extends Base {
   constructor(driver) {
@@ -14,57 +16,57 @@ class DashBoardPart extends Base {
     let item;
     if (table === 'cm') {
       await this.driver.wait(
-        until.elementLocated(By.css('app-dashboard-companies-table')),
+        until.elementLocated(locatorDashboard.dashCompanyTable),
         10000
       );
       compTable = await this.driver.wait(
         until.elementLocated(
-          By.css('app-dashboard-companies-table .table-companies__row')
+          locatorDashboard.dashCompaniesTableRow
         ),
         10000
       );
 
       firstTableElId = await compTable.findElement(
-        By.css('.table-companies__row .company-id')
+        locatorDashboard.dashCompanyId
       );
       firstTableLink = await compTable.findElement(
-        By.css('.table-companies__row .company-name')
+        locatorDashboard.dashCompanyName
       );
       item = await firstTableLink.findElement(By.css('span')).getText();
     } else if (table === 'pj') {
       await this.driver.wait(
-        until.elementLocated(By.css('app-dashboard-projects-table')),
+        until.elementLocated(locatorDashboard.dashProjectTable),
         10000
       );
       compTable = await this.driver.wait(
         until.elementLocated(
-          By.css('app-dashboard-projects-table .table-projects__row')
+          locatorDashboard.dashProjectsTableRow
         ),
         10000
       );
       firstTableElId = await compTable.findElement(
-        By.css('.table-projects__row .company-id')
+        locatorDashboard.dashProjectId
       );
       firstTableLink = await compTable.findElement(
-        By.css('.table-projects__row .company-name')
+        locatorDashboard.dashProjectName
       );
       item = await firstTableLink.findElement(By.css('span')).getText();
     } else {
       await this.driver.wait(
-        until.elementLocated(By.css('app-dashboard-tasks-table')),
+        until.elementLocated(locatorDashboard.dashTaskTable),
         10000
       );
       compTable = await this.driver.wait(
         until.elementLocated(
-          By.css('app-dashboard-tasks-table .table-tasks__row')
+          locatorDashboard.dashTasksTableRow
         ),
         10000
       );
       firstTableElId = await compTable.findElement(
-        By.css('.table-tasks__row .task-id')
+        locatorDashboard.dashTaskId
       );
       firstTableLink = await compTable.findElement(
-        By.css('.table-tasks__row .task-name')
+        locatorDashboard.dashTaskName
       );
       item = await firstTableLink.findElement(By.css('span')).getText();
     }
@@ -82,31 +84,31 @@ class DashBoardPart extends Base {
     switch (table) {
       case 'cm':
         await this.driver.wait(
-          until.elementLocated(By.css('.table-companies__row')),
+          until.elementLocated(locatorDashboard.dashRowCompanies),
           10000
         );
         tableElements = await this.driver.findElements(
-          By.css('.table-companies__row')
+          locatorDashboard.dashRowCompanies
         );
         console.log(await tableElements.length, 'len');
         break;
       case 'pj':
         await this.driver.wait(
-          until.elementLocated(By.css('.table-projects__row')),
+          until.elementLocated(locatorDashboard.dashRowProjects),
           10000
         );
         tableElements = await this.driver.findElements(
-          By.css('.table-projects__row')
+          locatorDashboard.dashRowProjects
         );
         console.log(await tableElements.length, 'len');
         break;
       case 'ts':
         await this.driver.wait(
-          until.elementLocated(By.css('.table-tasks__row')),
+          until.elementLocated(locatorsCommon.baseRowTasks),
           10000
         );
         tableElements = await this.driver.findElements(
-          By.css('.table-tasks__row')
+          locatorsCommon.baseRowTasks
         );
         console.log(await tableElements.length, 'len');
         break;
@@ -143,14 +145,14 @@ class DashBoardPart extends Base {
         throw new Error('Not such table');
     }
     const tables = await this.driver.wait(
-      until.elementsLocated(By.css('.total-statistic')),
+      until.elementsLocated(locatorDashboard.dashTotalStatistic),
       10000
     );
     for (let el of tables) {
       const tableTitle = await el.getText();
       if (tableTitle.includes(elementForSearch)) {
         const numberEl = await el.findElement(
-          By.css('.total-statistic-amount')
+          locatorDashboard.dashTotalStatisticAmount
         );
         number = await numberEl.getText();
 
@@ -178,11 +180,11 @@ class DashBoardPart extends Base {
         return newUrl !== oldUrl;
       }, 10000);
       await this.driver.wait(
-        until.elementLocated(By.css('app-companies')),
+        until.elementLocated(locatorsCommon.baseAppCompanies),
         10000
       );
       const companyEl = await this.driver.wait(
-        until.elementLocated(By.css('.company-name.company-name-sidebar')),
+        until.elementLocated(locatorDashboard.dashCompanySidebarName),
         10000
       );
       await this.driver.sleep(500);
@@ -202,13 +204,13 @@ class DashBoardPart extends Base {
         return newUrl !== oldUrl;
       }, 10000);
       await this.driver.wait(
-        until.elementLocated(By.css('app-project-details')),
+        until.elementLocated(locatorsCommon.baseAppProjectsDetails),
         10000
       );
 
       const projectEl = await this.driver.wait(
         until.elementLocated(
-          By.css('.project-list-link.nav-list__link--active')
+          locatorDashboard.dashProjectActiveLink
         ),
         10000
       );
@@ -226,9 +228,9 @@ class DashBoardPart extends Base {
         const newUrl = await this.driver.getCurrentUrl();
         return newUrl !== oldUrl;
       }, 10000);
-      await this.driver.wait(until.elementLocated(By.css('app-tasks')), 10000);
+      await this.driver.wait(until.elementLocated(locatorsCommon.baseAppTasks), 10000);
       const taskEl = await this.driver.wait(
-        until.elementLocated(By.css('.backdrop .form-invite #taskNameMobile')),
+        until.elementLocated(locatorDashboard.dashTaskNameMobile),
         10000
       );
       const textWait = itemName.trim();
@@ -243,7 +245,7 @@ class DashBoardPart extends Base {
 
   async clickOnSeeAllLink(link = 'pj', url) {
     await this.driver.wait(
-      until.elementsLocated(By.css('.settings-wrapper__header')),
+      until.elementsLocated(locatorsCommon.baseSettingsWrapperHeader),
       10000
     );
     let elementForClick;
@@ -264,7 +266,7 @@ class DashBoardPart extends Base {
       elementForClick,
       '.settings-wrapper__header .table-link'
     );
-    await this.driver.wait(until.urlIs(url), 10000);
+    await this.driver.wait(until.urlContains(url), 10000);
     await this.waitListDate(locator, 2);
     const number = await this.driver.findElements(By.css(locator));
     if ((await number.length) >= numberOfEl) {

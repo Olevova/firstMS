@@ -1,14 +1,13 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const AddRemoveUserToProject = require('../../src/classes/user/addAndRemoveUserToProject');
+const InviteUser = require('../../src/classes/user/inviteUser');
 const CreateTask = require('../../src/classes/task/createTask');
-const RemoveTask = require('../../src/classes/task/removeTask');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Tasks tests @S02097389', async () => {
   let driverChrome = null;
 
   const taskTitle = 'taskforPagination';
@@ -28,18 +27,18 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('checking the addition of a pagination, a pagination counter, after adding and removing a task on the user @Te9a62697', async () => {
+  it('Checking a pagination counter, after adding and removing a task @Te9a62697', async () => {
     await lambdaParameters(
-      'checking the addition of a pagination, a pagination counter, after adding and removing a task on the user',
+      'Checking a pagination counter, after adding and removing a task',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const createTask = new CreateTask(driverChrome);
-    const removeTask = new RemoveTask(driverChrome);
+    // const removeTask = new RemoveTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -91,7 +90,7 @@ describe('Tasks tests @S26f6875e', async () => {
         );
         throw new Error('Test failed, check screenshot');
       }
-      await removeTask.taskRemove(taskTitle);
+      await createTask.taskRemove(taskTitle);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_pagination');

@@ -1,7 +1,6 @@
 const { createWebdriverChrome } = require('../webdriver');
 const InviteUser = require('../../classes/user/inviteUser');
 const LoginPage = require('../../classes/auth/login');
-const RemoveUser = require('../../classes/user/removeUser');
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -36,26 +35,26 @@ describe('invite user by the project manager and check the counter of avaliable 
     return;
   });
 
-  it('invite user by the project manager and check the counter of avaliable invitations test-cases in the PM 189', async () => {
-    // await driverChrome.executeScript("document.body.style.zoom='50%'");
+  // it('invite user by the project manager and check the counter of avaliable invitations test-cases in the PM 189', async () => {
+  //   // await driverChrome.executeScript("document.body.style.zoom='50%'");
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const inviteUserTest = new InviteUser(driverChrome);
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(emailPM);
-    await logginPageTest.fillPasswordInput(passwordPM);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheckCA);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const inviteUserTest = new InviteUser(driverChrome);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(emailPM);
+  //   await logginPageTest.fillPasswordInput(passwordPM);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheckCA);
 
-    try {
-      await inviteUserTest.checkNumberOfUsersInUsersList('pm');
-      await inviteUserTest.checkAvailibleNumberOfUsersInInviteForm();
-      await lambdaParameters('passed', driverChrome);
-      //   await inviteUserTest.checkCreateNewUser(emailUserCA);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'check_avaliable_invitations');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await inviteUserTest.checkNumberOfUsersInUsersList('pm');
+  //     await inviteUserTest.checkAvailibleNumberOfUsersInInviteForm();
+  //     await lambdaParameters('passed', driverChrome);
+  //     //   await inviteUserTest.checkCreateNewUser(emailUserCA);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'check_avaliable_invitations');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

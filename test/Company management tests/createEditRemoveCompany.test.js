@@ -2,13 +2,11 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
-const RemoveCompany = require('../../src/classes/company/removeCompany');
-const EditCompany = require('../../src/classes/company/editCompany');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Company management tests @Sb36e9099', async () => {
+describe('Company management tests @Sca85247d', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'Fortest';
@@ -24,14 +22,14 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('create new company @T39b080c5', async () => {
-    await lambdaParameters('create new company', driverChrome);
+  it('Create new company @T39b080c5', async () => {
+    await lambdaParameters('Create new company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const createCompany = new CreateCompany(driverChrome);
-    const editCompany = new EditCompany(driverChrome);
+   
 
     await logginPageTest.userLogIn(
       config.email,
@@ -55,8 +53,8 @@ describe('Company management tests @Sb36e9099', async () => {
       );
       await createCompany.checkCreationOfNewCompany();
       await driverChrome.sleep(500);
-      await editCompany.findCompany(newConpanyName, config.companiesPage);
-      await editCompany.checkCompanyPlane(config.newCompanyPlan, 10000);
+      await createCompany.findCompany(newConpanyName, config.companiesPage);
+      await createCompany.checkCompanyPlane(config.newCompanyPlan, 10000);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'company_create');
@@ -65,13 +63,13 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('edit new company @Tf5a8e860', async () => {
-    await lambdaParameters('edit new company', driverChrome);
+  it('Update a company @Td9fe49ea0', async () => {
+    await lambdaParameters('Update a company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editCompany = new EditCompany(driverChrome);
+    const editCompany = new CreateCompany(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -91,13 +89,13 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('remove company @T9b9142ee', async () => {
-    await lambdaParameters('remove company', driverChrome);
+  it('Delete company @T9b9142ee', async () => {
+    await lambdaParameters('Delete company', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeCompany = new RemoveCompany(driverChrome);
+    const removeCompany = new CreateCompany(driverChrome);
 
     try {
       await logginPageTest.userLogIn(

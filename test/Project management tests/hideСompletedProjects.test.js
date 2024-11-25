@@ -1,7 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const CheckProjects = require('../../src/classes/project/checkProjects');
+const CreateProject = require('../../src/classes/project/createProject');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -26,7 +26,7 @@ describe('Project management tests @Sbae16311', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const checkProject = new CheckProjects(driverChrome);
+    const checkProject = new CreateProject(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

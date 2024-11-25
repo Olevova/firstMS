@@ -2,13 +2,12 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
-const RemoveCompany = require('../../src/classes/company/removeCompany');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Company management tests @Sb36e9099', async () => {
+describe('Company management tests @Sca85247d', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'CompanyUser';
@@ -23,9 +22,9 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('Create new company, and invite new user to the company', async () => {
+  it('Create new company, and invite new user to the company @Tb0c2ccf9', async () => {
     await lambdaParameters(
-      'create new company, and invite new user to the company, test-case #11.2',
+      'Create new company, and invite new user to the compan @Tb0c2ccf9',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -70,13 +69,13 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('remove company with the user', async () => {
-    await lambdaParameters('remove company with the user', driverChrome);
+  it('Delete company with the user @T86d55ce3', async () => {
+    await lambdaParameters('Delete company with the user @T86d55ce3', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeCompany = new RemoveCompany(driverChrome);
+    const removeCompany = new CreateCompany(driverChrome);
     try {
       await logginPageTest.userLogIn(
         config.email,

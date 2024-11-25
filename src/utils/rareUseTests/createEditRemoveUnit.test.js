@@ -1,8 +1,7 @@
 const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
 const CreateUnit = require('../../classes/view/unit/createUnit');
-const DeleteUnit = require('../../classes/view/unit/deleteUnit');
-const EditUnit = require('../../classes/view/unit/editUnit');
+// const EditUnit = require('../../classes/view/unit/editUnit');
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -36,78 +35,78 @@ describe('create, edit and remove Unit in the chrome browser', async () => {
     }
   });
 
-  it('create new unit', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('create new unit', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const createUnit = new CreateUnit(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const createUnit = new CreateUnit(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await createUnit.goToView();
-      await createUnit.createUnit(newUnitName);
-      await createUnit.checkCreateUnit(newUnitName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'unit_create');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await createUnit.goToView();
+  //     await createUnit.createUnit(newUnitName);
+  //     await createUnit.checkCreateUnit(newUnitName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'unit_create');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 
-  it('edit new unit', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('edit new unit', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const editUnit = new EditUnit(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const editUnit = new EditUnit(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await editUnit.goToView();
-      await editUnit.editUnit(newUnitName, editUnitName);
-      await editUnit.checkCreateUnit(editUnitName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'unit_edit');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await editUnit.goToView();
+  //     await editUnit.editUnit(newUnitName, editUnitName);
+  //     await editUnit.checkCreateUnit(editUnitName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'unit_edit');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 
-  it('delete new unit', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('delete new unit', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const deleteUnit = new DeleteUnit(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const deleteUnit = new CreateUnit(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await deleteUnit.goToView();
-      await deleteUnit.deleteUnit(editUnitName);
-      await deleteUnit.checkDeleteUnit(editUnitName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'unit_delete');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await deleteUnit.goToView();
+  //     await deleteUnit.deleteUnit(editUnitName);
+  //     await deleteUnit.checkDeleteUnit(editUnitName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'unit_delete');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

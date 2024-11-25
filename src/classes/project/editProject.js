@@ -26,7 +26,7 @@ class EditProject extends RemoveProject {
     await submitBtn.click();
     await this.notificationCheck();
     console.log(`New Project name ${newProjectName}`);
-    
+
   }
 
   async editProjectViaThreeDotsMenu(nameOld, newName){

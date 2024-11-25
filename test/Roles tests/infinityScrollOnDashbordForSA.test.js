@@ -7,7 +7,7 @@ const { By, until } = require('selenium-webdriver');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const config = require('../../src/utils/config');
 
-describe('Infinity scroll on Projects for SA @T56734caa @S5923ec7a', async () => {
+describe('Super admin role @S75be5ddc', async () => {
   let driverChrome = null;
   let elNumber;
 

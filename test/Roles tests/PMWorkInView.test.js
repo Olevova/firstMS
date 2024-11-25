@@ -2,13 +2,7 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateFloor = require('../../src/classes/view/floor/createFloor');
-const DeleteFloor = require('../../src/classes/view/floor/deleteFloor');
-const DuplicateFloor = require('../../src/classes/view/floor/duplicateFloor');
-const DuplicateUnit = require('../../src/classes/view/unit/duplicateUnit');
-const SequenceFloorChange = require('../../src/classes/view/floor/sequenceFloorChange');
-const SequenceUnitChange = require('../../src/classes/view/unit/sequenceUnitChange');
 const CreateUnit = require('../../src/classes/view/unit/createUnit');
-const DeleteUnit = require('../../src/classes/view/unit/deleteUnit');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -60,7 +54,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const duplicateFloorInProject = new DuplicateFloor(driverChrome);
+    const duplicateFloorInProject = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -85,7 +79,7 @@ it('PM can rearrange floors', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeFloor = new SequenceFloorChange(driverChrome);
+    const changeFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -113,7 +107,7 @@ it('PM can rearrange floors', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteFloor = new DeleteFloor(driverChrome);
+    const deleteFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -168,7 +162,6 @@ it('PM can rearrange floors', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const createUnit = new CreateUnit(driverChrome);
-    const duplicateUnit = new DuplicateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -178,7 +171,7 @@ it('PM can rearrange floors', async () => {
 
     try {
       await createUnit.goToView(config.projectNameForPM, 'pm');
-      duplicateUnitName = await duplicateUnit.duplicateUnit();
+      duplicateUnitName = await createUnit.duplicateUnit();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_duplicate_by_PM');
@@ -193,7 +186,7 @@ it('PM can rearrange floors', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeUnits = new SequenceUnitChange(driverChrome);
+    const changeUnits = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -219,7 +212,7 @@ it('PM can rearrange floors', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteUnit = new DeleteUnit(driverChrome);
+    const deleteUnit = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
         config.emailPM,

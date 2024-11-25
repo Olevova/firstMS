@@ -65,7 +65,7 @@ describe('Super admin role @S75be5ddc', async () => {
       );
       await dashBoardPart.clickOnSeeAllLink(
         config.dashboardTables.project,
-        config.mainCompanyProjectsPage
+        config.mainCompanyPage
       );
       await driverChrome.sleep(1000);
       await lambdaParameters('passed', driverChrome);
@@ -95,7 +95,7 @@ describe('Super admin role @S75be5ddc', async () => {
       );
       await dashBoardPart.clickOnSeeAllLink(
         config.dashboardTables.project,
-        config.mainCompanyProjectsPage
+        config.mainCompanyPage
       );
       await driverChrome.sleep(1000);
       await lambdaParameters('passed', driverChrome);
@@ -125,7 +125,7 @@ describe('Super admin role @S75be5ddc', async () => {
       );
       await dashBoardPart.clickOnSeeAllLink(
         config.dashboardTables.project,
-        config.mainCompanyProjectsPage
+        config.mainCompanyPage
       );
       await driverChrome.sleep(1000);
       await lambdaParameters('passed', driverChrome);

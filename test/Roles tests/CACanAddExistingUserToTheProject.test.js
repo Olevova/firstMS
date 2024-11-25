@@ -1,6 +1,6 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const AddRemoveUserToProject = require('../../src/classes/user/addAndRemoveUserToProject');
+const InviteUser = require('../../src/classes/user/inviteUser');
 const LoginPage = require('../../src/classes/auth/login');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
@@ -26,7 +26,7 @@ describe('Company admin role @Se7b2355c', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(

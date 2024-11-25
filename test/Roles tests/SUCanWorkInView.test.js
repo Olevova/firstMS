@@ -2,8 +2,7 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateFloor = require('../../src/classes/view/floor/createFloor');
-const SequenceFloorChange = require('../../src/classes/view/floor/sequenceFloorChange');
-const SequenceUnitChange = require('../../src/classes/view/unit/sequenceUnitChange');
+const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -29,7 +28,7 @@ describe('Standard User role @S7e09d7c0', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeFloor = new SequenceFloorChange(driverChrome);
+    const changeFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,
@@ -54,7 +53,7 @@ describe('Standard User role @S7e09d7c0', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeUnits = new SequenceUnitChange(driverChrome);
+    const changeUnits = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,

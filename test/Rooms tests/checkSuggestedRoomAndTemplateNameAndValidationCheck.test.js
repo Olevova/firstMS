@@ -9,10 +9,10 @@ const config = require('../../src/utils/config');
 
 describe('Rooms tests @Sa2b0fa77', async () => {
   let driverChrome = null;
-  const projectName = 'pmTest';
+  const projectName = config.projectNameForPM;
   const newRoomName = 'test' + nanoid(5);
-  const templateName = 'testSuggestName';
-  const roomForValidationCheck = 'loung';
+  const templateName = 'Bedroom 2';
+  const roomForValidationCheck = 'Bed';
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -24,9 +24,9 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('suggested template name when creating the room @T1ec11dc7', async () => {
+  it('Template name is suggested when creating the room @T1ec11dc7', async () => {
     await lambdaParameters(
-      'suggested template name when creating the room',
+      'Template name is suggested when creating the room',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -52,9 +52,9 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('suggested room name when creating the room based on the template @Te009a7ab', async () => {
+  it('Room name suggested when creating the room based on the template @Te009a7ab', async () => {
     await lambdaParameters(
-      'suggested room name when creating the room based on the template',
+      'Room name suggested when creating the room based on the template ',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -80,9 +80,9 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('validating the room name field when creating a unique room with a room name that exists @Tdd365e80', async () => {
+  it('Room name uniquness validated in create window @Tdd365e80', async () => {
     await lambdaParameters(
-      'validating the room name field when creating a unique room with a room name that exists',
+      'Room name uniquness validated in create window',
       driverChrome
     );
     // time and site or lochalhost there tests are going

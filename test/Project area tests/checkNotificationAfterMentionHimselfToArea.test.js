@@ -1,13 +1,14 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const MentionUserToArea = require('../../src/classes/view/area/mentionUserToArea');
+// const MentionUserToArea = require('../../src/classes/view/area/mentionUserToArea');
+const CreateArea = require('../../src/classes/view/area/createArea');
 const CheckUserNotificationsList = require('../../src/classes/notification/checkUserNotificationsList');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Project area tests @S2687e915', async () => {
+describe('Area comments tests @Sa128eb7d', async () => {
   let driverChrome = null;
   let areaName = '';
 
@@ -21,16 +22,16 @@ describe('Project area tests @S2687e915', async () => {
     }
   });
 
-  it('mentioning himself and check notification @T8cdf8fdc', async () => {
+  it('User mention himself and gets notification @T8cdf8fdc', async () => {
     await lambdaParameters(
-      'mentioning himself and check notification',
+      'User mention himself and gets notification',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addUserToComment = new MentionUserToArea(driverChrome);
+    const addUserToComment = new CreateArea(driverChrome);
     const checkUserNotificationsList = new CheckUserNotificationsList(
       driverChrome
     );
@@ -66,7 +67,7 @@ describe('Project area tests @S2687e915', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addUserToComment = new MentionUserToArea(driverChrome);
+    const addUserToComment = new CreateArea(driverChrome);
 
     await logginPageTest.openLoginForm();
     await logginPageTest.fillEmailInput(config.emailCA);
@@ -78,7 +79,6 @@ describe('Project area tests @S2687e915', async () => {
       await driverChrome.sleep(1000);
       await addUserToComment.goToView(config.projectNameMain, 'admin');
       await addUserToComment.goToSelectTab(config.view);
-      //   await addComment.addComment('@Yuliia');
 
       await addUserToComment.deleteUserFromComment('@Vova CA test1');
       await lambdaParameters('passed', driverChrome);

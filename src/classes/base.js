@@ -1,22 +1,34 @@
 const { By, until } = require('selenium-webdriver');
 const path = require('path');
-const { elementLocated } = require('selenium-webdriver/lib/until');
+const fs = require('fs');
+const os = require('os');
+const XLSX = require('xlsx');
+const {
+  isRunningInDocker,
+  isRunningInTeamCity,
+  inDocker,
+  withoutLambda
+
+} = require('../utils/webdriver');
+const config = require('./../utils/config');
 
 class Base {
   // The method used for finding values in dropdown menus in forms.
   async findDateInDropDown(array, text) {
-    // console.log(await array.length, 'len');
     for (const option of array) {
       const dateEl = await option.getText();
       const date = await dateEl.trim().toLowerCase();
-      // console.log(date, 'drop', text);
-
+            
       if (date === text.trim().toLowerCase()) {
         await option.click();
         return;
       }
+      
     }
-
+    if (array.length > 0) {
+      await array[0].click();
+      return;
+    }
     throw Error(`No ${text} in options list`);
   }
 
@@ -44,7 +56,7 @@ class Base {
     }
     const listOfItem = await this.driver.findElements(By.css(locator));
     let len;
-    // console.log(await listOfItem.length, "list len");
+    console.log(await listOfItem.length, "list len");
     if ((await listOfItem.length) >= 20) {
       const noPagination = await this.driver
         .wait(until.elementLocated(By.id('selectAmountItems')), 3000)
@@ -68,14 +80,16 @@ class Base {
         .getText();
       const numberEl = totalEl.split(' ');
       const len = Number(numberEl[numberEl.length - 1]);
+
       await paginationDropDown.click();
+
+      
       const paginationList = await this.driver.findElements(
         By.className('ng-option')
       );
       await this.findDateInDropDown(paginationList, number);
       await this.waitListDate(listLocator, 21);
       const dataInList = await this.driver.findElements(By.css(listLocator));
-      // console.log(len, await dataInList.length , 'lenght');
       if (len === (await dataInList.length)) {
         return len;
       } else {
@@ -289,7 +303,7 @@ class Base {
     let attempts = 0;
     const maxAttempts = 3;
     while(attempts < maxAttempts){
-      console.log('in notif', attempts);
+      console.log('attempts', attempts);
     try {
         await this.driver.wait(
         until.elementLocated(By.css('app-notification .notification')),
@@ -363,7 +377,8 @@ class Base {
     let notFindeLink = true;
     for (let linkTag of listOfLink) {
       const linkText = await linkTag.getText();
-
+      // console.log(link, 'link', (await linkText.toLowerCase().trim()) === link.toLowerCase(),await linkText.toLowerCase().trim(), link.toLowerCase() );
+      
       if ((await linkText.toLowerCase().trim()) === link.toLowerCase()) {
         await this.driver.wait(until.elementIsEnabled(linkTag), 10000);
         await linkTag.click();
@@ -427,11 +442,10 @@ class Base {
 
   // find item in list and open three dot menu
   async findItemAndOpenThreeDotsMenu(item, selector) {
-    const listOfItem = await this.driver.findElements(By.css(selector));
+    await this.driver.wait(until.elementLocated(By.css(selector)),10000);
+    const listOfItem = await this.driver.findElements(By.css(selector));    
     for (const [index, task] of listOfItem.entries()) {
-      // console.log(await task.getText(), index);
-      if (item === (await task.getText())) {
-        // console.log(index, 'index');
+      if (item === (await task.getText())) {        
         const itemsInfoEl = await this.driver.findElements(By.css('.item-info-list'));
         const menuForClick = await itemsInfoEl[index].findElement(By.css('.dots-actions'));
         await this.driver.wait(until.elementIsEnabled(menuForClick), 10000);
@@ -540,20 +554,23 @@ class Base {
   }
   //The method to check if the focus is on the first input element of a form
   async isFirstInputFocused(formSelector, text) {
-    await this.driver.sleep(1000);
+    let counter = 0;
+    let isFocused = false
+    while(!isFocused || counter < 3){
     await this.driver.wait(until.elementLocated(By.css(formSelector)), 10000);
     const form = await this.driver.findElement(By.css(formSelector));
     await this.driver.wait(until.elementLocated(By.css(`${formSelector} input`)),10000);
     const firstInput = await form.findElement(By.css('input'));
     const activeElement = await this.driver.switchTo().activeElement();
-    // console.log(await firstInput.getAttribute('id'), 'first', await activeElement.getAttribute('id'), 'second');
-    const isFocused =
+    isFocused =
       (await firstInput.getId()) === (await activeElement.getId());
     if (isFocused) {
       console.log(text + ' work');
       return isFocused;
     }
-
+    await this.driver.sleep(1000);
+    counter += 1;    
+  }
     throw new Error(text + ' not work');
   }
   //The mathod that make click on element
@@ -624,7 +641,11 @@ class Base {
     const listOfEl = await this.driver.findElements(
       By.className(locator)
     );
+    console.log(await listOfEl.length);
+    
     for (const [index, el] of listOfEl.entries()) {
+      console.log(await el.getText(), 'get');
+      
       if (array.includes(await el.getText())) {
         const threeDotsElement = await this.driver.findElements(By.css('.dots-actions'));
         const menuElement = await threeDotsElement[index];
@@ -725,6 +746,7 @@ class Base {
     );
     await this.driver.wait(until.elementIsEnabled(searchingFormInput));
     await searchingFormInput.sendKeys(text);
+    await this.driver.sleep(500);
   }
   // The method returns form error  or errors message
   async formErrorMsgArray(errorlocator='.error-message'){
@@ -741,5 +763,158 @@ class Base {
     console.log('Form has not errors');
     return false
   }
+// The method for file check
+
+async getFormattedDate() {
+  const today = new Date();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const year = today.getFullYear();
+  return `${month}-${day}-${year}`;
+}
+
+// The method for create download file name
+async generateFileName(baseName) {
+  const formattedDate = await this.getFormattedDate();
+  return `${baseName}-${formattedDate}.xlsx`;
+}
+
+// The method for file delete
+async deleteExportFile(name) {
+  let filePath
+  const fileName = await this.generateFileName(name);
+  if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity) {
+    const downloadPath = path.join(os.homedir(), 'Downloads');
+    filePath = path.join(downloadPath, fileName);
+    if (fs.existsSync(filePath)) {
+      console.log(`File "${fileName}" already exists. Deleting it.`);
+      fs.unlinkSync(filePath);
+    }
+  } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
+    console.log("Save in lambda");
+    this.driver.executeScript(`lambda-file-exists=${fileName}`).then(function(file_exists){
+      console.log(file_exists);
+    })
+    this.driver.executeScript(`lambda-file-stats=${fileName}`).then(function(file_properties) {
+      console.log(file_properties);
+    })
+    return
+  } else {
+        const fileP = config.dockerPathForDownloaddFiles
+        filePath = path.join(fileP, fileName);
+
+        if (fs.existsSync(filePath)) {
+          console.log(`File "${fileName}" already exists. Deleting it.`);
+          fs.unlinkSync(filePath);
+        }
+  }
+}
+
+// The method find download file in system
+async checkFileOnDesktop(name){
+  const fileName = await this.generateFileName(name)
+  let filePath;
+  let counter=0;
+  if (!withoutLambda && !isRunningInDocker && !isRunningInTeamCity) {
+    const downloadPath = path.join(os.homedir(), 'Downloads');
+    filePath = path.join(downloadPath, fileName);
+    console.log(`Wait file: ${filePath}`);
+  while(counter < 10){
+    if (fs.existsSync(filePath)) {
+      console.log(`File "${fileName}" found.`);
+      try {
+        const workbook = XLSX.readFile(filePath);
+        const sheetName = workbook.SheetNames[0]; 
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+        console.log(`Excel file content:`, jsonData);
+        return jsonData;
+      } catch (err) {
+        console.error(`Error reading file "${fileName}":`, err);
+        throw new Error(`Error reading file "${fileName}"`);
+      }
+    }
+    console.log('waiting...');
+    await this.driver.sleep(1000);
+    counter += 1
+  }
+  } else if ((isRunningInTeamCity || isRunningInDocker) && !withoutLambda) {
+    console.log("Save in docker");
+    try {
+      const get_file_content = await this.driver.executeScript(`lambda-file-content=${fileName}`);
+      
+      // Decode the file content
+      const buffer = Buffer.from(get_file_content, 'base64');
+      fs.writeFileSync('downloadedFile.xlsx', buffer);
+
+      // Read and parse the Excel file
+      const workbook = XLSX.readFile('downloadedFile.xlsx');
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      console.log(`Excel file content:`, jsonData);
+      return jsonData; // Ensure data is returned
+    } catch (err) {
+      console.error(`Error handling Lambda file content:`, err);
+      throw new Error('Error reading file content from LambdaTest');
+    }
+  } else {
+    let counter = 0;
+    while (counter < 10) {
+        console.log(`Checking for file: ${fileName}`);
+        const fileP = config.dockerPathForDownloaddFiles
+        filePath = path.join(fileP, fileName);
+
+        if (fs.existsSync(filePath)) {
+          console.log(`File "${fileName}" found.`);
+          try {
+            const workbook = XLSX.readFile(filePath);
+            const sheetName = workbook.SheetNames[0]; 
+            const worksheet = workbook.Sheets[sheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            console.log(`Excel file content:`, jsonData);
+            return jsonData;
+          } catch (err) {
+            console.error(`Error reading file "${fileName}":`, err);
+            throw new Error(`Error reading file "${fileName}"`);
+          }
+        }
+        console.log('waiting...');
+        await this.driver.sleep(1000);
+        counter += 1
+  }}
+  
+  throw new Error(`File ${fileName} not found`);
+
+}
+// The method for export
+async exportFile(name){
+  await this.clickElement('.dots-btn');
+  await this.driver.sleep(1000);
+  await this.deleteExportFile(name);
+  await this.findAndClickOnLinInTheList('Export','.dots-btn-menu__item');
+  const file = await this.checkFileOnDesktop(name);
+  console.log("File Content:", file);
+  console.log("File Type:", typeof file);
+  if (Array.isArray(file)) {
+    return file
+      .filter(i => i.Materials !== 'ID') 
+      .map(i => i.Materials);
+  }
+  throw new Error('File data is not an array'); 
+}
+
+// The method return the array of items
+async returnArrayOfItems(locator){
+  await this.waitListDate(locator, 2);
+  const itemArray = [];
+  const id = await this.driver.findElements(By.css(locator));
+  for(let el of id){
+    const number = await el.getText();
+    itemArray.push(number);
+  }
+    return itemArray
+}
 }
 module.exports = Base;

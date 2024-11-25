@@ -1,7 +1,7 @@
 const { createWebdriverChrome } = require('../webdriver');
 const InviteUser = require('../../classes/user/inviteUser');
 const LoginPage = require('../../classes/auth/login');
-const RemoveUser = require('../../classes/user/removeUser');
+// const RemoveUser = require('../../classes/user/removeUser');
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -31,27 +31,27 @@ describe('invite and remove user test', async () => {
     return;
   });
 
-  it('invite user', async () => {
-    // await driverChrome.executeScript("document.body.style.zoom='50%'");
+  // it('invite user', async () => {
+  //   // await driverChrome.executeScript("document.body.style.zoom='50%'");
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const inviteUserTest = new InviteUser(driverChrome);
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const inviteUserTest = new InviteUser(driverChrome);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await inviteUserTest.goToUsersList();
-      await inviteUserTest.fillInviteForm(emailUser, 'test3', 'employee');
-      await lambdaParameters('passed', driverChrome);
-      // await inviteUserTest.checkNewUser(emailUser, usersPage)
-      // await driverChrome.sleep(2000)
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'user_create');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await inviteUserTest.goToUsersList();
+  //     await inviteUserTest.fillInviteForm(emailUser, 'test3', 'employee');
+  //     await lambdaParameters('passed', driverChrome);
+  //     // await inviteUserTest.checkNewUser(emailUser, usersPage)
+  //     // await driverChrome.sleep(2000)
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'user_create');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

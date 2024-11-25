@@ -2,7 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateProject = require('../../src/classes/project/createProject');
-const RemoveProject = require('../../src/classes/project/removeProject');
 const CreateTask = require('../../src/classes/task/createTask');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
@@ -36,9 +35,9 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('create the project and create task in it @T4717f011', async () => {
+  it('Create the project and create task in it @T4717f011', async () => {
     await lambdaParameters(
-      'create the project and create task in it',
+      'Create the project and create task in it',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -88,13 +87,13 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('remove project @T32a31c21', async () => {
-    await lambdaParameters('remove project', driverChrome);
+  it('Delete project with task @T32a31c21', async () => {
+    await lambdaParameters('Delete project with task', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeProject = new RemoveProject(driverChrome);
+    const removeProject = new CreateProject(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

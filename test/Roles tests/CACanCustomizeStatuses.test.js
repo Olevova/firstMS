@@ -2,8 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCustomStatus = require('../../src/classes/statusAndWeight/createCustomStatus');
-const DeleteCustomStatus = require('../../src/classes/statusAndWeight/deleteCustomStatus');
-const EditCustomStatus = require('../../src/classes/statusAndWeight/editCustomStatus');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -30,7 +28,7 @@ describe('Company admin role @Se7b2355c', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const createStatus = new CreateCustomStatus(driverChrome);
-    const checkStatus = new EditCustomStatus(driverChrome);
+    const checkStatus = new CreateCustomStatus(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -62,7 +60,7 @@ describe('Company admin role @Se7b2355c', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteStatus = new DeleteCustomStatus(driverChrome);
+    const deleteStatus = new CreateCustomStatus(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,

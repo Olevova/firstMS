@@ -2,14 +2,13 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
-const RemoveCompany = require('../../src/classes/company/removeCompany');
 const CreateProject = require('../../src/classes/project/createProject');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { nanoid } = require('nanoid');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Company management tests @Sb36e9099', async () => {
+describe('Company management tests @Sca85247d', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'CompanyProject';
@@ -29,8 +28,8 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('create new company, and new project @Tbc6b497c', async () => {
-    await lambdaParameters('create new company, and new project', driverChrome);
+  it('Create new company, and new project @Tbc6b497c', async () => {
+    await lambdaParameters('Create new company, and new project', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -83,13 +82,13 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('remove company with the project @T6cb9b9df', async () => {
-    await lambdaParameters('remove company with the project', driverChrome);
+  it('Delete company with the project @T6cb9b9df', async () => {
+    await lambdaParameters('Delete company with the project', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeCompany = new RemoveCompany(driverChrome);
+    const removeCompany = new CreateCompany(driverChrome);
     const createProjectTest = new CreateProject(driverChrome);
 
     try {

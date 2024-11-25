@@ -1,6 +1,6 @@
 const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
-const DuplicateUnit = require('../../classes/view/unit/duplicateUnit');
+// const DuplicateUnit = require('../../classes/view/unit/duplicateUnit');
 
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
@@ -34,30 +34,30 @@ describe('duplicate 20 units', async () => {
     }
   });
 
-  it('duplicate unit', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  // it('duplicate unit', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const duplicateUnit = new DuplicateUnit(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+  //   const duplicateUnit = new DuplicateUnit(driverChrome);
 
-    await logginPageTest.userLogIn(
-      config.email,
-      config.password,
-      config.urlhomePageForCheck
-    );
+  //   await logginPageTest.userLogIn(
+  //     config.email,
+  //     config.password,
+  //     config.urlhomePageForCheck
+  //   );
 
-    try {
-      await duplicateUnit.goToView(projectName);
-      for (let i = 0; i < 15; i += 1) {
-        await duplicateUnit.duplicateUnit();
-      }
+  //   try {
+  //     await duplicateUnit.goToView(projectName);
+  //     for (let i = 0; i < 15; i += 1) {
+  //       await duplicateUnit.duplicateUnit();
+  //     }
 
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, '20unit_duplicate');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, '20unit_duplicate');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

@@ -2,15 +2,9 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateFloor = require('../../src/classes/view/floor/createFloor');
-const DeleteFloor = require('../../src/classes/view/floor/deleteFloor');
-const DuplicateFloor = require('../../src/classes/view/floor/duplicateFloor');
-const DuplicateUnit = require('../../src/classes/view/unit/duplicateUnit');
-const SequenceFloorChange = require('../../src/classes/view/floor/sequenceFloorChange');
 const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const CreateArea = require('../../src/classes/view/area/createArea');
 const CreateRoom = require('../../src/classes/view/room/createRoom');
-const DeleteRoom = require('../../src/classes/view/room/deleteRoom');
-const RoomTemplate = require('../../src/classes/view/room/roomTemplate');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -39,7 +33,7 @@ describe('Company admin role @Se7b2355c', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const createFloor = new CreateFloor(driverChrome);
-    const duplicateFloorInProject = new DuplicateFloor(driverChrome);
+    
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -51,7 +45,7 @@ describe('Company admin role @Se7b2355c', async () => {
       await createFloor.goToView(config.projectNameForCA, 'ca');
       await createFloor.createFloor(config.newFloorName);
       await createFloor.checkFloorCreation(config.newFloorName);
-      duplicateFloorName = await duplicateFloorInProject.duplicateFloor();  
+      duplicateFloorName = await createFloor.duplicateFloor();  
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_create_duplicate_by_CA');
@@ -66,7 +60,7 @@ it('CA can rearrange floors @T64f23cbb', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeFloor = new SequenceFloorChange(driverChrome);
+    const changeFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -92,7 +86,7 @@ it('CA can rearrange floors @T64f23cbb', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const createUnit = new CreateUnit(driverChrome);
-    const duplicateUnit = new DuplicateUnit(driverChrome);
+    // const duplicateUnit = new DuplicateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -104,7 +98,7 @@ it('CA can rearrange floors @T64f23cbb', async () => {
       await createUnit.goToView(config.projectNameForCA, 'ca');
       await createUnit.createUnit(config.newUnitName);
       await createUnit.checkCreateUnit(config.newUnitName);
-      await duplicateUnit.duplicateUnit();
+      await createUnit.duplicateUnit();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'unit_create_duplicate_by_CA');
@@ -122,7 +116,7 @@ it('CA can rearrange floors @T64f23cbb', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteFloor = new DeleteFloor(driverChrome);
+    const deleteFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -145,7 +139,7 @@ it('CA can rearrange floors @T64f23cbb', async () => {
   });
 
   it('CA can add unique rooms @T41e327d3', async () => {
-    await lambdaParameters('create new Room(unique)', driverChrome);
+    await lambdaParameters('CA can add unique rooms', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -206,13 +200,13 @@ it('CA can rearrange floors @T64f23cbb', async () => {
     }
   });
 
-  it('delete new room (unique) @T48f0e2da', async () => {
-    await lambdaParameters('delete new room (unique)', driverChrome);
+  it('Delete unique room @T48f0e2da', async () => {
+    await lambdaParameters('Delete unique room', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteRoom = new DeleteRoom(driverChrome);
+    const deleteRoom = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -323,8 +317,7 @@ it('CA can rearrange floors @T64f23cbb', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteRoom = new DeleteRoom(driverChrome);
-    const roomTemplate = new RoomTemplate(driverChrome);
+    const deleteRoom = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -338,8 +331,8 @@ it('CA can rearrange floors @T64f23cbb', async () => {
       await deleteRoom.checkDeleteFloor(config.detuchRoom);
       await deleteRoom.deleteRoom(config.roomBasedOnTemplate);
       await deleteRoom.checkDeleteFloor(config.roomBasedOnTemplate);
-      await roomTemplate.deleteTemplate('_', config.template);
-      await roomTemplate.checkDeleteTemplate('_', config.template);
+      await deleteRoom.deleteTemplate('_', config.template);
+      await deleteRoom.checkDeleteTemplate('_', config.template);
       await lambdaParameters('passed', driverChrome);
       await driverChrome.sleep(1000);
     } catch (error) {

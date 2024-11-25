@@ -1,15 +1,15 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const EditUnit = require('../../src/classes/view/unit/editUnit');
+const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
 describe('Unit tests @S023a0c9b', async () => {
   let driverChrome = null;
-  const unitName = 'First';
-  const editName = 'FirstEdit';
+  const unitName = 'first';
+  const editName = 'firstEdit';
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -21,13 +21,13 @@ describe('Unit tests @S023a0c9b', async () => {
     }
   });
 
-  it('Edit Unit name by clicking on it @T8aa7c967', async () => {
-    await lambdaParameters('Edit Unit name by clicking on it', driverChrome);
+  it('Edit unit name by clicking on it @T8aa7c967', async () => {
+    await lambdaParameters('Edit unit name by clicking on it', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editUnit = new EditUnit(driverChrome);
+    const editUnit = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

@@ -11,6 +11,7 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     volumes:
       - ./../utils/files:/home/selenium_files
+      - shared-downloads:/home/seluser/Downloads
 
   firefox:
     image: selenium/node-firefox:dev
@@ -43,3 +44,9 @@ services:
     environment:
       - RUNNING_IN_DOCKER=true
       - RUNNING_WITHOUT_VIDEO=${RUNNING_WITHOUT_VIDEO}
+      - BASE_URL=${BASE_URL}
+      - BASE_URL_BACKEND=${BASE_URL_BACKEND}
+    volumes:
+      - shared-downloads:/shared/downloads
+volumes:
+  shared-downloads:

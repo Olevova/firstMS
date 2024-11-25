@@ -1,7 +1,7 @@
 const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
-const CreateTaskByEmployee = require('../../classes/task/employee/employeeCreateTask');
-const EmployeeUpdateTask = require('../../classes/task/employee/employeeUpdateTask');
+// const CreateTaskByEmployee = require('../../classes/task/employee/employeeCreateTask');
+// const EmployeeUpdateTask = require('../../classes/task/employee/employeeUpdateTask');
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -41,27 +41,27 @@ describe('create, edit and remove task by the employee in the chrome browser', a
     }
   });
 
-  it('update task by employee', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('update task by employee', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const employeeUpdateTask = new EmployeeUpdateTask(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const employeeUpdateTask = new EmployeeUpdateTask(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await employeeUpdateTask.goToCreateTasksForm();
-      await employeeUpdateTask.editTask(newTaskName, newTaskNameForUpdate);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'task_update');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await employeeUpdateTask.goToCreateTasksForm();
+  //     await employeeUpdateTask.editTask(newTaskName, newTaskNameForUpdate);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'task_update');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

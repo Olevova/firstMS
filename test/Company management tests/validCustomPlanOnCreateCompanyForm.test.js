@@ -8,7 +8,7 @@ const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
 
-describe('Company management tests @Sb36e9099', async () => {
+describe('Company management tests @Sca85247d', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'Valid';
@@ -24,7 +24,7 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('Enter 0 to the Number of users field when Custom plan is selected on Create company form', async () => {
+  it('Enter 0 to the Number of users field when Custom plan is selected on Create company form @T988da911' , async () => {
     await lambdaParameters('Enter 0 to the Number of users field when Custom plan is selected on Create company form', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);

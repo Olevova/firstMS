@@ -2,15 +2,13 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
-const EditCompany = require('../../src/classes/company/editCompany');
 const CreateProject = require('../../src/classes/project/createProject');
-const EditProject = require('../../src/classes/project/editProject');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const CreateFloor = require('../../src/classes/view/floor/createFloor');
 const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const CreateRoom = require('../../src/classes/view/room/createRoom');
 const CreateTask = require('../../src/classes/task/createTask');
-const UpdateUser = require('../../src/classes/user/updateUser');
+// const UpdateUser = require('../../src/classes/user/updateUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -41,7 +39,7 @@ describe('Company management tests @Sb36e9099', async () => {
 
   it('Verification about cursor in first field of item creation forms @T36d81540', async () => {
     await lambdaParameters(
-      'Verification about cursor in first field of item creation forms',
+      'Verification about cursor in first field of item creation forms @T36d81540 ',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -134,7 +132,7 @@ describe('Company management tests @Sb36e9099', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateUser = new UpdateUser(driverChrome);
+    const updateUser = new InviteUser(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -199,7 +197,7 @@ describe('Company management tests @Sb36e9099', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editProject = new EditProject(driverChrome);
+    const editProject = new CreateProject(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -210,7 +208,7 @@ describe('Company management tests @Sb36e9099', async () => {
     try {
       await editProject.goToProjectList();
       await editProject.waitListDate(config.locatorProjectsCss,19);
-      await driverChrome.sleep(500);
+      await driverChrome.sleep(1000);
       await editProject.findProject(
         config.projectNameEdit,
         config.projectsPage
@@ -270,7 +268,7 @@ describe('Company management tests @Sb36e9099', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editCompany = new EditCompany(driverChrome);
+    const editCompany = new CreateCompany(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

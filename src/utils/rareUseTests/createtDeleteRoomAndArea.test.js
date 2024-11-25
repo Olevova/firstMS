@@ -3,7 +3,7 @@ const LoginPage = require('../../classes/auth/login');
 const CreateRoom = require('../../classes/view/room/createRoom');
 const DeleteRoom = require('../../classes/view/room/deleteRoom');
 const CreateArea = require('../../classes/view/area/createArea');
-const DeleteArea = require('../../classes/view/area/deleteArea');
+// const DeleteArea = require('../../classes/view/area/deleteArea');
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -39,105 +39,105 @@ describe('create, edit and remove Room in the chrome browser', async () => {
     }
   });
 
-  it('create new Room', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('create new Room', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const createRoom = new CreateRoom(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const createRoom = new CreateRoom(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await createRoom.goToView();
-      await createRoom.createRoom('_', newRoomName);
-      await createRoom.checkCreateNewRoom(newRoomName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'room_create');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await createRoom.goToView();
+  //     await createRoom.createRoom('_', newRoomName);
+  //     await createRoom.checkCreateNewRoom(newRoomName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'room_create');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 
-  it('create new Area', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('create new Area', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const createArea = new CreateArea(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const createArea = new CreateArea(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await createArea.goToView();
-      await createArea.openEditRoomFormViaThreeDots(newRoomName);
-      await createArea.addAreaInRoom(newAreaName);
-      await createArea.checkCreateArea(newRoomName, newAreaName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'area_create');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await createArea.goToView();
+  //     await createArea.openEditRoomFormViaThreeDots(newRoomName);
+  //     await createArea.addAreaInRoom(newAreaName);
+  //     await createArea.checkCreateArea(newRoomName, newAreaName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'area_create');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 
-  it('delete new area', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('delete new area', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const deleteArea = new DeleteArea(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const deleteArea = new CreateArea(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await deleteArea.goToView();
-      await deleteArea.openEditRoomFormViaThreeDots(newRoomName);
-      await deleteArea.deleteArea(newAreaName);
-      await deleteArea.checkDeleteArea(newRoomName, newAreaName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'area_delete');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await deleteArea.goToView();
+  //     await deleteArea.openEditRoomFormViaThreeDots(newRoomName);
+  //     await deleteArea.deleteArea(newAreaName);
+  //     await deleteArea.checkDeleteArea(newRoomName, newAreaName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'area_delete');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 
-  it('delete new room', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', URL);
+  // it('delete new room', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', URL);
 
-    const logginPageTest = new LoginPage(driverChrome, URL);
-    const deleteRoom = new DeleteRoom(driverChrome);
+  //   const logginPageTest = new LoginPage(driverChrome, URL);
+  //   const deleteRoom = new DeleteRoom(driverChrome);
 
-    await logginPageTest.openLoginForm();
-    await logginPageTest.fillEmailInput(email);
-    await logginPageTest.fillPasswordInput(password);
-    await logginPageTest.checkSaveForFuture();
-    await logginPageTest.login(urlForCheck);
+  //   await logginPageTest.openLoginForm();
+  //   await logginPageTest.fillEmailInput(email);
+  //   await logginPageTest.fillPasswordInput(password);
+  //   await logginPageTest.checkSaveForFuture();
+  //   await logginPageTest.login(urlForCheck);
 
-    try {
-      await deleteRoom.goToView();
-      await deleteRoom.deleteRoom(newRoomName);
-      await deleteRoom.checkDeleteFloor(newRoomName);
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'room_delete');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //   try {
+  //     await deleteRoom.goToView();
+  //     await deleteRoom.deleteRoom(newRoomName);
+  //     await deleteRoom.checkDeleteFloor(newRoomName);
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'room_delete');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

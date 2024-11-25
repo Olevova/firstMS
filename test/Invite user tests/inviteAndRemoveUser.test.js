@@ -2,7 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const LoginPage = require('../../src/classes/auth/login');
-const RemoveUser = require('../../src/classes/user/removeUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -94,7 +93,7 @@ describe('Invite users tests @S22695f61', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

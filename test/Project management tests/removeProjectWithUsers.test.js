@@ -2,9 +2,7 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateProject = require('../../src/classes/project/createProject');
-const RemoveProject = require('../../src/classes/project/removeProject');
 const InviteUser = require('../../src/classes/user/inviteUser');
-const RemoveUser = require('../../src/classes/user/removeUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -36,9 +34,9 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('create the project and invite user to the project @T1c6d82e7', async () => {
+  it('Create the project and invite user to the project @T1c6d82e7', async () => {
     await lambdaParameters(
-      'create the project and invite user to the project',
+      'Create the project and invite user to the project',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -87,14 +85,14 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('remove project @T4553e845', async () => {
-    await lambdaParameters('remove project with user', driverChrome);
+  it('Delete project with user @T4553e845', async () => {
+    await lambdaParameters('Delete project with user', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeProject = new RemoveProject(driverChrome);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeProject = new CreateProject(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -109,12 +107,12 @@ describe('Project management tests @Sbae16311', async () => {
       await removeUserTest.goToUserList('incompany');
       await removeUserTest.findUser(
         config.emailForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await removeUserTest.removefindUser();
       await removeUserTest.checkIfUserRemove(
         config.emailForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

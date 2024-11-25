@@ -1,4 +1,4 @@
-const ForgotPassword = require('../src/classes/forgotPassword');
+const LoginPage = require('../src/classes/LoginPage');
 const { createWebdriverChrome } = require('../webdriver');
 const { describe } = require('mocha');
 const { By, until } = require('selenium-webdriver');
@@ -33,7 +33,7 @@ describe('forgot password chrome', async () => {
   });
 
   it('forgot passsord Coloradojob chrome', async () => {
-    const forgotPasswordTest = new ForgotPassword(driverChrome);
+    const forgotPasswordTest = new LoginPage(driverChrome);
 
     await forgotPasswordTest.openFogotPasswordForm(comperaUrl);
     await forgotPasswordTest.changePassword(email);

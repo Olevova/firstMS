@@ -2,7 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateCompany = require('../../src/classes/company/createCompany');
-const RemoveCompany = require('../../src/classes/company/removeCompany');
 const CreateProject = require('../../src/classes/project/createProject');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
@@ -10,7 +9,7 @@ const { nanoid } = require('nanoid');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Company management tests @Sb36e9099', async () => {
+describe('Company management tests @Sca85247d', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'CompanyProjectUser';
@@ -30,9 +29,9 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('create new company, create project and invite user to the company, test-case #11.3', async () => {
+  it('Create new company, create project and invite user to the company', async () => {
     await lambdaParameters(
-      'create new company, create project and invite user to the company, test-case #11.3',
+      'create new company, create project and invite user to the company',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -88,7 +87,7 @@ describe('Company management tests @Sb36e9099', async () => {
       );
       await inviteUser.checkNewUser(
         config.emailForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -98,7 +97,7 @@ describe('Company management tests @Sb36e9099', async () => {
     }
   });
 
-  it('remove company with the project and User', async () => {
+  it('Delete company with the project and User', async () => {
     await lambdaParameters(
       'remove company with the project and User',
       driverChrome
@@ -107,7 +106,7 @@ describe('Company management tests @Sb36e9099', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeCompany = new RemoveCompany(driverChrome);
+    const removeCompany = new CreateCompany(driverChrome);
     const createProjectTest = new CreateProject(driverChrome);
 
     try {

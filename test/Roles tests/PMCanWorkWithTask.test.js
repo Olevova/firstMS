@@ -1,12 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const CreateTaskByEmployee = require('../../src/classes/task/employee/employeeCreateTask');
-const EmployeeUpdateTask = require('../../src/classes/task/employee/employeeUpdateTask');
-const RemoveTaskByEmployee = require('../../src/classes/task/employee/employeeRemoveTask');
-const FilterTaskByStatus = require('../../src/classes/task/filterTaskByStatus');
-const SearchingTaskByName = require('../../src/classes/task/searchingTask');
-const ChangeStatusTask = require('../../src/classes/task/changeStatus');
+const CreateTask = require('../../src/classes/task/createTask');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
@@ -36,7 +31,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const createTaskByPM = new CreateTaskByEmployee(driverChrome);
+    const createTaskByPM = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -53,6 +48,7 @@ describe('Project management role @Sfbe51cff', async () => {
         config.taskDate,
         config.taskTestUserCA
       );
+      await createTaskByPM.checkTaskCreation(config.newTaskName);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'task_create_by_PM');
@@ -67,7 +63,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const PMUpdateTask = new EmployeeUpdateTask(driverChrome);
+    const PMUpdateTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
         config.emailPM,
@@ -92,7 +88,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeTaskByPM = new RemoveTaskByEmployee(driverChrome);
+    const removeTaskByPM = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -118,7 +114,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const filter = new FilterTaskByStatus(driverChrome);
+    const filter = new CreateTask(driverChrome);
 
     await loginPageTest.userLogIn(
       config.emailPM,
@@ -132,9 +128,11 @@ describe('Project management role @Sfbe51cff', async () => {
       startTaskNumber = await filter.numberOfItemsInTheList(locatorTasksElements,100, locatorTasksElements)
       await filter.filterTasks(config.done,config.userPMName);
       await filter.chekFilter(config.done, config.userPMName);
+      await driverChrome.sleep(500);
       await filter.clickElement(locatorDeleteFilter);
-      await filter.waitListDate(locatorTasksElements,startTaskNumber )
-      const endTaskNumber = await filter.numberOfItemsInTheList(locatorTasksElements,100, locatorTasksElements)
+      await filter.waitListDate(locatorTasksElements,startTaskNumber );
+      
+      const endTaskNumber = await filter.numberOfItemsInTheList(locatorTasksElements, 100, locatorTasksElements)
       if(endTaskNumber===startTaskNumber){
         console.log('Filter test passed');
       }
@@ -158,7 +156,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const searchingTask = new SearchingTaskByName(driverChrome);
+    const searchingTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -194,8 +192,8 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const searchingTask = new SearchingTaskByName(driverChrome);
-    const filter = new FilterTaskByStatus(driverChrome);
+    const searchingTask = new CreateTask(driverChrome);
+    const filter = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -244,7 +242,7 @@ describe('Project management role @Sfbe51cff', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeTaskStatus = new ChangeStatusTask(driverChrome);
+    const changeTaskStatus = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -276,7 +274,7 @@ describe('Project management role @Sfbe51cff', async () => {
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const inviteUserTest = new InviteUser(driverChrome);
     // const userSelect = new RemoveUser(driverChrome);
-    const changeTaskStatus = new ChangeStatusTask(driverChrome);
+    const changeTaskStatus = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,

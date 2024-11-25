@@ -2,7 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const LoginPage = require('../../src/classes/auth/login');
-const RemoveUser = require('../../src/classes/user/removeUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -49,9 +48,9 @@ describe('Company admin role @Se7b2355c', async () => {
     }
   });
 
-  it('Check the counter of avaliable invitations by the PM test-cases in the PM 189 @T1783d43c', async () => {
+  it('Check the counter of avaliable invitations by the PM @T1783d43c', async () => {
     await lambdaParameters(
-      'Check the counter of avaliable invitations by the PM test-cases in the PM 189',
+      'Check the counter of avaliable invitations by the PM',
       driverChrome
     );
 
@@ -77,7 +76,7 @@ describe('Company admin role @Se7b2355c', async () => {
   it('remove user by the company admin @T307ff4af', async () => {
     await lambdaParameters('remove user by the company admin', driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
     await logginPageTest.userLogIn(
       config.emailCA,
       config.passwordCA,
@@ -88,12 +87,12 @@ describe('Company admin role @Se7b2355c', async () => {
       await removeUserTest.goToUserList('ca');
       await removeUserTest.findUser(
         config.emailUseForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await removeUserTest.removefindUser();
       await removeUserTest.checkIfUserRemove(
         config.emailUseForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

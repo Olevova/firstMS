@@ -1,0 +1,33 @@
+const { By } = require('selenium-webdriver');
+
+module.exports = {
+    materialsTagElement: By.id('tagNameMobile'),
+    materialsDescriptionElement: By.id('materialDescription'),
+    materialsUnitElement: By.id('materialUnit'),
+    materialsSupplierElement: By.id('supplierName'),
+    materialsAreaElement: By.id('areaName'),
+    materialsSelectBtnElement: By.id('materialSelectBtn'),
+    materialsEtaDateElement: By.id('materialEtaDate'),
+    materialsGrossQtyElement: By.id('grossQtyName'),
+    materialsOrderQtyElement: By.id('orderQtyName'),
+    materialsOrderDateElement: By.id('materialOrderDate'),
+    materialsPaymentStatusElement: By.css('app-material-custom-selector[formcontrolname="paymentStatus"] #paymentStatus'),
+    materialsReceivedQtyElement: By.id('receivedQtyName'),
+    materialsStoredLocationElement: By.id('storedLocation'),
+    materialsNotesElement: By.id('materialNotes'),
+    materialsFileInputMobile: By.id('fileInputMobile'),
+    baseBtnSubmitMobile: By.css('#btnSubmitMobile'),
+    materialUnitMenuText: By.css('.material__unit-menu__text'),
+    materialUnitMenuAddNew: By.css('div[openmenu="true"] .material-unit-menu-addNew'),
+    materialUnitMenuItem: By.css('.material__unit-menu__item'),
+    materialMenuDeleBtn: By.css('.material__unit-icon-delete'),
+    materialUnitMenuItemOpenMenu: By.css('[openmenu="true"] .material__unit-menu__item'),
+    materialTableRow: By.css('.table-materials__row'),
+    materialsCreateOptionInputDesk: By.id('createOptionInputDesk'),
+    materialCreateUnitBtnSave: By.id('createUnitBtnDesk'),
+    materialsStatusTableEl: By.css('.material-colored-status-td'),
+    materialsStatusInTableMenu: By.css('.material-colored-status-td[openmenu] .material-status-menu__item'),
+    materialsName: By.css('.material-name'),
+    materialsPaymentInput: By.id('paymentStatus'),
+    materialsIdElements: By.css('.material-id')
+};

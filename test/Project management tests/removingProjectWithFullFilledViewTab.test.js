@@ -2,11 +2,9 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateProject = require('../../src/classes/project/createProject');
-const RemoveProject = require('../../src/classes/project/removeProject');
 const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const CreateRoom = require('../../src/classes/view/room/createRoom');
 const CreateArea = require('../../src/classes/view/area/createArea');
-const RoomTemplate = require('../../src/classes/view/room/roomTemplate');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -42,9 +40,9 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('create a project and fill it with a unit, a room, a template @Tc01bf041', async () => {
+  it('Create a project with a unit, a room, a template @Tc01bf041', async () => {
     await lambdaParameters(
-      'create a project and fill it with a unit, a room, a template',
+      'Create a project with a unit, a room, a template',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -55,7 +53,6 @@ describe('Project management tests @Sbae16311', async () => {
     const createUnit = new CreateUnit(driverChrome);
     const createRoom = new CreateRoom(driverChrome);
     const createArea = new CreateArea(driverChrome);
-    const roomTemplate = new RoomTemplate(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -89,7 +86,7 @@ describe('Project management tests @Sbae16311', async () => {
       await createArea.openEditRoomFormViaThreeDots(newRoomName);
       await createArea.addAreaInRoom(newAreaName);
       await createArea.checkCreateArea(newRoomName, newAreaName);
-      await roomTemplate.checkTemplateInList('_', newAreaName);
+      await createRoom.checkTemplateInList('_', newAreaName);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'project_create_task_add');
@@ -97,13 +94,13 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('remove project @Te6b2713d', async () => {
-    await lambdaParameters('remove fullfield project ', driverChrome);
+  it('Delete project with all possible entities @Te6b2713d', async () => {
+    await lambdaParameters('Delete project with all possible entities', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeProject = new RemoveProject(driverChrome);
+    const removeProject = new CreateProject(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

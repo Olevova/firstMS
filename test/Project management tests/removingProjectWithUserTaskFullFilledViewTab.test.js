@@ -2,14 +2,11 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateProject = require('../../src/classes/project/createProject');
-const RemoveProject = require('../../src/classes/project/removeProject');
 const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const CreateRoom = require('../../src/classes/view/room/createRoom');
 const CreateArea = require('../../src/classes/view/area/createArea');
-const RoomTemplate = require('../../src/classes/view/room/roomTemplate');
 const CreateTask = require('../../src/classes/task/createTask');
 const InviteUser = require('../../src/classes/user/inviteUser');
-const RemoveUser = require('../../src/classes/user/removeUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -49,9 +46,9 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('create a project and fill it with a unit, a room, a template, add User and create task @T42acb296', async () => {
+  it('Create a project  with a unit, a room, a template, user ans task @T42acb296', async () => {
     await lambdaParameters(
-      'create a project and fill it with a unit, a room, a template, add User and create task',
+      'Create a project with a unit, a room, a template, user and task',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -62,7 +59,7 @@ describe('Project management tests @Sbae16311', async () => {
     const createUnit = new CreateUnit(driverChrome);
     const createRoom = new CreateRoom(driverChrome);
     const createArea = new CreateArea(driverChrome);
-    const roomTemplate = new RoomTemplate(driverChrome);
+    // const roomTemplate = new RoomTemplate(driverChrome);
     const inviteUserTest = new InviteUser(driverChrome);
     const createTask = new CreateTask(driverChrome);
 
@@ -98,7 +95,7 @@ describe('Project management tests @Sbae16311', async () => {
       await createArea.openEditRoomFormViaThreeDots(newRoomName);
       await createArea.addAreaInRoom(newAreaName);
       await createArea.checkCreateArea(newRoomName, newAreaName);
-      await roomTemplate.checkTemplateInList('_', newAreaName);
+      await createRoom.checkTemplateInList('_', newAreaName);
       await createProjectTest.goToSelectTab('Users');
       await inviteUserTest.openInviteUserFormInProject();
       await inviteUserTest.fillInviteFormByCA(
@@ -122,17 +119,17 @@ describe('Project management tests @Sbae16311', async () => {
     }
   });
 
-  it('remove project @T915269b2', async () => {
+  it('Delete  project with unit, room, template, user and task @T915269b2', async () => {
     await lambdaParameters(
-      'remove project with a unit, a room, a template, add User and create task',
+      'Delete  project with unit, room, template, user and task',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeProject = new RemoveProject(driverChrome);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeProject = new CreateProject(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -147,12 +144,12 @@ describe('Project management tests @Sbae16311', async () => {
       await removeUserTest.goToUserList('incompany');
       await removeUserTest.findUser(
         config.emailUseForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await removeUserTest.removefindUser();
       await removeUserTest.checkIfUserRemove(
         config.emailUseForTest,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

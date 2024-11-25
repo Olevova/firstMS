@@ -1,4 +1,3 @@
-const LogOut = require('../../src/classes/auth/logOut');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
@@ -26,14 +25,14 @@ describe('Authorization tests @Se24225b7', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
     try {
       const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-      const logOutUserTest = new LogOut(driverChrome);
+
       await loginPageTest.userLogIn(
         config.email,
         config.password,
         config.urlhomePageForCheck
       );
-      await logOutUserTest.findUserMenu();
-      await logOutUserTest.userLogOut(config.urlLoginPage);
+      await loginPageTest.findUserMenu();
+      await loginPageTest.userLogOut(config.urlLoginPage);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       // if something wrong make screen in utils/screenshot
@@ -53,15 +52,15 @@ describe('Authorization tests @Se24225b7', async () => {
       console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
       try {
         const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-        const logOutUserTest = new LogOut(driverChrome);
+        
         await loginPageTest.userLogIn(
           config.email,
           config.password,
           config.urlhomePageForCheck,
           true
         );
-        await logOutUserTest.findUserMenu();
-        await logOutUserTest.userLogOut(config.urlLoginPage);
+        await loginPageTest.findUserMenu();
+        await loginPageTest.userLogOut(config.urlLoginPage);
         await lambdaParameters('passed', driverChrome);
       } catch (error) {
         // if something wrong make screen in utils/screenshot

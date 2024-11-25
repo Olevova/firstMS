@@ -8,7 +8,7 @@ const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
 
-describe('Company tests @Sca85247d', async () => {
+describe('Company management tests @Sca85247d', async () => {
   let driverChrome = null;
 
   const newConpanyName = 'Valid';

@@ -1,4 +1,3 @@
-const ForgotPassword = require('../../src/classes/auth/forgotPassword');
 const LoginPage = require('../../src/classes/auth/login');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
@@ -14,6 +13,7 @@ describe('Authorization tests @Se24225b7', async () => {
 
   const searchText = "Here's a link to";
   const sendMailDate = new Date();
+  const should = chai.should();
 
   beforeEach(async () => {
     try {
@@ -31,7 +31,7 @@ describe('Authorization tests @Se24225b7', async () => {
 
   it('Forgot password - enter valid email @T6825b92c', async () => {
     await lambdaParameters('Forgot password - enter valid email', driverChrome);
-    const forgotPasswordTest = new ForgotPassword(driverChrome);
+    const forgotPasswordTest = new LoginPage(driverChrome);
 
     await forgotPasswordTest.openFogotPasswordForm(config.urlLoginPage);
     await forgotPasswordTest.changePassword(config.emailSU);
@@ -82,7 +82,7 @@ describe('Authorization tests @Se24225b7', async () => {
 
   it('Forgot password - invalid format email @Tf732cd02', async () => {
     await lambdaParameters('Forgot password - invalid format email @Tf732cd02', driverChrome);
-    const forgotPasswordTest = new ForgotPassword(driverChrome);
+    const forgotPasswordTest = new LoginPage(driverChrome);
     try {
     await forgotPasswordTest.openFogotPasswordForm(config.urlLoginPage);
     await forgotPasswordTest.changePassword(config.wrongEmailFormat);
@@ -104,12 +104,12 @@ describe('Authorization tests @Se24225b7', async () => {
 
   it("Forgot password - don't change, but login with old password @T309ab760", async () => {
     await lambdaParameters("Forgot password - don't change, but login with old password @T309ab760", driverChrome);
-    const forgotPasswordTest = new ForgotPassword(driverChrome);
+    
     const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
   
       
     try {
-      await forgotPasswordTest.openFogotPasswordForm(config.urlLoginPage);
+      await loginPageTest.openFogotPasswordForm(config.urlLoginPage);
       await loginPageTest.clickElement(config.locatorCancelLinkLoginCss);
       await loginPageTest.userLogIn(
         config.email,
@@ -126,12 +126,12 @@ describe('Authorization tests @Se24225b7', async () => {
 
   it("Forgot password - cancel @T7a675d87", async () => {
     await lambdaParameters("Forgot password - cancel @T7a675d87", driverChrome);
-    const forgotPasswordTest = new ForgotPassword(driverChrome);
+    
     const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
   
       
     try {
-      await forgotPasswordTest.openFogotPasswordForm(config.urlLoginPage);
+      await loginPageTest.openFogotPasswordForm(config.urlLoginPage);
       await loginPageTest.clickElement(config.locatorCancelLinkLoginCss);
       const loginPage =  await driverChrome.wait(until.urlIs(config.urlLoginPage), 3000).catch(()=>null);
       if(null){

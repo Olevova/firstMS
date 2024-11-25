@@ -1,15 +1,13 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const CreateTaskByEmployee = require('../../src/classes/task/employee/employeeCreateTask');
-const EmployeeUpdateTask = require('../../src/classes/task/employee/employeeUpdateTask');
-const RemoveTaskByEmployee = require('../../src/classes/task/employee/employeeRemoveTask');
+const CreateTask = require('../../src/classes/task/createTask');
 const CheckUserNotificationsList = require('../../src/classes/notification/checkUserNotificationsList');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Standard user role @S7e09d7c0', async () => {
   let driverChrome = null;
 
   const newTaskName = 'FortesTaskEmployee';
@@ -26,13 +24,13 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('create new task by employee @T98285107', async () => {
-    await lambdaParameters('create new task by employee', driverChrome);
+  it('Standard user crates task @Tf74bce5a', async () => {
+    await lambdaParameters('Standard user crates task', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const createTaskByEmployee = new CreateTaskByEmployee(driverChrome);
+    const createTaskByEmployee = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,
@@ -41,13 +39,14 @@ describe('Tasks tests @S26f6875e', async () => {
     );
 
     try {
-      await createTaskByEmployee.goToCreateTasksForm();
+      await createTaskByEmployee.goToCreateTasksForm(null, 'ca');
       await createTaskByEmployee.fillCreateTask(
         newTaskName,
         config.taskDescription,
         config.taskDate,
         config.userCAName
       );
+      await createTaskByEmployee.checkTaskCreation(newTaskName);
       taskIdForNotification = await createTaskByEmployee.getTaskId(newTaskName);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -57,9 +56,9 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('Check receive notification about assigning in the Task @T2426c107', async () => {
+  it('SU receives notification about assigning to the task @T31d44088', async () => {
     await lambdaParameters(
-      'Check receive notification about assigning in the Task',
+      'SU receives notification about assigning to the task',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -85,13 +84,13 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('update task by employee @T579133b6', async () => {
-    await lambdaParameters('update task by employee', driverChrome);
+  it('SU can edit own tasks @Td2b8f868', async () => {
+    await lambdaParameters('SU can edit own tasks', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const employeeUpdateTask = new EmployeeUpdateTask(driverChrome);
+    const employeeUpdateTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,
@@ -100,7 +99,7 @@ describe('Tasks tests @S26f6875e', async () => {
     );
 
     try {
-      await employeeUpdateTask.goToCreateTasksForm();
+      await employeeUpdateTask.goToCreateTasksForm(null, 'ca')
       await employeeUpdateTask.editTask(newTaskName, newTaskNameForUpdate);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -110,12 +109,12 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('remove task @Te905fd21', async () => {
+  it('SU can delete own tasks @T3355b8b5', async () => {
     await lambdaParameters('remove task', driverChrome);
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeTaskByEmployee = new RemoveTaskByEmployee(driverChrome);
+    const removeTaskByEmployee = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,
@@ -124,7 +123,7 @@ describe('Tasks tests @S26f6875e', async () => {
     );
 
     try {
-      await removeTaskByEmployee.goToTasksList();
+      await removeTaskByEmployee.goToCreateTasksForm(null, 'ca')
       await removeTaskByEmployee.taskRemove(newTaskNameForUpdate);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

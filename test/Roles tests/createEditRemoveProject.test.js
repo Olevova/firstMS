@@ -2,8 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateProject = require('../../src/classes/project/createProject');
-const EditProject = require('../../src/classes/project/editProject');
-const RemoveProject = require('../../src/classes/project/removeProject');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -73,7 +71,7 @@ describe('Super admin role @S75be5ddc', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editProject = new EditProject(driverChrome);
+    const editProject = new CreateProject(driverChrome);
 
     try {
       await logginPageTest.userLogIn(
@@ -99,7 +97,7 @@ describe('Super admin role @S75be5ddc', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeProject = new RemoveProject(driverChrome);
+    const removeProject = new CreateProject(driverChrome);
 
     try {
       await logginPageTest.userLogIn(

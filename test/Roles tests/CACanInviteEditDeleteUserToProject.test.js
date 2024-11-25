@@ -2,8 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const LoginPage = require('../../src/classes/auth/login');
-const RemoveUser = require('../../src/classes/user/removeUser');
-const UpdateUser = require('../../src/classes/user/updateUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -60,8 +58,6 @@ describe('Company admin role @Se7b2355c', async () => {
       driverChrome
     );
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
-    const updateUser = new UpdateUser(driverChrome);
     const inviteUserTest = new InviteUser(driverChrome);
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -70,12 +66,18 @@ describe('Company admin role @Se7b2355c', async () => {
     );
 
     try {
-      await removeUserTest.goToUserList('ca');
-      await removeUserTest.findUser(
+      await inviteUserTest.goToUserList('ca');
+      await inviteUserTest.findUser(
         config.inviteUserEmail,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
-      await updateUser.updateAndCheck(config.inviteUserName,true, config.inviteUserPhone,false,true);
+      await inviteUserTest.updateAndCheck(
+        config.inviteUserName,
+        true,
+        config.inviteUserPhone,
+        false,
+        true
+      );
       await inviteUserTest.checkCreateNewUser(config.inviteUserEmail);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -86,13 +88,8 @@ describe('Company admin role @Se7b2355c', async () => {
   });
 
   it('CA can edit company User Details @T6233cb25', async () => {
-    await lambdaParameters(
-      'CA can edit company User Details',
-      driverChrome
-    );
+    await lambdaParameters('CA can edit company User Details', driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
-    const updateUser = new UpdateUser(driverChrome);
     const inviteUserTest = new InviteUser(driverChrome);
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -101,12 +98,18 @@ describe('Company admin role @Se7b2355c', async () => {
     );
 
     try {
-      await removeUserTest.goToUserList('ca');
-      await removeUserTest.findUser(
+      await inviteUserTest.goToUserList('ca');
+      await inviteUserTest.findUser(
         config.inviteUserEmail,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
-      await updateUser.updateAndCheck(config.inviteUserNameEdit,true, config.inviteUserPhone, config.inviteUserNewEmail,true)
+      await inviteUserTest.updateAndCheck(
+        config.inviteUserNameEdit,
+        true,
+        config.inviteUserPhone,
+        config.inviteUserNewEmail,
+        true
+      );
       await inviteUserTest.checkCreateNewUser(config.inviteUserNewEmail);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -119,7 +122,7 @@ describe('Company admin role @Se7b2355c', async () => {
   it('CA can delete company users @Tee6f30dc', async () => {
     await lambdaParameters('remove user by the company admin', driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
     await logginPageTest.userLogIn(
       config.emailCA,
       config.passwordCA,
@@ -130,12 +133,12 @@ describe('Company admin role @Se7b2355c', async () => {
       await removeUserTest.goToUserList('ca');
       await removeUserTest.findUser(
         config.inviteUserNewEmail,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await removeUserTest.removefindUser();
       await removeUserTest.checkIfUserRemove(
         config.inviteUserNewEmail,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -154,7 +157,7 @@ describe('Company admin role @Se7b2355c', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const inviteUserTest = new InviteUser(driverChrome);
-    const removeUserTest = new RemoveUser(driverChrome);
+    
     await logginPageTest.userLogIn(
       config.emailCA,
       config.passwordCA,
@@ -169,19 +172,22 @@ describe('Company admin role @Se7b2355c', async () => {
         config.projManager
       );
       await inviteUserTest.checkCreateNewUser(config.inviteUserEmail);
-      await removeUserTest.goToUserList('ca');
-      await removeUserTest.findUser(
+      await inviteUserTest.goToUserList('ca');
+      await inviteUserTest.findUser(
         config.inviteUserEmail,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
-      await removeUserTest.removefindUser();
-      await removeUserTest.checkIfUserRemove(
+      await inviteUserTest.removefindUser();
+      await inviteUserTest.checkIfUserRemove(
         config.inviteUserEmail,
-        config.mainCompanyUsersPage
+        config.mainCompanyPage
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
-      await makeScreenshot(driverChrome, 'user_unconfirmed_delete_from_project_by_CA');
+      await makeScreenshot(
+        driverChrome,
+        'user_unconfirmed_delete_from_project_by_CA'
+      );
       await lambdaParameters('failed', driverChrome);
       throw error;
     }

@@ -2,14 +2,13 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const LoginPage = require('../../src/classes/auth/login');
-const RemoveUser = require('../../src/classes/user/removeUser');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
 describe('Company admin role @Se7b2355c', async () => {
   let driverChrome = null;
-  const userSUName = ['testPM', 'task-test']
+  const userSUName = ['PM_parallel', 'SU_parallel']
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -31,7 +30,6 @@ describe('Company admin role @Se7b2355c', async () => {
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
     const inviteUserTest = new InviteUser(driverChrome);
-    const userSelect = new RemoveUser(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailCA,
@@ -40,7 +38,7 @@ describe('Company admin role @Se7b2355c', async () => {
     );
     try {
       await inviteUserTest.goToView(config.projectNameMain, 'ca');
-      await userSelect.goToUserList('ca');
+      await inviteUserTest.goToUserList('ca');
       await inviteUserTest.checkElFromArrayInList(userSUName, config.locatorUserNames);
       await inviteUserTest.checkCounter(userSUName.length);
       await lambdaParameters('passed', driverChrome);

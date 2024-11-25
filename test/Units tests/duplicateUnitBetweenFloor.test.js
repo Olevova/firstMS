@@ -1,7 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const DuplicateUnit = require('../../src/classes/view/unit/duplicateUnit');
+const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -19,13 +19,13 @@ describe('Unit tests @S023a0c9b', async () => {
     }
   });
 
-  it('duplicate unit @Tc91a88a4', async () => {
-    await lambdaParameters('duplicate unit', driverChrome);
+  it('Duplicate unit @Tc91a88a4', async () => {
+    await lambdaParameters('Duplicate unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const duplicateUnit = new DuplicateUnit(driverChrome);
+    const duplicateUnit = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

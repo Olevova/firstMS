@@ -1,13 +1,13 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const MentionUserToArea = require('../../src/classes/view/area/mentionUserToArea');
+const CreateArea = require('../../src/classes/view/area/createArea');
 const CheckUserNotificationsList = require('../../src/classes/notification/checkUserNotificationsList');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Project area tests @S2687e915', async () => {
+describe('Area comments tests @Sa128eb7d', async () => {
   let driverChrome = null;
   let areaName = '';
 
@@ -21,13 +21,13 @@ describe('Project area tests @S2687e915', async () => {
     }
   });
 
-  it('Mention user to the area comment @T54377cb7', async () => {
+  it('Mention user in the area comment @T54377cb7', async () => {
     await lambdaParameters('mention user to the area comment', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addUserToComment = new MentionUserToArea(driverChrome);
+    const addUserToComment = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -49,9 +49,9 @@ describe('Project area tests @S2687e915', async () => {
     }
   });
 
-  it('Check receive notification about mentioning in the comment within the Area  @T803b9e0b', async () => {
+  it('Check notification about mentioning in the area comment   @T803b9e0b', async () => {
     await lambdaParameters(
-      'Check receive notification about mentioning in the comment within the Area',
+      'Check notification about mentioning in the area comment',
       driverChrome
     );
     // time and site or lochalhost there tests are going
@@ -75,13 +75,13 @@ describe('Project area tests @S2687e915', async () => {
     }
   });
 
-  it('Delete mention user @Td1d85a20', async () => {
-    await lambdaParameters('Delete mention user', driverChrome);
+  it('Delete mentioned user from comment @Td1d85a20', async () => {
+    await lambdaParameters('Delete mentioned user from comment', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addUserToComment = new MentionUserToArea(driverChrome);
+    const addUserToComment = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

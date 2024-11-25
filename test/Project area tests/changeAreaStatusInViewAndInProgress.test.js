@@ -1,13 +1,12 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const ChangeAreaStatus = require('../../src/classes/view/area/changeAreaStatusInView');
-const ChangeAreaStatusInProjectProgress = require('../../src/classes/view/area/changeAreaStatusInProjectProgress');
+const CreateArea = require('../../src/classes/view/area/createArea');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Project area tests @S2687e915', async () => {
+describe('Area status and weight tests @Sc6ecacd5', async () => {
   let driverChrome = null;
 
   beforeEach(async () => {
@@ -22,14 +21,14 @@ describe('Project area tests @S2687e915', async () => {
 
   it('Change area status in project @Tb28627eb', async () => {
     await lambdaParameters(
-      'change area status in progress project',
+      'Change area status in progress project',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeAreaStatusInProgress = new ChangeAreaStatusInProjectProgress(
+    const changeAreaStatusInProgress = new CreateArea(
       driverChrome
     );
 
@@ -65,7 +64,7 @@ describe('Project area tests @S2687e915', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeAreaStatus = new ChangeAreaStatus(driverChrome);
+    const changeAreaStatus = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

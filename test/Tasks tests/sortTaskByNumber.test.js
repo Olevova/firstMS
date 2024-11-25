@@ -1,12 +1,12 @@
 const LoginPage = require('../../src/classes/auth/login');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const SortTasksByNumber = require('../../src/classes/task/sortTaskByNumber');
+const CreateTask = require('../../src/classes/task/createTask');
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const { describe } = require('mocha');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Tasks tests @S02097389', async () => {
   let driverChrome = null;
 
   beforeEach(async () => {
@@ -19,13 +19,13 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('Sort tasks by number  @Te56adcd1', async () => {
+  it('Sort tasks by number  @Tc3e82eca', async () => {
     await lambdaParameters('Sort tasks by number', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const sortTasksByNumber = new SortTasksByNumber(driverChrome);
+    const sortTasksByNumber = new CreateTask(driverChrome);
 
     await loginPageTest.userLogIn(
       config.email,
@@ -34,7 +34,7 @@ describe('Tasks tests @S26f6875e', async () => {
     );
 
     try {
-      await sortTasksByNumber.goToTasksLists(config.projectNameMain);
+      await sortTasksByNumber.goToTasksList(config.projectNameMain);
       await sortTasksByNumber.sortTasks();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

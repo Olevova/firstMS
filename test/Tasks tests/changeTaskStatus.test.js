@@ -1,12 +1,13 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const ChangeStatusTask = require('../../src/classes/task/changeStatus');
+// const ChangeStatusTask = require('../../src/classes/task/changeStatus');
+const CreateTask = require('../../src/classes/task/createTask');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Tasks tests @S02097389', async () => {
   let driverChrome = null;
 
   beforeEach(async () => {
@@ -19,13 +20,13 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('change task status @T4c81812d', async () => {
-    await lambdaParameters('change task status', driverChrome);
+  it('Change task status from Tasks list page@Tf6ae65d7', async () => {
+    await lambdaParameters('Change task status from Tasks list page', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeTaskStatus = new ChangeStatusTask(driverChrome);
+    const changeTaskStatus = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

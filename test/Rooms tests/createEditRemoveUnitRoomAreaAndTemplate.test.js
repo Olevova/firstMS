@@ -2,13 +2,8 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateUnit = require('../../src/classes/view/unit/createUnit');
-const DeleteUnit = require('../../src/classes/view/unit/deleteUnit');
-const EditUnit = require('../../src/classes/view/unit/editUnit');
 const CreateRoom = require('../../src/classes/view/room/createRoom');
-const DeleteRoom = require('../../src/classes/view/room/deleteRoom');
 const CreateArea = require('../../src/classes/view/area/createArea');
-const DeleteArea = require('../../src/classes/view/area/deleteArea');
-const RoomTemplate = require('../../src/classes/view/room/roomTemplate');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -37,8 +32,8 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('create new unit @T089b45ef', async () => {
-    await lambdaParameters('create new unit', driverChrome);
+  it('Create new unit @T089b45ef', async () => {
+    await lambdaParameters('Create new unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -63,13 +58,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('edit new unit @T621de4c7', async () => {
+  it('Update new unit @T621de4c7', async () => {
     await lambdaParameters('edit new unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editUnit = new EditUnit(driverChrome);
+    const editUnit = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -89,8 +84,8 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('create new Room(unique) @T2c9a49cd', async () => {
-    await lambdaParameters('create new Room(unique)', driverChrome);
+  it('Create new unique room @T2c9a49cd', async () => {
+    await lambdaParameters('Create new unique room', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -115,8 +110,8 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('create new Area and create template @Td4fc92c6', async () => {
-    await lambdaParameters('create new Area and create template', driverChrome);
+  it('Create new area and create template @Td4fc92c6', async () => {
+    await lambdaParameters('Create new area and create template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -142,13 +137,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('delete new area @Ta3935be1', async () => {
-    await lambdaParameters('delete new area', driverChrome);
+  it('Delete area @Ta3935be1', async () => {
+    await lambdaParameters('Delete area', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteArea = new DeleteArea(driverChrome);
+    const deleteArea = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -169,13 +164,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('delete new room (unique) @T48f0e2da', async () => {
-    await lambdaParameters('delete new room (unique)', driverChrome);
+  it('Delete room (unique) @T48f0e2da', async () => {
+    await lambdaParameters('Delete room (unique)', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteRoom = new DeleteRoom(driverChrome);
+    const deleteRoom = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -195,13 +190,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('delete new unit @T4a1ecb6c', async () => {
-    await lambdaParameters('delete new unit', driverChrome);
+  it('Delete unit @T4a1ecb6c', async () => {
+    await lambdaParameters('Delete unit', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteUnit = new DeleteUnit(driverChrome);
+    const deleteUnit = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -221,13 +216,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('template edit @T7965bbb8', async () => {
-    await lambdaParameters('template edit', driverChrome);
+  it('Update template @T7965bbb8', async () => {
+    await lambdaParameters('Update template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const roomTemplate = new RoomTemplate(driverChrome);
+    const roomTemplate = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -247,8 +242,8 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('create template room via template @T9731e9ba', async () => {
-    await lambdaParameters('create template room via template', driverChrome);
+  it('Create template room via template @T9731e9ba', async () => {
+    await lambdaParameters('Create template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -277,8 +272,8 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('edit template room via template @T4fd5c13f', async () => {
-    await lambdaParameters('edit template room via template', driverChrome);
+  it('Update template room via template @T4fd5c13f', async () => {
+    await lambdaParameters('update template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -305,13 +300,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('delete template room via template @T51941cd6', async () => {
-    await lambdaParameters('delete template room via template', driverChrome);
+  it('Delete template room via template @T51941cd6', async () => {
+    await lambdaParameters('Delete template room via template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteRoom = new DeleteRoom(driverChrome);
+    const deleteRoom = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -332,13 +327,13 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     }
   });
 
-  it('template delete @Te003c823', async () => {
-    await lambdaParameters('template delete', driverChrome);
+  it('Delete template @Te003c823', async () => {
+    await lambdaParameters('Delete template', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const roomTemplate = new RoomTemplate(driverChrome);
+    const roomTemplate = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

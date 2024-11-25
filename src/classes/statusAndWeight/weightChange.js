@@ -1,5 +1,7 @@
 const { By, until } = require('selenium-webdriver');
 const Base = require('../base');
+const locatorsCommon = require('../../utils/locators/locatorsCommon');
+const locatorStatusWeight = require('../../utils/locators/locatorStatusWeight');
 
 class WeightChange extends Base {
   constructor(driver) {
@@ -10,24 +12,30 @@ class WeightChange extends Base {
   }
 
   async findeWeightAndChangeIt(weight = 'medium') {
-    await this.driver.wait(until.elementLocated(By.css('html')), 10000);
+    await this.driver.wait(
+      until.elementLocated(locatorsCommon.baseHtml),
+      10000
+    );
     await this.driver.executeScript('return document.readyState');
-    const weightDropDown = await this.driver.findElement(By.css('.area__weight-btn'));
+    const weightDropDown = await this.driver.findElement(
+      locatorStatusWeight.weightAreaWeightBtn
+    );
     await weightDropDown.click();
     const weightList = await this.driver.findElements(
-      By.css('.area__weight-menu__text')
+      locatorStatusWeight.weightAreaWeightMenuText
     );
     await this.findDateInDropDown(await weightList, weight);
     await this.notificationCheck();
-    
   }
 
   async closeAreaAndCheckProgress() {
-    const closeAreaBtn = await this.driver.findElement(By.id('btnCloseModal'));
+    const closeAreaBtn = await this.driver.findElement(
+      locatorsCommon.baseBtnCloseModal
+    );
     await this.driver.wait(until.elementIsEnabled(closeAreaBtn));
     await closeAreaBtn.click();
     await this.driver.wait(
-      until.elementLocated('backdrop[show="false"]'),
+      until.elementLocated(locatorsCommon.baseBacksropShowFalse),
       10000
     );
   }

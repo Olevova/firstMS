@@ -2,8 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const InviteUser = require('../../src/classes/user/inviteUser');
 const LoginPage = require('../../src/classes/auth/login');
-const RemoveUser = require('../../src/classes/user/removeUser');
-const AddRemoveUserToProject = require('../../src/classes/user/addAndRemoveUserToProject');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -41,22 +39,22 @@ describe('Project management role @Sfbe51cff', async () => {
       await inviteUserTest.goToView(config.projectNameForPM, 'pm');
       await inviteUserTest.goToSelectTab(config.users);
       await inviteUserTest.openInviteUserFormInProject();
-      await inviteUserTest.fillInviteFormByCA(
-        config.inviteUserEmail,
-        false
-      );
+      await inviteUserTest.fillInviteFormByCA(config.inviteUserEmail, false);
       await inviteUserTest.checkCreateNewUser(config.inviteUserEmail);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
-      await makeScreenshot(driverChrome, 'user_invite_in_project_via_project_by_PM');
+      await makeScreenshot(
+        driverChrome,
+        'user_invite_in_project_via_project_by_PM'
+      );
       await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });
 
-  it("PM can invite user to project @T52c3796c", async () => {
+  it('PM can invite user to project @T52c3796c', async () => {
     await lambdaParameters(
-      "PM can invite user to project @T52c3796c",
+      'PM can invite user to project @T52c3796c',
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
@@ -71,9 +69,7 @@ describe('Project management role @Sfbe51cff', async () => {
     try {
       await inviteUserTest.goToView(config.projectNameForPM, 'pm');
       await inviteUserTest.goToInviteUsersForm('pm');
-      await inviteUserTest.fillInviteFormByCA(
-        config.inviteUserEmailSU
-      );
+      await inviteUserTest.fillInviteFormByCA(config.inviteUserEmailSU);
       await inviteUserTest.checkCreateNewUser(config.inviteUserEmailSU);
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -91,7 +87,7 @@ describe('Project management role @Sfbe51cff', async () => {
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
     await logginPageTest.userLogIn(
       config.email,
       config.password,
@@ -99,19 +95,13 @@ describe('Project management role @Sfbe51cff', async () => {
     );
     try {
       await removeUserTest.goToUserList('sa');
-      await removeUserTest.findUser(
-        config.inviteUserEmail,
-        config.usersPage
-      );
+      await removeUserTest.findUser(config.inviteUserEmail, config.usersPage);
       await removeUserTest.removefindUser();
       await removeUserTest.checkIfUserRemove(
         config.inviteUserEmail,
         config.usersPage
       );
-      await removeUserTest.findUser(
-        config.inviteUserEmailSU,
-        config.usersPage
-      );
+      await removeUserTest.findUser(config.inviteUserEmailSU, config.usersPage);
       await removeUserTest.removefindUser();
       await removeUserTest.checkIfUserRemove(
         config.inviteUserEmailSU,
@@ -119,7 +109,10 @@ describe('Project management role @Sfbe51cff', async () => {
       );
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
-      await makeScreenshot(driverChrome, 'user_unconfirmed_delete_from_project_by_CA');
+      await makeScreenshot(
+        driverChrome,
+        'user_unconfirmed_delete_from_project_by_CA'
+      );
       await lambdaParameters('failed', driverChrome);
       throw error;
     }
@@ -128,7 +121,7 @@ describe('Project management role @Sfbe51cff', async () => {
   it('PM cannot delete user from company @T28ed51e3', async () => {
     await lambdaParameters('PM cannot delete user from company', driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
     await logginPageTest.userLogIn(
       config.emailPM,
       config.passwordPM,
@@ -138,29 +131,37 @@ describe('Project management role @Sfbe51cff', async () => {
     try {
       await removeUserTest.goToUserList('pm');
       await driverChrome.sleep(2000);
-      const missingThreeDotsMenu = await removeUserTest.findUser(
-         config.taskTestUserEmail,
-         config.mainCompanyUsersPage
-      ).catch(() => null);
+      const missingThreeDotsMenu = await removeUserTest
+        .findUser(config.taskTestUserEmail, config.mainCompanyPage)
+        .catch(() => null);
       console.log(missingThreeDotsMenu, 'missingThreeDotsMenu');
-      
-      if(missingThreeDotsMenu === null){
-        console.log('PM cannot delete user from company via Three dots menu, test passed');
+
+      if (missingThreeDotsMenu === null) {
+        console.log(
+          'PM cannot delete user from company via Three dots menu, test passed'
+        );
+      } else {
+        throw new Error('PM can delete user from company via Three dots menu');
       }
-      else {
-        throw new Error('PM can delete user from company via Three dots menu')
-      }
-      await removeUserTest.findAndClickOnLinInTheList(config.taskTestUser,'.list-name-wrapper');
-      await driverChrome.wait(until.elementLocated(By.css('app-user-profile .table-details-wrapper')),10000);
-      const deleteBtn = await removeUserTest.checkMissingElement(config.locatorDeleteUserCss, 1000);
+      await removeUserTest.findAndClickOnLinInTheList(
+        config.taskTestUser,
+        '.list-name-wrapper'
+      );
+      await driverChrome.wait(
+        until.elementLocated(By.css('app-user-profile .table-details-wrapper')),
+        10000
+      );
+      const deleteBtn = await removeUserTest.checkMissingElement(
+        config.locatorDeleteUserCss,
+        1000
+      );
       console.log(deleteBtn);
-      
-      if(deleteBtn){
+
+      if (deleteBtn) {
         console.log('Test passed PM cannot delete User');
-        
       }
-      if(!deleteBtn){
-        throw new Error('PM can delete User, test failed')
+      if (!deleteBtn) {
+        throw new Error('PM can delete User, test failed');
       }
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -173,7 +174,7 @@ describe('Project management role @Sfbe51cff', async () => {
   it('PM cannot edit user @T1b33f616', async () => {
     await lambdaParameters('PM cannot edit user', driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeUserTest = new RemoveUser(driverChrome);
+    const removeUserTest = new InviteUser(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailPM,
@@ -183,29 +184,37 @@ describe('Project management role @Sfbe51cff', async () => {
 
     try {
       await removeUserTest.goToUserList('pm');
-      const missingThreeDotsMenu = await removeUserTest.findUser(
-         config.taskTestUserEmail,
-         config.mainCompanyUsersPage
-      ).catch(() => null);
+      const missingThreeDotsMenu = await removeUserTest
+        .findUser(config.taskTestUserEmail, config.mainCompanyPage)
+        .catch(() => null);
       console.log(missingThreeDotsMenu, 'missingThreeDotsMenu');
-      
-      if(missingThreeDotsMenu === null){
-        console.log('PM cannot edit user from company via Three dots menu, test passed');
+
+      if (missingThreeDotsMenu === null) {
+        console.log(
+          'PM cannot edit user from company via Three dots menu, test passed'
+        );
+      } else {
+        throw new Error('PM can delete edit from company via Three dots menu');
       }
-      else {
-        throw new Error('PM can delete edit from company via Three dots menu')
-      }
-      await removeUserTest.findAndClickOnLinInTheList(config.taskTestUser,'.list-name-wrapper');
-      await driverChrome.wait(until.elementLocated(By.css('app-user-profile .table-details-wrapper')),10000);
-      const deleteBtn = await removeUserTest.checkMissingElement(config.locatorEditUserCss, 1000);
+      await removeUserTest.findAndClickOnLinInTheList(
+        config.taskTestUser,
+        '.list-name-wrapper'
+      );
+      await driverChrome.wait(
+        until.elementLocated(By.css('app-user-profile .table-details-wrapper')),
+        10000
+      );
+      const deleteBtn = await removeUserTest.checkMissingElement(
+        config.locatorEditUserCss,
+        1000
+      );
       console.log(deleteBtn);
-      
-      if(deleteBtn){
+
+      if (deleteBtn) {
         console.log('Test passed PM cannot edit User');
-        
       }
-      if(!deleteBtn){
-        throw new Error('PM can edit User, test failed')
+      if (!deleteBtn) {
+        throw new Error('PM can edit User, test failed');
       }
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -221,7 +230,7 @@ describe('Project management role @Sfbe51cff', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -248,7 +257,7 @@ describe('Project management role @Sfbe51cff', async () => {
       driverChrome
     );
     // await driverChrome.executeScript("document.body.style.zoom='50%'");
-    const addRemoveUserToProject = new AddRemoveUserToProject(driverChrome);
+    const addRemoveUserToProject = new InviteUser(driverChrome);
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
 
     await logginPageTest.userLogIn(
@@ -259,13 +268,20 @@ describe('Project management role @Sfbe51cff', async () => {
     try {
       await addRemoveUserToProject.goToView(config.projectNameForPM, 'pm');
       await addRemoveUserToProject.goToSelectTab(config.users);
-      await addRemoveUserToProject.removeUserFromProject(config.taskTestUser).catch(()=> null);
-      const canDeleteCA = await addRemoveUserToProject.removeUserFromProject(config.taskTestUserPM).catch(()=>null);
-      if(canDeleteCA === null){
-        console.log('Test passed, PM cannot delete user from project exept Standard User ');
-      }
-      else{
-        throw new Error('Test failed, PM can delete user from project exept Standard User')
+      await addRemoveUserToProject
+        .removeUserFromProject(config.taskTestUser)
+        .catch(() => null);
+      const canDeleteCA = await addRemoveUserToProject
+        .removeUserFromProject(config.taskTestUserPM)
+        .catch(() => null);
+      if (canDeleteCA === null) {
+        console.log(
+          'Test passed, PM cannot delete user from project exept Standard User '
+        );
+      } else {
+        throw new Error(
+          'Test failed, PM can delete user from project exept Standard User'
+        );
       }
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
@@ -274,5 +290,4 @@ describe('Project management role @Sfbe51cff', async () => {
       throw error;
     }
   });
-
 });

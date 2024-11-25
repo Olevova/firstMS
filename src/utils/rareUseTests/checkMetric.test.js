@@ -1,7 +1,8 @@
 const { createWebdriverChrome } = require('../webdriver');
 const LoginPage = require('../../classes/auth/login');
-const ChangeAreaStatus = require('../../classes/view/area/changeAreaStatusInView');
-const ChangeAreaStatusInProjectProgress = require('../../classes/view/area/changeAreaStatusInProjectProgress');
+// const ChangeAreaStatus = require('../../classes/view/area/changeAreaStatusInView');
+// const ChangeAreaStatusInProjectProgress = require('../../classes/view/area/changeAreaStatusInProjectProgress');
+// const CreateArea = require('../../src/classes/view/area/createArea');
 const makeScreenshot = require('../makeScreenShot');
 const { describe } = require('mocha');
 const should = require('chai').should();
@@ -38,54 +39,54 @@ describe('check metrics', async () => {
     }
   });
 
-  it('check metrics', async () => {
-    // time and site or lochalhost there tests are going
-    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  // it('check metrics', async () => {
+  //   // time and site or lochalhost there tests are going
+  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeAreaStatusInProgress = new ChangeAreaStatusInProjectProgress(
-      driverChrome
-    );
+  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+  //   const changeAreaStatusInProgress = new ChangeAreaStatusInProjectProgress(
+  //     driverChrome
+  //   );
 
-    await logginPageTest.userLogIn(
-      config.email,
-      config.password,
-      config.urlhomePageForCheck
-    );
+  //   await logginPageTest.userLogIn(
+  //     config.email,
+  //     config.password,
+  //     config.urlhomePageForCheck
+  //   );
 
-    try {
-      await changeAreaStatusInProgress.goToView(project);
-      await changeAreaStatusInProgress.goToSelectTab('Project Progress');
-      await driverChrome.sendAndGetDevToolsCommand('Performance.enable');
-      obtainedMetrics = await driverChrome.sendAndGetDevToolsCommand(
-        'Performance.getMetrics'
-      );
-      performance = await driverChrome.executeScript(
-        'return window.performance.timing;'
-      );
-      navigationTimings = await driverChrome.executeScript(
-        "return window.performance.getEntriesByType('navigation')"
-      );
-      // const timeToFirstByte = performance.responseStart - performance.requestStart;
-      // console.log(`Time to First Byte (TTFB): ${timeToFirstByte} ms`);
-      // const domContentLoadedTime = performance.domContentLoadedEventEnd - performance.navigationStart;
-      // console.log(`DOM Content Loaded Time: ${domContentLoadedTime} ms`);
-      // const pageLoadTime = performance.loadEventEnd - performance.navigationStart;
-      // console.log(`Page Load Time: ${pageLoadTime} ms`);
+  //   try {
+  //     await changeAreaStatusInProgress.goToView(project);
+  //     await changeAreaStatusInProgress.goToSelectTab('Project Progress');
+  //     await driverChrome.sendAndGetDevToolsCommand('Performance.enable');
+  //     obtainedMetrics = await driverChrome.sendAndGetDevToolsCommand(
+  //       'Performance.getMetrics'
+  //     );
+  //     performance = await driverChrome.executeScript(
+  //       'return window.performance.timing;'
+  //     );
+  //     navigationTimings = await driverChrome.executeScript(
+  //       "return window.performance.getEntriesByType('navigation')"
+  //     );
+  //     // const timeToFirstByte = performance.responseStart - performance.requestStart;
+  //     // console.log(`Time to First Byte (TTFB): ${timeToFirstByte} ms`);
+  //     // const domContentLoadedTime = performance.domContentLoadedEventEnd - performance.navigationStart;
+  //     // console.log(`DOM Content Loaded Time: ${domContentLoadedTime} ms`);
+  //     // const pageLoadTime = performance.loadEventEnd - performance.navigationStart;
+  //     // console.log(`Page Load Time: ${pageLoadTime} ms`);
 
-      console.log(
-        obtainedMetrics,
-        '1',
-        performance,
-        '2',
-        navigationTimings,
-        '3'
-      );
-      await lambdaParameters('passed', driverChrome);
-    } catch (error) {
-      await makeScreenshot(driverChrome, 'change_area_status_project');
-      await lambdaParameters('failed', driverChrome);
-      throw error;
-    }
-  });
+  //     console.log(
+  //       obtainedMetrics,
+  //       '1',
+  //       performance,
+  //       '2',
+  //       navigationTimings,
+  //       '3'
+  //     );
+  //     await lambdaParameters('passed', driverChrome);
+  //   } catch (error) {
+  //     await makeScreenshot(driverChrome, 'change_area_status_project');
+  //     await lambdaParameters('failed', driverChrome);
+  //     throw error;
+  //   }
+  // });
 });

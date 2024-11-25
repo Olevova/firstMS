@@ -1,8 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const AddCommentToArea = require('../../src/classes/view/area/addCommentToArea');
-const ChangeAreaStatus = require('../../src/classes/view/area/changeAreaStatusInView');
+const CreateArea = require('../../src/classes/view/area/createArea');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -29,8 +28,7 @@ describe('Standard User role @S7e09d7c0', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addComment = new AddCommentToArea(driverChrome);
-    const changeAreaStatus = new ChangeAreaStatus(driverChrome);
+    const addComment = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,
@@ -40,7 +38,7 @@ describe('Standard User role @S7e09d7c0', async () => {
 
     try {
       await addComment.goToView(config.projectNameForSU, 'su');
-      const projectProgress = await changeAreaStatus.checkStartProgressProjectPercent();
+      const projectProgress = await addComment.checkStartProgressProjectPercent();
       if(projectProgress>=0 && projectProgress<=100){
         console.log('Test SU can see project of the area and main progress passed');
         

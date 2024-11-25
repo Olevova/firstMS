@@ -1,14 +1,13 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const CheckRoomGrouping = require('../../src/classes/view/room/checkRoomGrouping');
+const CreateRoom = require('../../src/classes/view/room/createRoom');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
 describe('Rooms tests @Sa2b0fa77', async () => {
   let driverChrome = null;
-  const project = 'one-floor';
 
   beforeEach(async () => {
     driverChrome = await createWebdriverChrome();
@@ -29,7 +28,7 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const checkRoomGrouping = new CheckRoomGrouping(driverChrome);
+    const checkRoomGrouping = new CreateRoom(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -38,9 +37,9 @@ describe('Rooms tests @Sa2b0fa77', async () => {
     );
 
     try {
-      await checkRoomGrouping.goToView(project);
+      await checkRoomGrouping.goToView(config.projectNameMain);
       await checkRoomGrouping.roomGroupingWithSameNameInViewTab();
-      await checkRoomGrouping.goToSelectTab('Project Progress');
+      await checkRoomGrouping.goToSelectTab(config.projectProgress);
       await checkRoomGrouping.checkGroupingInProjectProgressTab();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {

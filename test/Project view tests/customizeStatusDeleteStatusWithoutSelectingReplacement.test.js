@@ -1,8 +1,8 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const DeleteCustomStatus = require('../../src/classes/statusAndWeight/deleteCustomStatus');
-const ChangeAreaStatus = require('../../src/classes/view/area/changeAreaStatusInView');
+const CreateCustomStatus = require('../../src/classes/statusAndWeight/createCustomStatus');
+const CreateArea = require('../../src/classes/view/area/createArea');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -33,8 +33,8 @@ describe('Project view tests, @S1a26e659', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeAreaStatus = new ChangeAreaStatus(driverChrome);
-    const deleteStatus = new DeleteCustomStatus(driverChrome);
+    const changeAreaStatus = new CreateArea(driverChrome);
+    const deleteStatus = new CreateCustomStatus(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

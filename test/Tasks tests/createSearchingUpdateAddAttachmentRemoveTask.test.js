@@ -2,14 +2,11 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateTask = require('../../src/classes/task/createTask');
-const SearchingTaskByName = require('../../src/classes/task/searchingTask');
-const RemoveTask = require('../../src/classes/task/removeTask');
-const UpdateTaskDetail = require('../../src/classes/task/updateTaskDetail');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Tasks tests @S02097389', async () => {
   let driverChrome = null;
 
   const newTaskName = 'FortesTask';
@@ -32,8 +29,8 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('create new task @Tcdda7369', async () => {
-    await lambdaParameters('create new task', driverChrome);
+  it('Create a tasks with all required fields @T33c7bd7b', async () => {
+    await lambdaParameters('Create a tasks with all required fields', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
@@ -62,16 +59,16 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('searching task by name in the searching form @T551024c6', async () => {
+  it('Search task by name @Tbbb5a825', async () => {
     await lambdaParameters(
-      'searching task by name in the searching form',
+      'Search task by name',
       driverChrome
     );
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const searchingTask = new SearchingTaskByName(driverChrome);
+    const searchingTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -91,21 +88,21 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('update task @T94a5fca4', async () => {
-    await lambdaParameters('update task', driverChrome);
+  it('Update task @T0f1a4aee', async () => {
+    await lambdaParameters('Update task', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+    const updateTaskDetail = new CreateTask(driverChrome);
+    
 
     await logginPageTest.userLogIn(
       config.email,
       config.password,
       config.urlhomePageForCheck
     );
-    await goToTasks.goToTasksList(config.projectNameMain);
+    await updateTaskDetail.goToTasksList(config.projectNameMain);
     try {
       await updateTaskDetail.findAllTasksInProject();
       await updateTaskDetail.editTask(newTaskName, newTaskNameForUpdate);
@@ -117,21 +114,20 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('add attachment to the task @T07c57ec0', async () => {
+  it('Attach file to a task @T7f6f6389', async () => {
     await lambdaParameters('add attachment to the task', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const updateTaskDetail = new UpdateTaskDetail(driverChrome);
-    const goToTasks = new SearchingTaskByName(driverChrome);
+    const updateTaskDetail = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
       config.password,
       config.urlhomePageForCheck
     );
-    await goToTasks.goToTasksList(config.projectNameMain);
+    await updateTaskDetail.goToTasksList(config.projectNameMain);
 
     try {
       await updateTaskDetail.findAllTasksInProject();
@@ -148,13 +144,13 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('remove task @T331e8497', async () => {
-    await lambdaParameters('remove task', driverChrome);
+  it('Delete task @T04c98212', async () => {
+    await lambdaParameters('Delete task', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const removeTask = new RemoveTask(driverChrome);
+    const removeTask = new CreateTask(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

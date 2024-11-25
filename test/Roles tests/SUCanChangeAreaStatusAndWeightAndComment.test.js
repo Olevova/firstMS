@@ -1,9 +1,7 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const AddCommentToArea = require('../../src/classes/view/area/addCommentToArea');
-const ChangeAreaStatus = require('../../src/classes/view/area/changeAreaStatusInView');
-const CheckHistoryStatus = require('../../src/classes/view/area/checkStatusHistory');
+const CreateArea = require('../../src/classes/view/area/createArea');
 const WeightChange = require('../../src/classes/statusAndWeight/weightChange');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
@@ -31,9 +29,7 @@ describe('Standard User role @S7e09d7c0', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addComment = new AddCommentToArea(driverChrome);
-    const changeAreaStatus = new ChangeAreaStatus(driverChrome);
-    const checkhistory = new CheckHistoryStatus(driverChrome);
+    const addComment = new CreateArea(driverChrome);
     const changeWeight = new WeightChange(driverChrome);
 
     await logginPageTest.userLogIn(
@@ -45,17 +41,17 @@ describe('Standard User role @S7e09d7c0', async () => {
     try {
       await addComment.goToView(config.projectNameForSU, 'su');
       await addComment.goToSelectTab(config.view);
-      await changeAreaStatus.findAreaInView();
-      await changeAreaStatus.changeStatusToDoOnInProgress();
-      await checkhistory.checkHistory(config.toDo);
-      await changeAreaStatus.changeColorProgressStatusByClick();
-      await changeAreaStatus.changeStatusInProgressOnDone();
-      await changeAreaStatus.changeStatusDoneOnInProgress();
-      await changeAreaStatus.changeColorProgressStatusByBtn();
-      await changeAreaStatus.changeStatusInProgressOnToDo();
+      await addComment.findAreaInView();
+      await addComment.changeStatusToDoOnInProgress();
+      await addComment.checkHistory(config.toDo);
+      await addComment.changeColorProgressStatusByClick();
+      await addComment.changeStatusInProgressOnDone();
+      await addComment.changeStatusDoneOnInProgress();
+      await addComment.changeColorProgressStatusByBtn();
+      await addComment.changeStatusInProgressOnToDo();
       await changeWeight.findeWeightAndChangeIt(config.huge);
       await changeWeight.findeWeightAndChangeIt(config.medium);
-      await changeAreaStatus.closeAreaModalWindow();
+      await addComment.closeAreaModalWindow();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'change_area_status_and_weight_by_SU');
@@ -73,7 +69,7 @@ describe('Standard User role @S7e09d7c0', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const addComment = new AddCommentToArea(driverChrome);
+    const addComment = new CreateArea(driverChrome);
 
     await logginPageTest.userLogIn(
       config.emailSU,

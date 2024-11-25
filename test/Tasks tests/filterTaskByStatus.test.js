@@ -1,12 +1,12 @@
 const LoginPage = require('../../src/classes/auth/login');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
-const FilterTaskByStatus = require('../../src/classes/task/filterTaskByStatus');
+const CreateTask = require('../../src/classes/task/createTask')
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const { describe } = require('mocha');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Tasks tests @S02097389', async () => {
   let driverChrome = null;
 
   beforeEach(async () => {
@@ -19,13 +19,13 @@ describe('Tasks tests @S26f6875e', async () => {
     }
   });
 
-  it('Filter tasks @T569ff7fa', async () => {
-    await lambdaParameters('Filter tasks', driverChrome);
+  it('Filter tasks by status @T49357fce', async () => {
+    await lambdaParameters('Filter tasks by status', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const loginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const filter = new FilterTaskByStatus(driverChrome);
+    const filter = new CreateTask(driverChrome);
 
     await loginPageTest.userLogIn(
       config.email,

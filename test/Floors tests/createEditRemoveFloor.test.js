@@ -2,8 +2,6 @@ const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
 const CreateFloor = require('../../src/classes/view/floor/createFloor');
-const DeleteFloor = require('../../src/classes/view/floor/deleteFloor');
-const EditFloor = require('../../src/classes/view/floor/editFloor');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -54,7 +52,7 @@ describe('Floors tests @S85063df9', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const editFloor = new EditFloor(driverChrome);
+    const editFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -83,7 +81,7 @@ describe('Floors tests @S85063df9', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const deleteFloor = new DeleteFloor(driverChrome);
+    const deleteFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,

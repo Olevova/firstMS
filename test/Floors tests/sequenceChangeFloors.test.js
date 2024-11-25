@@ -1,8 +1,8 @@
 const { createWebdriverChrome } = require('../../src/utils/webdriver');
 const lambdaParameters = require('../../src/utils/lambdaAddParameters');
 const LoginPage = require('../../src/classes/auth/login');
-const SequenceFloorChange = require('../../src/classes/view/floor/sequenceFloorChange');
-const SequenceUnitChange = require('../../src/classes/view/unit/sequenceUnitChange');
+const CreateFloor = require('../../src/classes/view/floor/createFloor');
+const CreateUnit = require('../../src/classes/view/unit/createUnit');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const { describe } = require('mocha');
 const config = require('../../src/utils/config');
@@ -26,7 +26,7 @@ describe('Floors tests @S85063df9', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeUnits = new SequenceUnitChange(driverChrome);
+    const changeUnits = new CreateUnit(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -52,7 +52,7 @@ describe('Floors tests @S85063df9', async () => {
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
     const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-    const changeFloor = new SequenceFloorChange(driverChrome);
+    const changeFloor = new CreateFloor(driverChrome);
 
     await logginPageTest.userLogIn(
       config.email,
@@ -61,12 +61,13 @@ describe('Floors tests @S85063df9', async () => {
     );
 
     try {
-      await changeFloor.goToView(config.projectNameMain);
+      await changeFloor.goToView(config.projectDone);
       await changeFloor.sequenceChange();
       await changeFloor.checkSequence();
       await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'floor_change_sequence');
+      await lambdaParameters('failed', driverChrome);
       throw error;
     }
   });

@@ -7,7 +7,7 @@ const { By, until } = require('selenium-webdriver');
 const makeScreenshot = require('../../src/utils/makeScreenShot');
 const config = require('../../src/utils/config');
 
-describe('Tasks tests @S26f6875e', async () => {
+describe('Dashboard tests @Sbfdc74b0', async () => {
   let driverChrome = null;
   let elNumber;
 
@@ -19,7 +19,7 @@ describe('Tasks tests @S26f6875e', async () => {
     await driverChrome.quit();
   });
 
-  it('Infinity scroll on My open tasks (for CA, PM, Stand. User) @T33c4a28a', async () => {
+  it('Infinity scroll on My open tasks (for CA, PM, Stand. User) @Tc25fb408', async () => {
     await lambdaParameters(
       'Infinity scroll on My open tasks (for CA, PM, Stand. User)',
       driverChrome

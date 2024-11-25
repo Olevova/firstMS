@@ -50,7 +50,7 @@ describe('Project management tests @Sbae16311', async () => {
         config.eneDate,
         true
       );
-      const errorMsgArray = await createProjectTest.formErrorMsgArray('.small-error-text-field');
+      const errorMsgArray = await createProjectTest.formErrorMsgArray(config.locatorSmallErrorEl);
       console.log(await errorMsgArray.length);
       
       if(await errorMsgArray.length === 9){
