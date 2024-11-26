@@ -46,6 +46,7 @@ services:
       - RUNNING_WITHOUT_VIDEO=${RUNNING_WITHOUT_VIDEO}
       - BASE_URL=${BASE_URL}
       - BASE_URL_BACKEND=${BASE_URL_BACKEND}
+      - TEST_PATH=${TEST_PATH:-test/**/*.js}
     volumes:
       - shared-downloads:/shared/downloads
 volumes:
