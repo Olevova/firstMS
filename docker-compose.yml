@@ -1,18 +1,25 @@
-version: '3.9'
+version: '3.8'
 
 name: colorjob
 services:
-  mysql:
-    image: denisdetkov/manual-testing-db:develop
-    container_name: mysql-container-cj
-    volumes:
-      - mysql-data:/var/lib/mysql
+  mysql:                                                  #to use copy of staging db
+    image: denisdetkov/manual-testing-db:develop  
+    container_name: mysql-container
     networks:
-      - my-network
+      - colorjob-network
+
+  #mysql:                                                    #to use clear db
+    #image: mysql:8.0.36-debian
+    #container_name: mysql-container
+    #environment:
+     # - MYSQL_ROOT_PASSWORD=12211221
+      #- MYSQL_DATABASE=colorjob
+    #networks:
+     # - colorjob-network
 
   backend:
-    image: denisdetkov/manual-testing-colorjob-backend:test
-    container_name: backend-cj
+    image: denisdetkov/manual-testing-colorjob-backend:develop #change to needed branch
+    container_name: backend
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -20,21 +27,18 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - my-network
+      - colorjob-network
 
   frontend:
-    image: denisdetkov/manual-testing-colorjob-frontend:develop
-    container_name: frontend-cj
+    image: denisdetkov/manual-testing-colorjob-frontend:develop #change to needed branch
+    container_name: frontend
     environment:
       - SCRIPT_NAME=startDocker
     ports:
        - "4400:4200"
     networks:
-      - my-network
-
-volumes:
-  mysql-data:
+      - colorjob-network
 
 networks:
-  my-network:
+  colorjob-network:
     driver: bridge

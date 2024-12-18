@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
   chrome:
     image: selenium/node-chrome:dev
@@ -12,6 +12,8 @@ services:
     volumes:
       - ./../utils/files:/home/selenium_files
       - shared-downloads:/home/seluser/Downloads
+    networks:
+      - colorjob-network
 
   firefox:
     image: selenium/node-firefox:dev
@@ -22,6 +24,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - colorjob-network
 
   selenium-hub:
     image: selenium/hub:latest
@@ -35,6 +39,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - colorjob-network
 
   test-runner:
     image: olevova1983/firsttest:latest
@@ -43,11 +49,17 @@ services:
         condition: service_healthy
     environment:
       - RUNNING_IN_DOCKER=true
-      - RUNNING_WITHOUT_VIDEO=${RUNNING_WITHOUT_VIDEO}
+      - RUNNING_WITHOUT_VIDEO=true
       - BASE_URL=${BASE_URL}
       - BASE_URL_BACKEND=${BASE_URL_BACKEND}
-      - TEST_PATH=${TEST_PATH:-test/**/*.js}
+      - FORCE_ENTITY_CREATION=${FORCE_ENTITY_CREATION}
+      - TEST_PATH=${TEST_PATH:-test/Authorization_tests/**/*.js}
     volumes:
       - shared-downloads:/shared/downloads
+    networks:
+      - colorjob-network
+networks:
+  colorjob-network:
+    driver: bridge
 volumes:
   shared-downloads:

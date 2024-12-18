@@ -91,8 +91,8 @@ describe('Materials @S48382f8a', async () => {
     }
   });
 
-  it('Delete custom statuses from Unit dropdown @T4fd0bfd8', async () => {
-    await lambdaParameters('Delete custom statuses from Unit dropdown @T4fd0bfd8', driverChrome);
+  it('Delete custom statuses from Payments status dropdown @T37877111', async () => {
+    await lambdaParameters('Delete custom statuses from Payments status dropdown @T37877111', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 

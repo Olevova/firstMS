@@ -23,159 +23,158 @@ describe('Materials @S48382f8a', async () => {
     }
   });
 
-  // it('Add materials with all required fields @T8fbddcce', async () => {
-  //   await lambdaParameters('Add materials with all required fields @T8fbddcce', driverChrome);
-  //   // time and site or lochalhost there tests are going
-  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  it('Add materials with all required fields @T8fbddcce', async () => {
+    await lambdaParameters('Add materials with all required fields @T8fbddcce', driverChrome);
+    // time and site or lochalhost there tests are going
+    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-  //   const createMaterials = new CreateMaterials(driverChrome);
+    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+    const createMaterials = new CreateMaterials(driverChrome);
 
-  //   await logginPageTest.userLogIn(
-  //     config.emailCA,
-  //     config.passwordCA,
-  //     config.mainCompanyPage
-  //   );
+    await logginPageTest.userLogIn(
+      config.emailCA,
+      config.passwordCA,
+      config.mainCompanyPage
+    );
 
-  //   try {
-  //     await createMaterials.goToView(config.projectNameForSU,'ca');
-  //     await createMaterials.goToSelectTab(config.materials);
-  //     await createMaterials.openMaterialsAddMaterialsForm();
-  //     await createMaterials.fillOrUpdateMaterialsFields({
-  //       save:true,
-  //       tag:config.tagMT,
-  //       unit:config.unit.SF,
-  //       supplier:config.supplier,
-  //       area:config.areaMT,
-  //       submittalStatus:config.SubmittalStatus.Submitted,
-  //       orderStatus:config.OrderStatus.POSubmitted,
-  //   });
-  //     await lambdaParameters('passed', driverChrome);
-  //   } catch (error) {
-  //     await makeScreenshot(driverChrome, 'materials_create');
-  //     await lambdaParameters('failed', driverChrome);
-  //     throw error;
-  //   }
-  // });
+    try {
+      await createMaterials.goToView(config.projectNameForSU,'ca');
+      await createMaterials.goToSelectTab(config.materials);
+      await createMaterials.openMaterialsAddMaterialsForm();
+      await createMaterials.fillOrUpdateMaterialsFields({
+        save:true,
+        tag:config.tagMT,
+        unit:config.unit.SF,
+        supplier:config.supplier,
+        area:config.areaMT,
+        submittalStatus:config.SubmittalStatus.Submitted,
+        orderStatus:config.OrderStatus.POSubmitted,
+    });
+      await lambdaParameters('passed', driverChrome);
+    } catch (error) {
+      await makeScreenshot(driverChrome, 'materials_create');
+      await lambdaParameters('failed', driverChrome);
+      throw error;
+    }
+  });
 
-  // it('Add material with all fields @Tdce99f75', async () => {
-  //   await lambdaParameters('Add material with all fields @Tdce99f75', driverChrome);
-  //   // time and site or lochalhost there tests are going
-  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  it('Add material with all fields @Tdce99f75', async () => {
+    await lambdaParameters('Add material with all fields @Tdce99f75', driverChrome);
+    // time and site or lochalhost there tests are going
+    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-  //   const createMaterials = new CreateMaterials(driverChrome);
+    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+    const createMaterials = new CreateMaterials(driverChrome);
 
-  //   await logginPageTest.userLogIn(
-  //     config.emailCA,
-  //     config.passwordCA,
-  //     config.mainCompanyPage
-  //   );
-  //   try {
-  //     await createMaterials.goToView(config.projectNameForSU,'ca');
-  //     await createMaterials.goToSelectTab(config.materials);
-  //     await createMaterials.openMaterialsAddMaterialsForm();
-  //     await createMaterials.fillOrUpdateMaterialsFields({
-  //       save:true,
-  //       tag:config.tagMTFull,
-  //       description:config.taskDescription,
-  //       unit:config.unit.SF,
-  //       supplier:config.supplier,
-  //       area:config.areaMT,
-  //       submittalStatus:config.SubmittalStatus.Submitted,
-  //       file:config.attachmentFilePhoto,
-  //       orderStatus:config.OrderStatus.POSubmitted,
-  //       eta:config.taskDate,
-  //       grossQty:1,
-  //       orderQty:1,
-  //       orderDate:config.taskDate,
-  //       paymentStatus:config.materialPaymentStatus,
-  //       receivedQty:1,
-  //       location:config.materialsLocation,
-  //       materialNotes:config.materialsNot,
-  //       fileSecondInput:config.attachmentFilePhoto,}
-  //     );
-  //     await lambdaParameters('passed', driverChrome);
-  //   } catch (error) {
-  //     await makeScreenshot(driverChrome, 'materials_create_all_fields');
-  //     await lambdaParameters('failed', driverChrome);
-  //     throw error;
-  //   }
-  // });
+    await logginPageTest.userLogIn(
+      config.emailCA,
+      config.passwordCA,
+      config.mainCompanyPage
+    );
+    try {
+      await createMaterials.goToView(config.projectNameForSU,'ca');
+      await createMaterials.goToSelectTab(config.materials);
+      await createMaterials.openMaterialsAddMaterialsForm();
+      await createMaterials.fillOrUpdateMaterialsFields({
+        save:true,
+        tag:config.tagMTFull,
+        description:config.taskDescription,
+        unit:config.unit.SF,
+        supplier:config.supplier,
+        area:config.areaMT,
+        submittalStatus:config.SubmittalStatus.Submitted,
+        file:config.attachmentFilePhoto,
+        orderStatus:config.OrderStatus.POSubmitted,
+        eta:config.taskDate,
+        grossQty:1,
+        orderQty:1,
+        orderDate:config.taskDate,
+        paymentStatus:config.materialPaymentStatus,
+        receivedQty:1,
+        location:config.materialsLocation,
+        materialNotes:config.materialsNot,
+        fileSecondInput:config.attachmentFilePhoto,}
+      );
+      await lambdaParameters('passed', driverChrome);
+    } catch (error) {
+      await makeScreenshot(driverChrome, 'materials_create_all_fields');
+      await lambdaParameters('failed', driverChrome);
+      throw error;
+    }
+  });
 
-  // it('Verify that the Submittal Status can be changed directly from the table @Te0c57a0b', async () => {
-  //   await lambdaParameters('Verify that the Submittal Status can be changed directly from the table @Te0c57a0b', driverChrome);
-  //   // time and site or lochalhost there tests are going
-  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  it('Verify that the Submittal Status can be changed directly from the table @Te0c57a0b', async () => {
+    await lambdaParameters('Verify that the Submittal Status can be changed directly from the table @Te0c57a0b', driverChrome);
+    // time and site or lochalhost there tests are going
+    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-  //   const createMaterials = new CreateMaterials(driverChrome);
+    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+    const createMaterials = new CreateMaterials(driverChrome);
 
-  //   await logginPageTest.userLogIn(
-  //     config.emailCA,
-  //     config.passwordCA,
-  //     config.mainCompanyPage
-  //   );
+    await logginPageTest.userLogIn(
+      config.emailCA,
+      config.passwordCA,
+      config.mainCompanyPage
+    );
 
-  //   try {
-  //     await createMaterials.goToView(config.projectNameForSU,'ca');
-  //     await createMaterials.goToSelectTab(config.materials);
-  //     await createMaterials.changeMaterialsStatusInTable({materials:config.tagMT,submittalStatus:config.SubmittalStatus.Submitted})
-  //     const status = await createMaterials.checkMaterialsStatusInTable(config.tagMT);
-  //     console.log(status, 'status');
-  //     if(status.Submittal === config.SubmittalStatus.Submitted){
-  //       console.log("Test passed");
+    try {
+      await createMaterials.goToView(config.projectNameForSU,'ca');
+      await createMaterials.goToSelectTab(config.materials);
+      await createMaterials.changeMaterialsStatusInTable({materials:config.tagMT,submittalStatus:config.SubmittalStatus.Submitted})
+      const status = await createMaterials.checkMaterialsStatusInTable(config.tagMT);
+      console.log(status, 'status');
+      if(status.Submittal === config.SubmittalStatus.Submitted){
+        console.log("Test passed");
         
-  //     }
-  //     else{
-  //       throw new Error('Test failed')
-  //     }
-  //     await lambdaParameters('passed', driverChrome);
-  //   } catch (error) {
-  //     await makeScreenshot(driverChrome, 'materials_change_submittal_in_table');
-  //     await lambdaParameters('failed', driverChrome);
-  //     throw error;
-  //   }
-  // });
+      }
+      else{
+        throw new Error('Test failed')
+      }
+      await lambdaParameters('passed', driverChrome);
+    } catch (error) {
+      await makeScreenshot(driverChrome, 'materials_change_submittal_in_table');
+      await lambdaParameters('failed', driverChrome);
+      throw error;
+    }
+  });
 
-  // it('Verify that the Order Status can be changed directly from the table @Tbf4f64c8', async () => {
-  //   await lambdaParameters('Verify that the Order Status can be changed directly from the table @Tbf4f64c8', driverChrome);
-  //   // time and site or lochalhost there tests are going
-  //   console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
+  it('Verify that the Order Status can be changed directly from the table @Tbf4f64c8', async () => {
+    await lambdaParameters('Verify that the Order Status can be changed directly from the table @Tbf4f64c8', driverChrome);
+    // time and site or lochalhost there tests are going
+    console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
 
-  //   const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
-  //   const createMaterials = new CreateMaterials(driverChrome);
+    const logginPageTest = new LoginPage(driverChrome, config.urlLoginPage);
+    const createMaterials = new CreateMaterials(driverChrome);
 
-  //   await logginPageTest.userLogIn(
-  //     config.email,
-  //     config.password,
-  //     config.urlhomePageForCheck
-  //   );
+    await logginPageTest.userLogIn(
+      config.email,
+      config.password,
+      config.urlhomePageForCheck
+    );
 
-  //   try {
-  //     await createMaterials.goToView(config.projectNameForSU,'sa');
-  //     await createMaterials.goToSelectTab(config.materials);
-  //     await createMaterials.changeMaterialsStatusInTable({materials:config.tagMT,orderStatus:config.OrderStatus.Ordered})
-  //     const status = await createMaterials.checkMaterialsStatusInTable(config.tagMT);
-  //     console.log(status, 'status');
-      
-  //     if(status.Order === config.OrderStatus.Ordered){
-  //       console.log("Test passed");
+    try {
+      await createMaterials.goToView(config.projectNameForSU,'sa');
+      await createMaterials.goToSelectTab(config.materials);
+      await createMaterials.changeMaterialsStatusInTable({materials:config.tagMT,orderStatus:config.OrderStatus.Ordered})
+      const status = await createMaterials.checkMaterialsStatusInTable(config.tagMT);
+      console.log(status, 'status');
+      if(status.Order === config.OrderStatus.Ordered){
+        console.log("Test passed");
         
-  //     }
-  //     else{
-  //       throw new Error('Test failed')
-  //     }
-  //     await lambdaParameters('passed', driverChrome);
-  //   } catch (error) {
-  //     await makeScreenshot(driverChrome, 'materials_change_order_in_table');
-  //     await lambdaParameters('failed', driverChrome);
-  //     throw error;
-  //   }
-  // });
+      }
+      else{
+        throw new Error('Test failed')
+      }
+      await lambdaParameters('passed', driverChrome);
+    } catch (error) {
+      await makeScreenshot(driverChrome, 'materials_change_order_in_table');
+      await lambdaParameters('failed', driverChrome);
+      throw error;
+    }
+  });
 
 
-  it('Verify that the “…” menu is not visible for SU role @T0f836fec', async () => {
+  it('Verify that the “…” menu is not visible for SU role @T0f836fec, @T11da5080', async () => {
     await lambdaParameters('Verify that the “…” menu is not visible for SU role @T0f836fec', driverChrome);
     // time and site or lochalhost there tests are going
     console.log(Date().toLocaleLowerCase(), 'date', config.urlLoginPage);
@@ -267,6 +266,7 @@ describe('Materials @S48382f8a', async () => {
       if(!materialsFormEdit){
         throw new Error("Materials can be opened by ID for SU")
       }
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'materials_can_not_opened_by_id_for_su');
       await lambdaParameters('failed', driverChrome);
@@ -299,6 +299,7 @@ describe('Materials @S48382f8a', async () => {
       if(materialsFormEdit){
         throw new Error("Materials can't be opened by ID for CA")
       }
+      await lambdaParameters('passed', driverChrome);
     } catch (error) {
       await makeScreenshot(driverChrome, 'materials_can_opened_by_id_for_CA');
       await lambdaParameters('failed', driverChrome);
