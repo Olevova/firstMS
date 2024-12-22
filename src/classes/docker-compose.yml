@@ -49,7 +49,7 @@ services:
         condition: service_healthy
     environment:
       - RUNNING_IN_DOCKER=true
-      - RUNNING_WITHOUT_VIDEO=true
+      - RUNNING_WITHOUT_VIDEO=${RUNNING_WITHOUT_VIDEO}
       - BASE_URL=${BASE_URL}
       - BASE_URL_BACKEND=${BASE_URL_BACKEND}
       - FORCE_ENTITY_CREATION=${FORCE_ENTITY_CREATION}
