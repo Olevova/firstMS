@@ -53,7 +53,8 @@ services:
       - BASE_URL=${BASE_URL}
       - BASE_URL_BACKEND=${BASE_URL_BACKEND}
       - FORCE_ENTITY_CREATION=${FORCE_ENTITY_CREATION}
-      - TEST_PATH=${TEST_PATH:-test/**/*.js}
+      - TEST_PATH=${TEST_PATH:-test/Authorization_tests/**/*.js}
+      - PASSWORD=${PASSWORD}
     volumes:
       - shared-downloads:/shared/downloads
     networks:

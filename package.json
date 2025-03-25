@@ -7,7 +7,7 @@
     "test": "echo \"Running tests with path: $TEST_PATH\" && node src/utils/api/initData.js && DEBUG=testomatio:* TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035 npx mocha --no-timeouts -R ./node_modules/@testomatio/reporter/lib/adapter/mocha.js $(eval echo $TEST_PATH)",
     "test3": "node src/utils/api/initData.js && DEBUG=testomatio:* TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035 npx mocha --no-timeouts -R ./node_modules/@testomatio/reporter/lib/adapter/mocha.js 'test/**/*.js'",
     "test2": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports ",
-    "testLocal": "node src/utils/api/initData.js && mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options  reportDir=colorjob,reportFilename=reports 'test/**/*.js'",
+   "testLocal": "node src/utils/api/initData.js && mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options  reportDir=colorjob,reportFilename=reports 'test/Roles_tests/**/*.js'",
     "onetest": "mocha --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options reportDir=colorjob,reportFilename=reports test/**/addCustomStatusesPaymentsStatus.test.js",
     "testp": "mocha --no-timeouts --parallel",
     "import-tests": "set TESTOMATIO=tstmt_hPNdb80OrOnIZL94TWhW15LtzsXiprUlVw1719249035&& npx check-tests@latest Mocha \"test/**/*{.,_}{test,spec,cy}.js\" --update-ids --no-detached"

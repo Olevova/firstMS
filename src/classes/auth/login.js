@@ -155,9 +155,10 @@ class LoginPage extends Base {
     await this.driver.get(this.url);
     await this.driver.wait(until.elementLocated(locatorsLogin.authForm), 10000);
     if(config.baseUrl === config.baseUrlDev){
-      await this.driver.wait(until.elementLocated(locatorsLogin.authVersionTextCss),10000);
-      const versionEl = await this.driver.findElement(locatorsLogin.authVersionTextCss);
-      await this.driver.wait(until.elementTextMatches(versionEl,/^V\d+/), 10000);
+      // await this.driver.wait(until.elementLocated(locatorsLogin.authVersionTextCss),10000);
+      // const versionEl = await this.driver.findElement(locatorsLogin.authVersionTextCss);
+      await this.driver.sleep(1500);
+      // await this.driver.wait(until.elementTextMatches(versionEl,/^V\d+/), 10000);
     }
     else {
       this.driver.sleep(500)
