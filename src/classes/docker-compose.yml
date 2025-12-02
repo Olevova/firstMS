@@ -55,6 +55,7 @@ services:
       - FORCE_ENTITY_CREATION=${FORCE_ENTITY_CREATION}
       - TEST_PATH=${TEST_PATH:-test/Authorization_tests/**/*.js}
       - PASSWORD=${PASSWORD}
+      - TEST_TAG=${TEST_TAG}
     volumes:
       - shared-downloads:/shared/downloads
     networks:
