@@ -56,6 +56,8 @@ services:
       - TEST_PATH=${TEST_PATH:-test/Authorization_tests/**/*.js}
       - PASSWORD=${PASSWORD}
       - TEST_TAG=${TEST_TAG}
+      - VIEWPORT_WIDTH=${VIEWPORT_WIDTH}
+      - VIEWPORT_HEIGHT=${VIEWPORT_HEIGHT}
     volumes:
       - shared-downloads:/shared/downloads
     networks:
